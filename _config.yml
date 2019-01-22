@@ -1,1 +1,12 @@
+title: My Blog
+author: VirusPc
+email: your-email@domain.com
+description: a lazy man ~
+
+# social links
+twitter_username: VirusPc
+github_username:  VirusPc
+
+show_excerpts: true # set to false to remove excerpts on the homepage
+
 theme: jekyll-theme-slate
