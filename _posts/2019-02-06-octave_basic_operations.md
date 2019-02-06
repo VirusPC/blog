@@ -1,6 +1,6 @@
 ---
 title: 基本操作
-resource_path: ../assets/2019-02-06-octave_basic_operations
+resource_path: /blog/assets/2019-02-06-octave_basic_operations
 ---
 
 
@@ -170,5 +170,5 @@ ans =
 >> hist(w)
 >> hist(w, 50) % 指定直方图有50列
 ```
-![hist(w)](/blog/assets/2019-02-06-octave_basic_operations/hist(w).png)
-![hist(2,50)](/blog/assets/2019-02-06-octave_basic_operations/hist(2,&#32;50).png)
+![hist(w)]({{page.resource_path}}/hist(w).png)
+![hist(2,50)]({{page.resource_path}}/hist(2,&#32;50).png)
