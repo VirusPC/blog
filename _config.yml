@@ -11,4 +11,4 @@ qq: 479684801
 
 show_excerpts: true # set to false to remove excerpts on the homepage
 
-theme: jekyll-theme-hacker
+theme: jekyll-theme-midnight
