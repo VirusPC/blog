@@ -170,5 +170,5 @@ ans =
 >> hist(w)
 >> hist(w, 50) % 指定直方图有50列
 ```
-![hist(w)](../assets/2019-02-06-octave_basic_operations/hist(w).png)
-![hist(2,50)](../assets/2019-02-06-octave_basic_operations/hist(2,&#32;50).png)
+![hist(w)](assets/2019-02-06-octave_basic_operations/hist(w).png)
+![hist(2,50)](assets/2019-02-06-octave_basic_operations/hist(2,&#32;50).png)
