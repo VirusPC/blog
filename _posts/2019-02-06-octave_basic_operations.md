@@ -170,5 +170,5 @@ ans =
 >> hist(w)
 >> hist(w, 50) % 指定直方图有50列
 ```
-![hist(w)]({{post.resource}}/hist(w).png)
-![hist(2,50)]({{post.resource}}/hist(2,&#32;50).png)
+![hist(w)]({{post.resource_path}}/hist(w).png)
+![hist(2,50)]({{post.resource_path}}/hist(2,&#32;50).png)
