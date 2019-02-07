@@ -13,4 +13,4 @@ show_excerpts: true # set to false to remove excerpts on the homepage
 
 theme: jekyll-theme-midnight
 
-permalink: blog/:date
+permalink: blog/:categories/:yiear/:month/:day/:title:output_ext
