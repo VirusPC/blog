@@ -1,5 +1,6 @@
 ---
 title: 绘制数据
+categories: [机器学习]
 resource_path: /blog/assets/2019-02-06-plotting_data
 ---
 
