@@ -15,14 +15,14 @@ resource_path: /blog/assets/2019-02-06-plotting_data
 >> plot(t, y2)
 ```
 
-![plot(t, y1)](/sin.png "plot(t, y1)")
+![plot(t, y1)]({{page.resource_path}}/sin.png "plot(t, y1)")
 
-![plot(t, y2)](/cos.png "plot(t, y2)")
+![plot(t, y2)]({{page.resource_path}}/cos.png "plot(t, y2)")
 
 ```MATLAB
 ```
 
-![hold_on](/hold_on.png)
+![hold_on]({{resource_path}}/hold_on.png)
 
 ```MATLAB
 >> close  % 关闭图表
@@ -85,19 +85,19 @@ resource_path: /blog/assets/2019-02-06-plotting_data
 >> ylabel('value')  % 为刚刚生成的图表动态添加y轴的名字
 ```
 
-![add_label]({{pages.resource_path}}/add_label.png 'add xlabel and ylabel')
+![add_label]({{page.resource_path}}/add_label.png 'add xlabel and ylabel')
 
 ```MATLAB
 >> legend('sin', 'cos')  % 给绘制的两条线命名,也可通过plot函数的FMT参数中的<;displayname;>这一项，在一开始就命名
 ```
 
-![legend]({{pages.resource_path}}/legend.png 'legend(\'sin\', \'cos\')')
+![legend]({{page.resource_path}}/legend.png 'legend(\'sin\', \'cos\')')
 
 ```MATLAB
 >> title('my plot')  % 动态添加图表的名称
 ```
 
-![add_title]({{pages.resource_path}}/title.png 'title(\'my plot\')')
+![add_title]({{page.resource_path}}/title.png 'title(\'my plot\')')
 
 ```MATLAB
 >> subplot(4, 4, 1)  % 将画板按4*4矩阵划分，将子图放在第一块上
@@ -106,13 +106,13 @@ resource_path: /blog/assets/2019-02-06-plotting_data
 >> plot(t, y2)  % 在该子图上绘图
 ```
 
-![subplot]({{pages.resource_path}}/subplot.png 'subplot')
+![subplot]({{page.resource_path}}/subplot.png 'subplot')
 
 ```MATLAB
 >> axis([-1 1 -0.5 1])  % 设置x轴和y轴的取值范围：x∈[-1, 1]， y∈[-0.5, 1]
 ```
 
-![set_axis]({{pages.resource_path}}/axis.png 'aixs(p-1 1 0.5 1])')
+![set_axis]({{page.resource_path}}/axis.png 'aixs(p-1 1 0.5 1])')
 
 ```MATLAB
 >> A = magic(5)
@@ -129,8 +129,8 @@ A =
 >> colormap gray;  % 选取要映射的颜色表
 ```
 
-![imagesc]({{pages.resource_path}}/imagesc.png 'imagesc(A)')
-![colormap]({{pages.resource_path}}/colormap.png 'add color bar and set colormap')
+![imagesc]({{page.resource_path}}/imagesc.png 'imagesc(A)')
+![colormap]({{page.resource_path}}/colormap.png 'add color bar and set colormap')
 
 ```MATLAB
 >> clf  % 清空当前图表，使得可以在该窗口重新绘制另一个图表
