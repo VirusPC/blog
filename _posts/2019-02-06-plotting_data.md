@@ -22,7 +22,7 @@ resource_path: /blog/assets/2019-02-06-plotting_data
 ```MATLAB
 ```
 
-![hold_on]({{resource_path}}/hold_on.png)
+![hold_on]({{page.resource_path}}/hold_on.png)
 
 ```MATLAB
 >> close  % 关闭图表
