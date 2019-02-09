@@ -13,10 +13,10 @@ show_excerpts: true # set to false to remove excerpts on the homepage
 
 theme: jekyll-theme-midnight
 
-url: https://viruspc.github.io/blog
-permalink: /:categories/:year/:month/:day/:title:output_ext
+url: https://viruspc.github.io/
+permalink: /blog/:categories/:year/:month/:day/:title:output_ext
 
-asslink: /assets/:categories/:year/:month/:day/:title
+asslink: /blog/assets/:categories/:year/:month/:day/:title
 
 repository: "VirusPc/blog"
 
