@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+<!-- Begin Jekyll SEO tag v2.5.0 -->
+<title>绘制数据 | Blog</title>
+<meta name="generator" content="Jekyll v3.7.4" />
+<meta property="og:title" content="绘制数据" />
+<meta name="author" content="VirusPc" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="基本操作" />
+<meta property="og:description" content="基本操作" />
+<link rel="canonical" href="http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html" />
+<meta property="og:url" content="http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html" />
+<meta property="og:site_name" content="Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2019-02-06T00:00:00+08:00" />
+<script type="application/ld+json">
+{"datePublished":"2019-02-06T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html"},"url":"http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html","author":{"@type":"Person","name":"VirusPc"},"description":"基本操作","@type":"BlogPosting","headline":"绘制数据","dateModified":"2019-02-06T00:00:00+08:00","@context":"http://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
+
+    <link rel="stylesheet" href="/assets/css/style.css?v=bf1d910d52a98e87d91c3d4ec241741c45fe4fe2">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
+    <script src="/assets/js/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="/assets/css/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  </head>
+  <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="http://github.com/VirusPc/blog">View On GitHub</a></li>
+          
+        </nav>
+      </div><!-- end header -->
+
+    <div class="wrapper">
+
+      <section>
+        <div id="title">
+          <h1>Blog</h1>
+          <p>懒癌晚期</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="http://github.com/VirusPc">VirusPc</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
+
+        <h2 id="基本操作">基本操作</h2>
+
+<pre><code class="language-MATLAB">&gt;&gt; t = [0:0.01:0.98];
+&gt;&gt; y1 = sin(2*pi*4*t);
+&gt;&gt; plot(t, y1)
+&gt;&gt; y2 = cos(2*pi*4*t);
+&gt;&gt; plot(t, y2)
+</code></pre>
+
+<p><img src="/sin.png" alt="plot(t, y1)" title="plot(t, y1)" /></p>
+
+<p><img src="/cos.png" alt="plot(t, y2)" title="plot(t, y2)" /></p>
+
+<pre><code class="language-MATLAB">
+</code></pre>
+
+<p><img src="/hold_on.png" alt="hold_on" /></p>
+
+<pre><code class="language-MATLAB">&gt;&gt; close  % 关闭图表
+&gt;&gt; figure(1)  % 打开或切换到图表1，对其进行操作
+&gt;&gt; plot(t, y1)
+&gt;&gt; figure(2)  % 打开或切换到图表2，对其进行操作
+&gt;&gt; plot(t, y2)
+</code></pre>
+
+<h2 id="格式化参数">格式化参数</h2>
+
+<ul>
+  <li>调用方式：plot(X, Y, FMT)</li>
+  <li>
+    <p>FMT是一个字符串，由几个可选项组成：”&lt;linewith&gt;&lt;marker&gt;&lt;color&gt;&lt;marker&gt;&lt;color&gt;&lt;displayname&gt;“，以下为官方帮助文档中参数各可选项的可选值。（color中的‘blacK’首字母没大写！:unamused:）</p>
+
+    <blockquote>
+      <p>Format arguments:</p>
+
+      <p>linestyle</p>
+
+      <p>     ’-‘  Use solid lines (default).
+     ’–’ Use dashed lines.<br />
+     ’:’  Use dotted lines.<br />
+     ’-.’ Use dash-dotted lines.</p>
+
+      <p>marker</p>
+
+      <p>     ’+’  crosshair<br />
+     ‘o’  circle<br />
+     ‘*’  star<br />
+     ’.’  point<br />
+     ‘x’  cross<br />
+     ’s’  square<br />
+     ‘d’  diamond<br />
+     ’^’  upward-facing triangle<br />
+     ‘v’  downward-facing triangle<br />
+     ’&gt;’  right-facing triangle<br />
+     ’&lt;’  left-facing triangle<br />
+     ‘p’  pentagram<br />
+     ‘h’  hexagram</p>
+
+      <p>color</p>
+
+      <p>     ‘k’  blacK<br />
+        ‘r’  Red<br />
+     ‘g’  Green<br />
+        ‘b’  Blue<br />
+        ‘y’  Yellow<br />
+        ‘m’  Magenta<br />
+        ‘c’  Cyan<br />
+        ‘w’  White</p>
+
+      <p>“;displayname;”<br />
+        Here “displayname” is the label to use for the plot legend .</p>
+    </blockquote>
+  </li>
+</ul>
+
+<h2 id="其他操作">其他操作</h2>
+
+<pre><code class="language-MATLAB">&gt;&gt; xlabel('feature')  % 为刚刚生成的图表动态添加x轴的名字
+&gt;&gt; ylabel('value')  % 为刚刚生成的图表动态添加y轴的名字
+</code></pre>
+
+<p><img src="/add_label.png" alt="add_label" title="add xlabel and ylabel" /></p>
+
+<pre><code class="language-MATLAB">&gt;&gt; legend('sin', 'cos')  % 给绘制的两条线命名,也可通过plot函数的FMT参数中的&lt;;displayname;&gt;这一项，在一开始就命名
+</code></pre>
+
+<p><img src="/legend.png" alt="legend" title="legend(\'sin\', \'cos\" />’)</p>
+
+<pre><code class="language-MATLAB">&gt;&gt; title('my plot')  % 动态添加图表的名称
+</code></pre>
+
+<p><img src="/title.png" alt="add_title" title="title(\'my plot\" />’)</p>
+
+<pre><code class="language-MATLAB">&gt;&gt; subplot(4, 4, 1)  % 将画板按4*4矩阵划分，将子图放在第一块上
+&gt;&gt; plot(t, y1) % 在该子图上绘图
+&gt;&gt; subplot(2, 2, 4)  % 将画板按2*2矩阵划分，将子图放在第四块上。
+&gt;&gt; plot(t, y2)  % 在该子图上绘图
+</code></pre>
+
+<p><img src="/subplot.png" alt="subplot" title="subplot" /></p>
+
+<pre><code class="language-MATLAB">&gt;&gt; axis([-1 1 -0.5 1])  % 设置x轴和y轴的取值范围：x∈[-1, 1]， y∈[-0.5, 1]
+</code></pre>
+
+<p><img src="/axis.png" alt="set_axis" title="aixs(p-1 1 0.5 1])" /></p>
+
+<pre><code class="language-MATLAB">&gt;&gt; A = magic(5)
+A =
+
+   17   24    1    8   15
+   23    5    7   14   16
+    4    6   13   20   22
+   10   12   19   21    3
+   11   18   25    2    9
+
+&gt;&gt; imagesc(A)  % 根据矩阵的值给矩阵各块上色
+&gt;&gt; colorbar  % 在右侧添加色度条
+&gt;&gt; colormap gray;  % 选取要映射的颜色表
+</code></pre>
+
+<p><img src="/imagesc.png" alt="imagesc" title="imagesc(A)" />
+<img src="/colormap.png" alt="colormap" title="add color bar and set colormap" /></p>
+
+<pre><code class="language-MATLAB">&gt;&gt; clf  % 清空当前图表，使得可以在该窗口重新绘制另一个图表
+</code></pre>
+
+<h2 id="保存">保存</h2>
+
+<pre><code class="language-MATLAB">&gt;&gt; cd E:\Octave\octave_folder; print -dpng 'myPlot.png'
+&gt;&gt;  % print后的可选项格式为：d + 图片类型后缀名
+</code></pre>
+
+<p><a href="https://www.coursera.org/learn/machine-learning/lecture/I7gx3/plotting-data">课程链接</a></p>
+
+
+      </section>
+
+    </div>
+
+    
+  </body>
+</html>
