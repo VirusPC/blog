@@ -3,7 +3,7 @@
   <ul>
     {% for post in category[1] %}
       <li>
-        <a href="{{post.url}}">{{ post.title}}</a>
+        <a href="blog/{{post.url}}">{{ post.title}}</a>
       </li>
     {% endfor %}
   </ul>

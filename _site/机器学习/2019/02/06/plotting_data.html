@@ -21,7 +21,7 @@
 {"datePublished":"2019-02-06T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:5000/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html"},"url":"http://localhost:5000/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html","author":{"@type":"Person","name":"VirusPc"},"description":"基本操作","@type":"BlogPosting","headline":"绘制数据","dateModified":"2019-02-06T00:00:00+08:00","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=a72df3803010d90b6c1ed8c1cd1baf7a309be365">
+    <link rel="stylesheet" href="/assets/css/style.css?v=7c05a1c9a18f6444dbcf4ba22cae9e711b2044dc">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
     <script src="/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
@@ -61,9 +61,9 @@
 &gt;&gt; plot(t, y2)
 </code></pre>
 
-<p><img src="/sin.png" alt="plot(t, y1)" title="plot(t, y1)" /></p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/sin.png" alt="plot(t, y1)" title="plot(t, y1)" /></p>
 
-<p><img src="/cos.png" alt="plot(t, y2)" title="plot(t, y2)" /></p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/cos.png" alt="plot(t, y2)" title="plot(t, y2)" /></p>
 
 <pre><code class="language-MATLAB">
 </code></pre>
@@ -133,17 +133,17 @@
 &gt;&gt; ylabel('value')  % 为刚刚生成的图表动态添加y轴的名字
 </code></pre>
 
-<p><img src="/add_label.png" alt="add_label" title="add xlabel and ylabel" /></p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/add_label.png" alt="add_label" title="add xlabel and ylabel" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; legend('sin', 'cos')  % 给绘制的两条线命名,也可通过plot函数的FMT参数中的&lt;;displayname;&gt;这一项，在一开始就命名
 </code></pre>
 
-<p><img src="/legend.png" alt="legend" title="legend(\'sin\', \'cos\" />’)</p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/legend.png" alt="legend" title="legend(\'sin\', \'cos\" />’)</p>
 
 <pre><code class="language-MATLAB">&gt;&gt; title('my plot')  % 动态添加图表的名称
 </code></pre>
 
-<p><img src="/title.png" alt="add_title" title="title(\'my plot\" />’)</p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/title.png" alt="add_title" title="title(\'my plot\" />’)</p>
 
 <pre><code class="language-MATLAB">&gt;&gt; subplot(4, 4, 1)  % 将画板按4*4矩阵划分，将子图放在第一块上
 &gt;&gt; plot(t, y1) % 在该子图上绘图
@@ -151,12 +151,12 @@
 &gt;&gt; plot(t, y2)  % 在该子图上绘图
 </code></pre>
 
-<p><img src="/subplot.png" alt="subplot" title="subplot" /></p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/subplot.png" alt="subplot" title="subplot" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; axis([-1 1 -0.5 1])  % 设置x轴和y轴的取值范围：x∈[-1, 1]， y∈[-0.5, 1]
 </code></pre>
 
-<p><img src="/axis.png" alt="set_axis" title="aixs(p-1 1 0.5 1])" /></p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/axis.png" alt="set_axis" title="aixs(p-1 1 0.5 1])" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; A = magic(5)
 A =
@@ -172,8 +172,8 @@ A =
 &gt;&gt; colormap gray;  % 选取要映射的颜色表
 </code></pre>
 
-<p><img src="/imagesc.png" alt="imagesc" title="imagesc(A)" />
-<img src="/colormap.png" alt="colormap" title="add color bar and set colormap" /></p>
+<p><img src="/blog/assets/2019-02-06-plotting_data/imagesc.png" alt="imagesc" title="imagesc(A)" />
+<img src="/blog/assets/2019-02-06-plotting_data/colormap.png" alt="colormap" title="add color bar and set colormap" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; clf  % 清空当前图表，使得可以在该窗口重新绘制另一个图表
 </code></pre>
