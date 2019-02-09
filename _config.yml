@@ -15,6 +15,8 @@ theme: jekyll-theme-midnight
 
 permalink: /blog/:categories/:year/:month/:day/:title:output_ext
 
+asslink: /blog/:categories/:year/:month/:day/:title
+
 repository: "VirusPc/blog"
 
 port: 5000
