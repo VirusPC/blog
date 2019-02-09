@@ -1,5 +1,4 @@
 ---
-layout: post
 title: Introduction
 categories: [机器学习]
 ---
