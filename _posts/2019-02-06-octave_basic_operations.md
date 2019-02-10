@@ -1,7 +1,7 @@
 ---
 title: 基本操作
-categories: [机器学习]
-resource_path: /blog/assets/2019-02-06-octave_basic_operations
+categories: ['机器学习', 'Octave/Matlab教程'] 
+resource_path: /blog/assets/2019/02/06/octave_basic_operations
 ---
 
 

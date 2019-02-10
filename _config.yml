@@ -16,7 +16,7 @@ theme: jekyll-theme-midnight
 baseurl: /blog
 permalink: /:categories/:year/:month/:day/:title:output_ext
 
-asslink: /assets/:categories/:year/:month/:day/:title
+ass_baseurl: /blog/assets
 
 repository: "VirusPc/blog"
 

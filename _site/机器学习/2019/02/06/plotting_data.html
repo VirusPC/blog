@@ -12,23 +12,23 @@
 <meta property="og:locale" content="en_US" />
 <meta name="description" content="基本操作" />
 <meta property="og:description" content="基本操作" />
-<link rel="canonical" href="http://localhost:5000/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html" />
-<meta property="og:url" content="http://localhost:5000/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html" />
+<link rel="canonical" href="http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html" />
+<meta property="og:url" content="http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html" />
 <meta property="og:site_name" content="Blog" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2019-02-06T00:00:00+08:00" />
 <script type="application/ld+json">
-{"datePublished":"2019-02-06T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:5000/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html"},"url":"http://localhost:5000/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html","author":{"@type":"Person","name":"VirusPc"},"description":"基本操作","@type":"BlogPosting","headline":"绘制数据","dateModified":"2019-02-06T00:00:00+08:00","@context":"http://schema.org"}</script>
+{"datePublished":"2019-02-06T00:00:00+08:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html"},"url":"http://localhost:5000/blog/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/2019/02/06/plotting_data.html","author":{"@type":"Person","name":"VirusPc"},"description":"基本操作","@type":"BlogPosting","headline":"绘制数据","dateModified":"2019-02-06T00:00:00+08:00","@context":"http://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 
-    <link rel="stylesheet" href="/assets/css/style.css?v=7c05a1c9a18f6444dbcf4ba22cae9e711b2044dc">
+    <link rel="stylesheet" href="/blog/assets/css/style.css?v=ed89356330a553b39de4a5de5c690cc04967c93f">
     <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
-    <script src="/assets/js/respond.js"></script>
+    <script src="/blog/assets/js/respond.js"></script>
     <!--[if lt IE 9]>
       <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
     <!--[if lt IE 8]>
-    <link rel="stylesheet" href="/assets/css/ie.css">
+    <link rel="stylesheet" href="/blog/assets/css/ie.css">
     <![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
@@ -61,14 +61,19 @@
 &gt;&gt; plot(t, y2)
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/sin.png" alt="plot(t, y1)" title="plot(t, y1)" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/sin.png" alt="plot(t, y1)" title="plot(t, y1)" /></p>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/cos.png" alt="plot(t, y2)" title="plot(t, y2)" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/cos.png" alt="plot(t, y2)" title="plot(t, y2)" /></p>
 
-<pre><code class="language-MATLAB">
+<pre><code class="language-MATLAB">`&gt;&gt; t = [0:0.01:0.98];
+&gt;&gt; y1 = sin(2*pi*4*t);
+&gt;&gt; plot(t, y1)
+&gt;&gt; hold on
+&gt;&gt; y2 = cos(2*pi*4*t);
+&gt;&gt; plot(t, y2)
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/hold_on.png" alt="hold_on" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/hold_on.png" alt="hold_on" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; close  % 关闭图表
 &gt;&gt; figure(1)  % 打开或切换到图表1，对其进行操作
@@ -133,17 +138,17 @@
 &gt;&gt; ylabel('value')  % 为刚刚生成的图表动态添加y轴的名字
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/add_label.png" alt="add_label" title="add xlabel and ylabel" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/add_label.png" alt="add_label" title="add xlabel and ylabel" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; legend('sin', 'cos')  % 给绘制的两条线命名,也可通过plot函数的FMT参数中的&lt;;displayname;&gt;这一项，在一开始就命名
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/legend.png" alt="legend" title="legend(\'sin\', \'cos\" />’)</p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/legend.png" alt="legend" title="legend(\'sin\', \'cos\" />’)</p>
 
 <pre><code class="language-MATLAB">&gt;&gt; title('my plot')  % 动态添加图表的名称
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/title.png" alt="add_title" title="title(\'my plot\" />’)</p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/title.png" alt="add_title" title="title(\'my plot\" />’)</p>
 
 <pre><code class="language-MATLAB">&gt;&gt; subplot(4, 4, 1)  % 将画板按4*4矩阵划分，将子图放在第一块上
 &gt;&gt; plot(t, y1) % 在该子图上绘图
@@ -151,12 +156,12 @@
 &gt;&gt; plot(t, y2)  % 在该子图上绘图
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/subplot.png" alt="subplot" title="subplot" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/subplot.png" alt="subplot" title="subplot" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; axis([-1 1 -0.5 1])  % 设置x轴和y轴的取值范围：x∈[-1, 1]， y∈[-0.5, 1]
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/axis.png" alt="set_axis" title="aixs(p-1 1 0.5 1])" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/axis.png" alt="set_axis" title="aixs(p-1 1 0.5 1])" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; A = magic(5)
 A =
@@ -172,8 +177,8 @@ A =
 &gt;&gt; colormap gray;  % 选取要映射的颜色表
 </code></pre>
 
-<p><img src="/blog/assets/2019-02-06-plotting_data/imagesc.png" alt="imagesc" title="imagesc(A)" />
-<img src="/blog/assets/2019-02-06-plotting_data/colormap.png" alt="colormap" title="add color bar and set colormap" /></p>
+<p><img src="/blog/assets/2019/02/06/plotting_data/imagesc.png" alt="imagesc" title="imagesc(A)" />
+<img src="/blog/assets/2019/02/06/plotting_data/colormap.png" alt="colormap" title="add color bar and set colormap" /></p>
 
 <pre><code class="language-MATLAB">&gt;&gt; clf  % 清空当前图表，使得可以在该窗口重新绘制另一个图表
 </code></pre>
@@ -184,6 +189,7 @@ A =
 &gt;&gt;  % print后的可选项格式为：d + 图片类型后缀名
 </code></pre>
 
+<hr />
 <p><a href="https://www.coursera.org/learn/machine-learning/lecture/I7gx3/plotting-data">课程链接</a></p>
 
 

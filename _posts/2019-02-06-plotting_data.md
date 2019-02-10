@@ -1,7 +1,7 @@
 ---
 title: 绘制数据
 categories: [机器学习]
-resource_path: /blog/assets/2019-02-06-plotting_data
+resource_path: /blog/assets/2019/02/06/plotting_data
 ---
 
 基本操作
@@ -20,6 +20,12 @@ resource_path: /blog/assets/2019-02-06-plotting_data
 ![plot(t, y2)]({{page.resource_path}}/cos.png "plot(t, y2)")
 
 ```MATLAB
+`>> t = [0:0.01:0.98];
+>> y1 = sin(2*pi*4*t);
+>> plot(t, y1)
+>> hold on
+>> y2 = cos(2*pi*4*t);
+>> plot(t, y2)
 ```
 
 ![hold_on]({{page.resource_path}}/hold_on.png)
@@ -144,4 +150,6 @@ A =
 >>  % print后的可选项格式为：d + 图片类型后缀名
 ```
 
+
+---
 [课程链接](https://www.coursera.org/learn/machine-learning/lecture/I7gx3/plotting-data)
