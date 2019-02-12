@@ -1,5 +1,5 @@
 ---
-title: 移动数据
+title: Matlab/Octave 移动数据
 categories: [机器学习]
 ---
 

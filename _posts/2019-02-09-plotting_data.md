@@ -1,7 +1,7 @@
 ---
-title: 绘制数据
+title: Matlab/Octave 绘制数据
 categories: [机器学习]
-resource_path: /blog/assets/2019/02/06/plotting_data
+resource_path: /blog/assets/2019/02/09/plotting_data
 ---
 
 基本操作

@@ -1,5 +1,5 @@
 ---
-title: 计算数据
+title: Matlab/Octave 计算数据
 categories: [机器学习]
 ---
 
