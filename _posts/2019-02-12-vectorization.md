@@ -5,6 +5,8 @@ tags: [Matlab, Octave]
 resource_path: /blog/2019/02/12/vectorization
 ---
 
+<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=Tex-MML-AM_CHTML""> </script>
+
 量化的优点
 ---
 1. **高效**。经过相关专业人士的优化，其执行速度一般会比自己写的代码的执行速度快很多。
