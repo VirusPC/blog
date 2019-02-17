@@ -20,6 +20,6 @@ ass_baseurl: /blog/assets
 repository: "VirusPc/blog"
 
 markdown: kramdown
-# mathjax: true
+mathjax: true
 
 port: 5000
