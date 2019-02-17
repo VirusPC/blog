@@ -15,9 +15,11 @@ theme: jekyll-theme-midnight
 
 baseurl: /blog
 permalink: /:categories/:year/:month/:day/:title:output_ext
-
 ass_baseurl: /blog/assets
 
 repository: "VirusPc/blog"
+
+markdown: kramdown
+# mathjax: true
 
 port: 5000
