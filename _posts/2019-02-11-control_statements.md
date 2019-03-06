@@ -12,7 +12,9 @@ resource_path: /blog/assets/2019/02/11/control_statements
 
 for循环
 ---
+
 可用于遍历一维向量。形如：```for 一维向量, 语句1; 语句2; ... end;```
+
 ```MATLAB
 >> v = zeros(10, 1);
 >> for i=1:10,
@@ -166,18 +168,22 @@ v =
 
 损失函数(cost function)
 ---
+
 * costFunctionJ.m
-```MATLAB
-function J = costFunctionJ (X, y, theta)
-% X is the "design matrix" containing our training examples.
-% y is the class labels
-m = size(X, 1);  % numaber of training examples
-predictions = X*theta;  % predictions of hypothesis on all m examples
-sqrErrors = (predictions-y).^2;  %squared errors
+  ```MATLAB
+  function J = costFunctionJ (X, y, theta)
+  % X is the "design matrix" containing our training examples.
+  % y is the class labels
+  m = size(X, 1);  % numaber of training examples
+  predictions = X*theta;  % predictions of hypothesis on all m examples
+  sqrErrors = (predictions-y).^2;  %squared errors
   
-J = 1/(2*m) * sum(sqrErrors);
-```
+  J = 1
+  /(2*m) * sum(sqrErrors);
+  ```
+
 * 执行结果
+
   ```MATLAB
   >> X = [1 1; 1 2; 1 3]
   X =

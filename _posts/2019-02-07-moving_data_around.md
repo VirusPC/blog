@@ -1,6 +1,7 @@
 ---
 title: Matlab/Octave 移动数据
 categories: [机器学习]
+tags: [Matlab, Octave]
 ---
 
 矩阵操作
@@ -139,6 +140,13 @@ ans =
 
    1   2
    3   4
+
+>> B(1:3, 1)  % 1~3行，1列
+ans =
+
+   1
+   3
+   5
 
 >> B([2,3], :) = [5 6; 3 4]  % 更改多行多列
 B =
