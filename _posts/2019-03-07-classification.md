@@ -1,5 +1,5 @@
 ---
-title: 逻辑回归（Logistic Regression）
+title: 分类及其表示（classification and representation）
 categories: ['机器学习']
 tags: []
 resource_path: /blog/assets/2019/03/07/classification
@@ -7,7 +7,7 @@ resource_path: /blog/assets/2019/03/07/classification
 
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
 
-逻辑回归（Logistic Regression）
+分类及其表示
 ===
 
 分类问题(Classification Problem)
@@ -32,7 +32,8 @@ $$ \scriptsize{
 逻辑回归模型（logistic regression model）
 ---
 
-* 我们可以忽略y是离散值的事实来处理分类问题，并且使用我们之前的线性回归算法来来尝试对给定的x预测y。然而，我们很容易就可以构造出例子使得该方法执行的结果很差。从直觉上来说，$$h_\theta(x)$$ 在超出0到1的范围时同样也是没有意义的。为了解决这个问题，我们可以改变假设的形式来适应y的取值范围。即将 $$\theta^Tx$$ 嵌入到 Logistic Function 中。 
+* 我们可以忽略y是离散值的事实来处理分类问题，并且使用我们之前的线性回归算法来来尝试对给定的x预测y。然而，我们很容易就可以构造出例子使得该方法执行的结果很差。从直觉上来说，$$h_\theta(x)$$ 在超出0到1的范围时同样也是没有意义的。为了解决这个问题，我们可以改变假设的形式来适应y的取值范围。即将 $$\theta^Tx$$ 嵌入到 Logistic Function 中。  
+  逻辑回归与线性回归的假设函数具有不同的意义
 * 输出值在0到1之间（概率不可能小于0或大于1）
   $$ 0 \leq h_{\theta} (x) \leq 1$$
 * linear regression function  
@@ -75,5 +76,5 @@ $$ \scriptsize{
 ---
 课程链接：  
 * [Classification](https://www.coursera.org/learn/machine-learning/lecture/wlPeP/classification)
-* [Hypothesis Representation](https://www.coursera.org/learn/machine-learning/lecture/https://www.coursera.org/learn/machine-learning/lecture/wlPeP/classificationRJXfB/hypothesis-representation)
+* [Hypothesis Representation](https://www.coursera.org/learn/machine-learning/lecture/wlPeP/classificationRJXfB/hypothesis-representation)
 * [Decision Boundary](https://www.coursera.org/learn/machine-learning/lecture/WuL1H/decision-boundary)
