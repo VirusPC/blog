@@ -94,7 +94,9 @@ resource_path: /blog/assets/2019/03/09/logistic
   * 通常比梯度下降要快
 * 另三种算法的劣势：
   * 复杂
-* 不建议自己手写而是最好通过调用库来使用这些算法。库中的算法已经被高度优化。在octave中，我们可以通过无约束最小化函数fminunc(function minimum uncontraint)来调用高级的优化函数
+* 不建议自己手写而是最好通过调用库来使用这些算法。库中的算法已经被高度优化。在octave中，我们可以通过无约束最小化函数fminunc(function minimum uncontraint)来调用高级的优化函数来寻找最小值。
+  * fminunc是一个优化求解器（optimization solver），用来寻找非约束函数的最小值。有了它你不必再想写梯度下降那样去写循环和设置学习速率。你只需提供损失函数  。
+  * 优化中的约束通常指的是参数上的约束。例如，约束可能限制参数$$\theta <= 0$$。逻辑回归由于theta可以取任意值故不存在约束。
   * 首先我们要给出costFunction：  
   ```MATLAB
   function [jVal, gradient] = costFunction(theta)
@@ -107,7 +109,9 @@ resource_path: /blog/assets/2019/03/09/logistic
   >> options = optimset('GradObj','on','MaxIter','100');
   >> initialTheta = zeros(2,1)  % 最少两个参数
   >> [optTheta, functionVal, exitFlag] = fminunc(@costFunction, initialTheta, options)
-  ```
+  ```  
+  我们设置```GradObj```为```on```来告诉```fminunc```我们的costFunction返回损失和梯度。它允许```fminunc```在为函数找最小值的过程中使用梯度。  
+  此外，我们设置```MaxIter```为```400```，即最大迭代次数为400.
 
 - - -
 课程链接：  
