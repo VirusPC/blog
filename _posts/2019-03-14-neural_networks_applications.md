@@ -26,7 +26,7 @@ resource_path: /blog/assets/2019/03/14/applications
   \rightarrow
   h_\theta(x)
   $$  
-  ![AND]({{page.reource_path}}/and.png)
+  ![AND]({{page.resource_path}}/and.png)
 
 非线性二分类例子：XNOR(异或)
 ---
@@ -77,8 +77,11 @@ resource_path: /blog/assets/2019/03/14/applications
   $$
 * 图示  
   ![Multiclass Classification]({{page.resource_path}}/multiclass.png)
+
 - - -
+
 课程链接：  
+
 * [Examples and Intuitions I](https://www.coursera.org/learn/machine-learning/lecture/rBZmG/examples-and-intuitions-i)
 * [Examples and intuitions II](https://www.coursera.org/learn/machine-learning/lecture/solUx/examples-and-intuitions-ii)
 * [Multiclass Classification](https://www.coursera.org/learn/machine-learning/lecture/gFpiW/multiclass-classification)
