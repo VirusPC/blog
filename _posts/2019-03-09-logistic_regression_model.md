@@ -10,6 +10,8 @@ resource_path: /blog/assets/2019/03/09/logistic
 逻辑回归模型（Logistic Regression Model）
 ===
 
+---
+
 损失函数（Cost function）
 ---
 
@@ -95,7 +97,7 @@ resource_path: /blog/assets/2019/03/09/logistic
 * 另三种算法的劣势：
   * 复杂
 * 不建议自己手写而是最好通过调用库来使用这些算法。库中的算法已经被高度优化。在octave中，我们可以通过无约束最小化函数fminunc(function minimum uncontraint)来调用高级的优化函数来寻找最小值。
-  * fminunc是一个优化求解器（optimization solver），用来寻找非约束函数的最小值。有了它你不必再想写梯度下降那样去写循环和设置学习速率。你只需提供损失函数  。
+* fminunc是一个优化求解器（optimization solver），用来寻找非约束函数的最小值。有了它你不必再想写梯度下降那样去写循环和设置学习速率。你只需提供损失函数  。
   * 优化中的约束通常指的是参数上的约束。例如，约束可能限制参数$$\theta <= 0$$。逻辑回归由于theta可以取任意值故不存在约束。
   * 首先我们要给出costFunction：  
   ```MATLAB
@@ -112,6 +114,7 @@ resource_path: /blog/assets/2019/03/09/logistic
   ```  
   我们设置```GradObj```为```on```来告诉```fminunc```我们的costFunction返回损失和梯度。它允许```fminunc```在为函数找最小值的过程中使用梯度。  
   此外，我们设置```MaxIter```为```400```，即最大迭代次数为400.
+* fmincg是另一个优化求解器,使用共轭梯度算法来最小化函数。它的使用与fminunc类似，但是在处理含有大量参数的模型时会更加有效率。
 
 - - -
 课程链接：  

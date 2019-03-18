@@ -10,6 +10,8 @@ resource_path: /blog/assets/2019/03/14/applications
 神经网络的应用
 ===
 
+---
+
 非线性二分类例子：AND
 ---
 

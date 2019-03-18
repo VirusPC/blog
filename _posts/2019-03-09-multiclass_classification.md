@@ -10,6 +10,8 @@ resource_path: /blog/assets/2019/03/09/multiclass
 多类别分类
 ===
 
+---
+
 一对多（One-vs-all）分类算法
 ---
 
