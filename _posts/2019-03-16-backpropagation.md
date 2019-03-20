@@ -35,6 +35,8 @@ bp神经网络
 图示：  
 ![four layers network]({{page.resource_path}}/4_layers_network.png)  
 对给定的训练集：$$\{(x^{(1)}, y^{(1)}),...,(x^{(m)}, y^{(m)})\}$$  
+$$\delta_j^{(l)} $$ 表示样本在第l层的第j个神经元的误差。  
+$$ \delta_j^{(l)} = \frac{\partial}{\partial z_j^{(i)}} cost(i) $$  
 设置 $$ \Delta_{i,j}^{(l)} $$
 
 
@@ -87,6 +89,14 @@ $$
 其中：  
 $$ \frac{\partial}{\partial\Theta_{i,j}^{(l)}}J(\Theta) = D_{i,j}^{(l)}
 $$
+
+推导
+---
+
+图示：  
+![formula_picture]({{page.resource_path}}/formula_picture.png)  
+推导过程：  
+![formula_derivation]({{page.resource_path}}/formula_derivation.png)
 
 ---
   
