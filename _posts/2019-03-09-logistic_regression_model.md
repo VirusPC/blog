@@ -116,6 +116,11 @@ resource_path: /blog/assets/2019/03/09/logistic
   此外，我们设置```MaxIter```为```400```，即最大迭代次数为400.
 * fmincg是另一个优化求解器,使用共轭梯度算法来最小化函数。它的使用与fminunc类似，但是在处理含有大量参数的模型时会更加有效率。
 
+公式推导
+---
+
+![formula_derivation]({{page.resource_path}}/formula_derivation.png)
+
 - - -
 课程链接：  
 * [Cost Function](https://www.coursera.org/learn/machine-learning/lecture/1XG8G/cost-function)
