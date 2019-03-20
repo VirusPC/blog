@@ -103,5 +103,5 @@ $$
 课程链接：
 
 * [Cost Function](https://www.coursera.org/learn/machine-learning/lecture/na28E/cost-function)
-* [Backpropagation Algrithm]()
-* [Backpropagation Intuition]()
+* [Backpropagation Algrithm](https://www.coursera.org/learn/machine-learning/lecture/1z9WW/backpropagation-algorithm)
+* [Backpropagation Intuition](https://www.coursera.org/learn/machine-learning/lecture/du981/backpropagation-intuition)
