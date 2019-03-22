@@ -56,11 +56,11 @@ $$ \delta_j^{(l)} = \frac{\partial}{\partial z_j^{(i)}} cost(i) $$
    $$\delta_j^{(L)} = a_j^{(L)} - y_j = (h_\theta(x))_j-y_j\\$$
 4. 为了得到最后一层之前所有层的delta值，我们可以使用一个方程来从右到左求解。  
    $$
-   \delta^{(l)} = (\Theta^{(l)})^T\delta^{(l+1)}.*g'(z^{(l)}) \quad (l= 2,3,...,L-1)\\
+   \delta^{(l)} =  \frac{\partial}{\partial z_j^{(l)}} cost(i) = (\Theta^{(l)})^T\delta^{(l+1)}.*g'(z^{(l)}) \quad (l= 2,3,...,L-1)\\
    g'(z^{(l)}) = a^{(l)}.*(1-a^{(l)})\\
    $$
-5. 更新delta矩阵：
-   $$ \Delta_{i,j}^{(l)} := \Delta_{i,j}+a_j^{(l)}\delta_i^{(l+1)}
+5. 更新delta矩阵(将所有样本的偏差累加起来)：
+   $$\frac{\partial}{\partial\Theta_{i,j}^{(l)}}cost(i)=a_j^{l}\delta_i^{(l+1)} \\ \Delta_{i,j}^{(l)} := \Delta_{i,j}^{(l)}+a_j^{(l)}\delta_i^{(l+1)}
    $$  
    或者向量化：  
    $$ \Delta^{(l)}:=\Delta^{(l)}+\delta^{(l+1)}(a^{(l)})^T $$  

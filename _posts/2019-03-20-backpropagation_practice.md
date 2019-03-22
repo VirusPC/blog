@@ -81,11 +81,23 @@ resource_path: /blog/assets/2019/03/20/practice
 随机初始参数
 ---
 
-
+* 如果我们仍旧像之前那样，把所有的参数值都设为0或者其他一样的数值，会导致同一层的所有的结点都重复更新为相同的值。所以我们需要随机的初始化我们的参数矩阵。这种方法被称为 Symmetry breaking
+* Symmetry breaking就是把每个
+$$\Theta_{ij}^{(l)}$$
+初始化为
+$$\ [-\delta, \delta] \ $$
+内的一个随机值。
+* 代码实例：  
+  ```matlab
+  % 假设Theta1的维度是10*11，Theta2的维度是1*11
+  Theta1 = rand(10,11)*(2*INIT_EPSILON)-INIT_EPSILON;
+  Theta2 = rand(1,11)*(2*INIT_EPSILON)-INIT_EPSILON;
+  ```
+* 其中，rand函数是生成一个随机数矩阵，范围在0~1之间
 
 ---
 课程链接：  
 * [Implementation Noete: Unrolling Parameters](https://www.coursera.org/learn/machine-learning/supplement/v88ik/implementation-note-unrolling-parameters)
 * [Gradient Checking](https://www.coursera.org/learn/machine-learning/supplement/fqeMw/gradient-checking)
-* [Random Initialization]()
-* [Putting It Together]()
+* [Random Initialization](https://www.coursera.org/learn/machine-learning/supplement/KMzY7/random-initialization)
+* [Putting It Together](https://www.coursera.org/learn/machine-learning/supplement/Uskwd/putting-it-together)
