@@ -67,11 +67,10 @@ resource_path: /blog/assets/2019/03/09/logistic
   &Repeat\{\\
     &\theta_j := \theta_j-\alpha \frac{\partial}{\partial \theta_j}J(\theta)\\
   &\}
-  \end{align*}$$
-
+  \end{align*}$$  
+  求偏导得：  
   $$
   \begin{align*}  
-  求偏导得：  
   &Repeat\{\\
     &\theta_j := \theta_j-\alpha \frac{\partial}{m}
     {\sum_{i=1}^m(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)}}\\
