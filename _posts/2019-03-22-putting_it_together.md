@@ -32,7 +32,7 @@ resource_path: /blog/assets/2019/
 5. 使用梯度检查来确认你的后向传播是有效的。然后**关闭**它。
 6. 使用梯度小将或内置的优化函数通过改变theta的权重来最小化损失函数。
 
+---
 
-- - -
 课程链接：  
 [Putting it Together](https://www.coursera.org/learn/machine-learning/supplement/Uskwd/putting-it-together)

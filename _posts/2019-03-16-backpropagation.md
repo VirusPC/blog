@@ -80,7 +80,7 @@ Set \ \Delta_{i,j}^{(l)}=0\quad(for\ all\ l,i,j)\\
 For\ i=1\ to\ m\\
 \qquad Set\ a^{(1)}=x^{(i)}\\
 \qquad Perform\ forward\ propagation\ to\ compute\ a^{(l)}\ for\ l=2,3,...,L\\
-\qquad Using\ y^{{(i)}},compute\ \delta^{(L-2)},...,\delta^{(2)}\\
+\qquad Using\ y^{(i)},compute\ \delta^{(L-2)},...,\delta^{(2)}\\
 \qquad Compute\ \delta^{(L-1)},\delta^{(L-2)},...,\delta^{(2)}\\
 \qquad \Delta_{i,j}^{(l)}:=\Delta_{i,j}^{(l)}+a_j^{(l)}\delta_i^{(l+1)}\\
 D_{i,j}^{(l)}:=\frac{1}{m}\Delta_{i,j}^{(l)}+\lambda\Theta_{i,j}^{(l)}\quad if\ j \ne 0 \\
