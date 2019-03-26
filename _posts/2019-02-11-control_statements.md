@@ -1,6 +1,6 @@
 ---
-title: Matlab/Octave 控制语句及函数
-categories: ['机器学习']
+title: 控制语句及函数
+categories: ['Matlab/Octave']
 tags: ['Matlab', 'Octave']
 resource_path: /blog/assets/2019/02/11/control_statements
 ---

@@ -1,6 +1,6 @@
 ---
-title: Matlab/Octave 绘制数据
-categories: [机器学习]
+title: 绘制数据
+categories: ['Matlab/Octave']
 resource_path: /blog/assets/2019/02/09/plotting_data
 ---
 

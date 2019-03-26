@@ -1,6 +1,6 @@
 ---
-title: Matlab/Octave 向量化
-categories: ['机器学习']
+title: 向量化
+categories: ['Matlab/Octave']
 tags: [Matlab, Octave]
 resource_path: /blog/2019/02/12/vectorization
 ---

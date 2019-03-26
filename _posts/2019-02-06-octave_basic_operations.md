@@ -1,6 +1,6 @@
 ---
-title: Matlab/Octave 基本操作
-categories: ['机器学习'] 
+title: 基本操作
+categories: ['Matlab/Octave'] 
 tags: ['Octave', 'Matlab']
 resource_path: /blog/assets/2019/02/06/octave_basic_operations
 ---

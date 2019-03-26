@@ -1,6 +1,6 @@
 ---
-title: Matlab/Octave 移动数据
-categories: [机器学习]
+title: 移动数据
+categories: ['Matlab/Octave']
 tags: [Matlab, Octave]
 ---
 

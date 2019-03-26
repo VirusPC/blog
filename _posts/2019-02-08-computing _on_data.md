@@ -1,6 +1,6 @@
 ---
-title: Matlab/Octave 计算数据
-categories: [机器学习]
+title: 计算数据
+categories: ['Matlab/Octave']
 ---
 
 基本运算
