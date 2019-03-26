@@ -162,8 +162,11 @@ v =
 * 执行结果
   ```MATLAB
   >> [a, b] = squareX1AndCubeX2(2, 3);
-  y1 =  4
-  y2 =  27
+  a =  4
+  b =  27
+
+  >> a = squareX1AndCubeX2(2, 3);  % 只返回第一个
+  a =  4
   ```
 
 损失函数(cost function)

@@ -42,6 +42,7 @@ resource_path: /blog/assets/2019/03/24/BiasAndVariance
 正则化与偏差/方差
 ---
 
+正则化只是在优化过程中使用，在计算 $$ J_{train}(\theta) $$、$$ J_{cv}(\theta) $$ 和 $$ J_{test}(\theta) $$ 时并不会用到。  
 当较小时，我们的假设函数会倾向于欠拟合；当lambda较大时，我们的假设函数会倾向于欠拟合。为了选择模型和正则项lambda，我们需要：
 
 1. 创建一个lambda的列表，例如：{0, 0.01, 0.02, 0.04, 0.08, 0.16, 0.32, 0.64, 1.28, 2.56, 5.12, 10.24}
@@ -66,7 +67,7 @@ lambda与损失的关系:
 * 小的训练集：导致 $$J_{train}(\Theta)$$ 低，$$J_{cv}(\Theta)$$ 高。
 * 大的训练集：导致 $$J_{train}(\Theta)$$ 和 $$J_{cv}(\Theta)$$都高，且 $$ J_{train}(\Theta) \approx J_{cv}(\Theta) $$ 。
 
-如果一个学习算法具有高偏差，获取更多的训练数据不会提供太大的帮助。
+如果一个学习算法具有高偏差，获取更多的训练数据可能不会提供显著的帮助。
 
 ![high bias]({{page.resource_path}}/highBias.png)
 
