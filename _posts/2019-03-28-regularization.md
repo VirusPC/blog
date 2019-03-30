@@ -1,5 +1,5 @@
 ---
-title: 深入正则化
+title: 深入理解正则化
 categories: ['机器学习']
 tags: []
 resource_path: /blog/assets/2019/03/28/regularization
