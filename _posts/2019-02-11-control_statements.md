@@ -13,7 +13,7 @@ resource_path: /blog/assets/2019/02/11/control_statements
 for循环
 ---
 
-可用于遍历一维向量。形如：```for 一维向量, 语句1; 语句2; ... end;```
+可用于遍历一维向量(**行向量**而非列向量)。形如：```for 一维向量, 语句1; 语句2; ... end;```
 
 ```MATLAB
 >> v = zeros(10, 1);
