@@ -146,5 +146,3 @@ $$
 * [Gradient descent with momentum](https://www.coursera.org/learn/deep-neural-network/lecture/y0m1f/gradient-descent-with-momentum)
 * [RMSprop](https://www.coursera.org/learn/deep-neural-network/lecture/BhJlm/rmsprop)
 * [Adam optimization algrithm](https://www.coursera.org/learn/deep-neural-network/lecture/w9VCZ/adam-optimization-algorithm)
-* [learning rate decay]()
-* [The problem of local optima]()
