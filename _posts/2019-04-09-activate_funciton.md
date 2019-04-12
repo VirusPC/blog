@@ -7,7 +7,7 @@ resource_path: /blog/assets/2019/04/09/activation
 
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
 
-激活函数
+{{page.title}}
 ===
 
 ---
@@ -97,6 +97,15 @@ $$ \frac{d}{dz} relu(z)=
 函数图像：
 
 ![leakyReLU]({{page.resource_path}}/leakyReLU.png)
+
+输出层激活函数与代价函数的选取
+---
+
+任务类型|输出层激活函数|代价函数|代价函数表达式
+:-:|:-:|:-:|:-:
+回归|Linear|均方误差(MSE)| $$J(y,h)= \sum_{i=1}^m \mid\mid y_i-h_i \mid\mid_2^2 $$
+二分类|Sigmoid|二值交叉熵（Binary cross-entropy）|$$\begin{align} J(y,h) =  &-\sum_{i=1}^m h_i \log y_i \\ & -\sum_{i=1}^m(1-h_i)\log(1-y_i)\end{align}$$
+多分类|SoftMax|分类交叉熵（Categorical cross-entropy）|$$ J(y,h)=-\sum_{i=1}^n h_i \log y_i $$
 
 总结
 ---

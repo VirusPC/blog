@@ -1,8 +1,8 @@
 ---
-title: 加速神经网络的训练过程
+title: "优化算法：批量梯度下降、随机梯度下降与小批量梯度下降"
 categories: ['机器学习']
 tags: []
-resource_path: /blog/assets/2019/04/10/acceleration
+resource_path: /blog/assets/2019/04/11/optimization
 ---
 
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
@@ -12,68 +12,74 @@ resource_path: /blog/assets/2019/04/10/acceleration
 
 ---
 
-归一化（normalization）
+批量梯度下降（BGD，Batch Gradient Descent）
 ---
 
-归一化使得损失函数更易于优化，在更少的迭代次数内就可以达到同样的优化效果，它的步骤如下：
+批量梯度下降是最基本的优化算法。它在每一次迭代中都使用全部的样本来进行梯度更新。
 
-1. 求均值：
-   $$ \mu = \frac{1}{m} \sum_{i=1}^m x^{(i)} $$  
-2. 求方差：
-   $$ \sigma^2 = \frac{1}{m} \sum_{i=1}^m (x^{(i)})^2 $$  
-3. 减去均值再除以方差：
-   $$ x := \frac{x-\mu}{\sigma^2} $$
+$$
+\begin{align}
+&J(\theta_0,\theta_1,...,\theta_n)=\frac{1}{m}\sum_{i=1}^mcost(i)\\
+&for\ j=1,2,...,n \lbrace \\
+& \qquad \theta_j := \theta_j-\alpha \frac{\partial J(\theta_0,\theta_1,...,\theta_n)}{\partial \theta_j} \\
+& \rbrace
+\end{align}
+$$
 
-原训练集、减去均值、减去均值并除以方差的三个图像如下：
+然而，当样本的数目很大时，每次迭代都要对所有的样本进行计算，训练过程会很慢。
 
-![normalization]({{page.resource_path}}/normalization.png)
-
-正则化后与没有正则化的损失函数对比：
-
-![正则化与未正则化]({{page.resource_path}}/norm_nonorm.png)
-
-梯度消失/梯度爆炸（vanishing/exploding gradients）
+随机梯度下降（SGD, Stochastic Gradient Descent）
 ---
 
-在训练神经网络，尤其是层数非常多的神经网络的时候，我们会遇到一个问题，就是梯度的消失和爆炸。
+随机梯度下降在每一次迭代中都仅仅使用一个样本而非全部样本来进行梯度更新，这样每一轮参数的更新速度就快了很多。
 
-梯度消失问题发生时，离输出层最近的隐藏层相对正常，但从后往前隐藏层的权重更新的会越来越慢，甚至导致前面的层权值几乎一直保持一开始的权重不变，这就导致前面的隐藏层相当于只是一个映射层，对所有的输入做了一个同一映射，这是此深层网络的学习就等价于只有后几层的浅层网络的学习了。
+$$
+\begin{align}
+&J_t(\theta_0,\theta_1,...,\theta_n)=cost(t)\\
+&for\ t=1,2,...m \lbrace\\
+&\qquad for\ j=1,2,...,n \lbrace \\
+& \qquad\qquad \theta_j := \theta_j-\alpha \frac{\partial J_t(\theta_0,\theta_1,...,\theta_n)}{\partial \theta_j} \\
+& \qquad\rbrace\\
+& \rbrace
+\end{align}
+$$
 
-而梯度爆炸则与梯度消失相反。此时前面的层会比后面的层更新的要快很多，前面的参数可能会无限大或是无限小，模型也就废了。
+随机梯度下降也有一些缺点：
 
-其实梯度爆炸和梯度消失问题都是因为网络太深，网络权值更新不稳定造成的，本质上是因为梯度反向传播中的连乘效应。对于更普遍的梯度消失问题，可以考虑用ReLU激活函数取代sigmoid激活函数。另外，LSTM的结构设计也可以改善RNN中的梯度消失问题。
+* 准确度下降。即使目标函数时强凸函数，SGD也无法做到线性收敛。
+* 陷入局部最优。单个样本不能代表全部样本。
+* 不易于并行计算。不能很好的利用计算资源。
 
-权重初始化
+小批量梯度下降（MBGD, Mini-Batch Gradient Descent）
 ---
 
-更仔细地设置初始权重会有助于削弱梯度消失和梯度爆炸。
+小批量梯度下降是介于梯度下降和随机梯度下降之间的一个算法。它将样本平均分为多个部分，在每一次迭代中只采用一个部分来对参数进行更新。它比前两个算法要多一个超参数batchSize，代表着每一部分的大小，
 
-对于一个神经元，我们知道：
+$$
+\begin{align}
+&J_t(\theta_0,\theta_1,...,\theta_n)=\sum_{i=(t-1)*batchSize}^{t*batchSize-1}cost(i)\\
+&for\ t=1,2,...m/batchSize \lbrace\\
+&\qquad for\ j=1,2,...,n \lbrace \\
+& \qquad\qquad \theta_j := \theta_j-\alpha \frac{\partial J_t(\theta_0,\theta_1,...,\theta_n)}{\partial \theta_j} \\
+& \qquad\rbrace\\
+& \rbrace
+\end{align}
+$$
 
-$$ z^{(l+1)} = W^{(l)}a^{(l)}  $$
+可见，当batchSize=m的时候，MBGD就变成了BGD，当batchSize=1时MBGD就变成了SBGD。它既减少了每次迭代的计算量和收敛所需要的迭代次数，又可以使最终结果更加接近梯度下降的结果。并且可以充分利用部件进行并行化运算。
 
-我们希望上层神经元的数目n越多，权重矩阵的每个值就越小。一个合理的做法就是设置权重的方差等于n的导数。
+![BGD SGD and MBGD]({{page.resource_path}}/BGD_SGD_MBGD.png)
 
-$$ Var(w_i) = \frac{1}{n} $$
+![BGD SGD and MBGD]({{page.resource_path}}/BGD_SGD_MBGD2.png)
 
-```python
-# 适用于relu函数
-W[l] = np.random.randn(shape) * np.sqrt(2/n[l-1])
+显然，batchSize的选取直接影响到优化算法的效率。在选择batchSize的时候，我们要注意：
 
-# 适用于leak-relu函数
-W[l] = np.random.randn(shape) * np.sqrt( 2/((1+alpha**2)*n[l-1]) )
-
-# Xavier初始化，适用于tanh函数
-W[l] = np.random.randn(shape) * np.sqrt(1/n[l-1])
-
-# 适用于tanh函数
-W[l] = np.random.randn(shape) * np.sqrt(1/(n[l-1]+n[l]))
-```
+* 如果训练集比较小（m<=2000），使用BGD。
+* 训练集比较大时，常选用的batchSize有：64、128、256、512。计算机内存的布局和访问方式决定了当你的batchSize的大小是2的指数倍时，你的代码会运行的更快。
 
 ---
 
 课程链接：
 
-* [Normalizing inputs](https://www.coursera.org/learn/deep-neural-network/lecture/lXv6U/normalizing-inputs)
-* [Vanishing/Exploding gradients](https://www.coursera.org/learn/deep-neural-network/lecture/C9iQO/vanishing-exploding-gradients)
-* [Weight Initialization For Deep Networks](https://www.coursera.org/learn/deep-neural-network/lecture/RwqYe/weight-initialization-for-deep-networks)
+* [Mini-batch gradient descent](https://www.coursera.org/learn/deep-neural-network/lecture/qcogH/mini-batch-gradient-descent)
+* [Uerstanding mini-batch gradient descent](https://www.coursera.org/learn/deep-neural-network/lecture/lBXu8/understanding-mini-batch-gradient-descent)
