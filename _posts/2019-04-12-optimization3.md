@@ -2,7 +2,7 @@
 title: "对优化算法进行优化"
 categories: ['机器学习']
 tags: []
-resource_path: /blog/assets/2019/04/12/optimization2
+resource_path: /blog/assets/2019/04/12/optimization3
 ---
 
 <script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>

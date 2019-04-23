@@ -15,7 +15,7 @@ resource_path: /blog/assets/2019/04/12/optimization2
 指数加权平均（Exponentially weighted averags）
 ---
 
-指数加权平均在本质上是一种加权求平均的方法，但是比算术平均值要节省内存和计算资源。在算术平均值中，所有元素的权重都为 1/n。而在指数加权平均中，每一个元素的权重是一个指数函数，离最后一天越远，权值就越小。
+指数加权平均在本质上是一种加权求平均的方法，但是比算术平均值要节省内存和计算资源。在算术平均值中，所有元素的权重都为 1/n。而在指数加权平均中，每一个元素的权重是一个指数函数，元素越靠后，其权值越大。
 
 令 $$v_t$$ 为第1天到第t天的平均温度值， $$ \theta_t $$ 为第t天这一天的温度值， $$\beta$$为超参数，我们可以得到它的指数加权平均。$$\beta$$越小，最后一天的温度的权值就越大，平均值受最后一天的影响就越大。如果以t为横坐标，vt的值为纵坐标绘图，那么$$\beta$$越小，我们得到的曲线越平滑。
 
@@ -24,7 +24,7 @@ $$
 v_0&=0\\
 v_t&= \beta v_{t-1} + (1-\beta)\theta_t\\
 &= \beta^2v_{t-2}+\beta(1-\beta)\theta_{t-1}+(1-\beta)\theta_t\\
-& \qquad ...\\
+&= \qquad ...\\
 &=\beta^tv_0+\beta^{t-1}(1-\beta)\theta_1+\beta^{t-2}(1-\beta)\theta_2+\beta^{t-3}(1-\beta)\theta_3+...+(1-\beta)\theta_t\\
 &=\beta^{t-1}(1-\beta)\theta_1+\beta^{t-2}(1-\beta)\theta_2+\beta^{t-3}(1-\beta)\theta_3+...+(1-\beta)\theta_t
 \end{align}
@@ -121,7 +121,7 @@ Adam优化算法本质上是将Momentum和RMSprop结合起来
 $$
 \begin{align}
 &初始化：\\
-&\qquad v_{dw}=0,s_{dw}=0,v_{db}=0,v_{db}=0\\
+&\qquad v_{dw}=0,s_{dw}=0,v_{db}=0,s_{db}=0\\
 &在第t次迭代时:\\
 &\qquad 计算当前mini-batch上的dw和db\\
 &\qquad v_{dw}:=\beta_1 v_{dw}+(1-\beta_1)dw\\
