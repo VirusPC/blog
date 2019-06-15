@@ -12,7 +12,7 @@ resource_path: /blog/assets/2019/04/09/activation
 
 ---
 
-在建立神经网络的时候，你需要为隐含层和输出层选择激活函数。若不选择任何激活函数，那么我们称之为感知机，它和没有任何隐藏层的线性回归没有任何区别（多个线性函数的组合仍然时先行韩素华）；若只在输出层设置激活函数为sigmoid函数，那它其实和没有任何隐藏层的逻辑回归模型也是一样的。一般来说唯一可以使用线性激活函数的地方只有输出层，此外只有在一些极为特殊的情况下才会使用，比如压缩有关的处理。所以我们需要找一些非线性函数作为激活函数。
+在建立神经网络的时候，你需要为隐含层和输出层选择激活函数。若不选择任何激活函数，那么我们称之为感知机，它和没有任何隐藏层的线性回归没有任何区别（多个线性函数的组合仍然是线性函数）；若只在输出层设置激活函数为sigmoid函数，那它其实和没有任何隐藏层的逻辑回归模型也是一样的。一般来说唯一可以使用线性激活函数的地方只有输出层，此外只有在一些极为特殊的情况下才会使用，比如压缩有关的处理。所以我们需要找一些非线性函数作为激活函数。
 
 sigmoid
 ---
@@ -53,7 +53,7 @@ $$ \frac{d}{dz}tanh(z) = 1-(tanh(z))^2 $$
 ReLU
 ---
 
-ReLU是 rectified linear unit 的简称，即线性整流函数。它在原点左侧的梯度都为0，在原点右侧的梯度都为1.这样它收敛的就会比较快。从数学上讲，ReLU函数在原点不可求导，我们可以人为地设置0点的导数为0或是1。同样的，当处理二分类问题时，我们可以设置隐含层为ReLU函数，输出层sigmoid函数。
+ReLU是 rectified linear unit 的简称，即线性整流函数。它在原点左侧的梯度都为0，在原点右侧的梯度都为1.这样它收敛的就会比较快。从数学上讲，ReLU函数在原点不可求导，我们可以人为地设置0点的导数为0或是1。同样的，当处理二分类问题时，我们可以设置隐含层为ReLU函数，输出层为sigmoid函数。
 
 函数方程：
 
@@ -87,7 +87,7 @@ $$ LeakyReLU(z) = max(0.01z, z) $$
 
 导数：
 
-$$ \frac{d}{dz} relu(z)=
+$$ \frac{d}{dz} LeakyRelu(z)=
 \begin{cases}
     0.01 \quad if\ z<0\\
     1 \quad if\ z>0\\
@@ -113,7 +113,17 @@ $$
 导数：
 
 $$
-\frac{\partial softmax(z)}{\partial z} = \hat{y}-y
+\frac{\partial\ a_j}{\partial z_i}=
+\begin{cases}
+    -a_i a_j \quad i \neq j \\
+    a_i(1-a_i) \quad i=j
+\end{cases}
+$$
+
+使用分类交叉熵函数作为代价函数，且最后一层为softMax时，最后一层的偏差为：
+
+$$
+\frac{\partial J}{\partial z} = \hat{y}-y
 $$
 
 当没有隐藏层，只有一个输入层和一个输出层，且输出层使用softmax函数时，任意两个类之间的分界线是线性的：
@@ -131,7 +141,7 @@ softmax的输出的向量的每个元素的值在0~1之间，且和为1。与之
 :-:|:-:|:-:|:-:
 回归|Linear|均方误差(MSE)| $$J(y,\hat{y})= \frac{1}{2m} \sum_{i=1}^m \mid\mid y_i-\hat{y_i} \mid\mid_2^2 $$
 二分类|Sigmoid|二值交叉熵（Binary cross-entropy）|$$\begin{align} J(y,\hat{y}) =  &- \frac{1}{m} \sum_{i=1}^m y_i \log \hat{y_i} \\ & - \frac{1}{m} \sum_{i=1}^m(1-y_i)\log(1-\hat{y_i})\end{align}$$
-多分类|SoftMax|分类交叉熵（Categorical cross-entropy）| $$ J(y,\hat{y})=- \frac{1}{m} \sum_{i=1}^n y_i \log \hat{y_i} $$
+多分类|SoftMax|分类交叉熵（Categorical cross-entropy）| $$ J(y,\hat{y})=- \frac{1}{m} \sum_{i=1}^m \sum_{j=1}^n y_{(i,j)} \log \hat{y_{(i,j)}} $$
 
 总结
 ---

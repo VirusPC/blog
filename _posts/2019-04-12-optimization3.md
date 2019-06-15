@@ -17,7 +17,7 @@ resource_path: /blog/assets/2019/04/12/optimization3
 
 代价函数在迭代过程中，会逐步向最小值靠近，但不会完全收敛到极小值点，会在该点附近震荡，这是因为你的学习速率alpha取了固定值以及不同的批次会产生一些噪声。如果你慢慢地降低你的学习速率alpha，那么在初始阶段时由于alpha取值还比较大，学习速率仍然可以比较快。但随着学习速率alpha变小步长也会渐渐变小，素以最终将围绕着离极小值点更近的区域震荡，即使继续训练下去也不会远离。除此之外，它也可以让算法运行的更快。令epochNum为已经遍历数据集的次数，令t为已经进行梯度更新的次数，那么：
 
-$$ \alpha= \frac{1}{1+decayRate*epochNum} $$
+$$ \alpha= \frac{1}{1+decayRate*epochNum}\ *\ \alpha_0 $$
 
 当 $$\alpha_0=0.2$$，$$ decayRate=1 $$时：
 
