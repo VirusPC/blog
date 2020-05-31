@@ -12,6 +12,12 @@ resource_path: /blog/assets/2019/04/11/optimization
 
 ---
 
+Iteration与Epoch
+---
+
+* Iteration: 参数的一次更新，就是一次Iteration
+* Epoch：将所有的mini-batch全部计算一遍，称为一次Epoch
+
 批量梯度下降（BGD，Batch Gradient Descent）
 ---
 

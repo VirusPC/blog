@@ -1,6 +1,6 @@
 ---
 title: 图像增强
-categories: ['图形学']
+categories: ['图像处理']
 tags: []
 resource_path: /blog/assets/2019/04/08
 ---
