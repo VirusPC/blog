@@ -17,7 +17,7 @@ resource_path: /blog/assets/2019/03/09/logistic
 
 * 前提：
   * 数据集：
-    $$ \{ (x^{(1)},y^{(1)}, (x^{(2)},y^{(2)}) ,..., (x^{(3)},y^{(3)}) \}$$
+    $$ \{ (x^{(1)},y^{(1)}), (x^{(2)},y^{(2)}) ,..., (x^{(3)},y^{(3)}) \}$$
 
   * m个样本
   $$ x \in
@@ -50,7 +50,7 @@ resource_path: /blog/assets/2019/03/09/logistic
 ---
 
 * 简化后的Cost：  
-  $$ Cost(h_\theta(x), y)=-y\log(h_\theta(x)) - ((1-y)log(1-h_\theta(x))) $$
+  $$ Cost(h_\theta(x), y)=-y\log(h_\theta(x)) - (1-y)log(1-h_\theta(x)) $$
 * 最终的逻辑回归损失函数：  
   $$\begin{align*}
   J(\theta)

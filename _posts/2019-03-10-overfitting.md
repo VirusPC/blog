@@ -42,7 +42,7 @@ resource_path: /blog/assets/2019/03/10/overfitting
   通过为代价函数添加正则化项来缩小参数。  
   通常，正则化项只对 $$\theta_1 \sim \theta_{100}$$ 进行正则化，因为仅仅去掉一个参数$$\theta_0$$只会产生很小的影响，加不加并没有什么太大的区别，去掉写起来比较方便。
   * 线性回归：  
-    $$ J(\theta) = \frac{1}{2m} [\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2 \quad + \lambda \sum_{j=1}^n \theta_j^2 ] $$  
+    $$ J(\theta) = \frac{1}{2m} [\sum_{i=1}^m(h_\theta(x^{(i)}) - y^{(i)})^2 \quad + \lambda \sum_{j=1}^n \theta_j^2 $$  
   * 逻辑回归：
     $$ J(\theta) = \frac{1}{m} \sum_{(i=1)}^m[-y^{(i)}log(h_\theta(x^{(i)})) - (1-y^{(i)})log(1-h_\theta(x^{(i)}))]
     + \frac{\lambda}{2m}\sum_{j=1}^n \theta_j^2 $$
