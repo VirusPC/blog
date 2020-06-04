@@ -2,7 +2,7 @@
 title: 灰度化
 categories: ['图像处理']
 tags: [‘灰度化’, 'grey processing']
-resource_path: /blog/assets/2019/06/04/grey_processing
+resource_path: /blog/assets/2020/06/04/grey_processing
 ---
 
 灰度化
