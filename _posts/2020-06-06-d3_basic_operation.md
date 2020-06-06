@@ -10,8 +10,8 @@ D3基础操作
 
 1. [介绍](#介绍)
 2. [选择集](#选择集) 
-3. [数据绑定与动态属性](#数据绑定)
-4. [DOM元素与数据元素数量不匹配问题](#DOM元素与数据元素数量不匹配问题)
+3. [数据绑定与动态属性](#数据绑定与动态属性)
+4. [DOM元素与数据元素数量不匹配问题](#dom元素与数据个数不匹配问题)
 5. [过渡](#过渡)
 
 ---
@@ -27,7 +27,7 @@ D3 不是一个框架，因此也没有操作上的限制。没有框架的限�
 你可以用```selection.style("name", "value")```为 DOM 元素设置样式，也可以直接使用 css 为 D3 创建的 DOM 元素设置样式。可以用```selection.attr("name", "value")```为 DOM 元素设置属性。
 
 
-选择集(Selections)
+选择集
 ---
 要想对元素进行操作，首先要对元素进行选择。通过 [d3-selection](https://d3js.org.cn/document/#selections-d3-selection)，我们可以通过```d3.select(selector)```和```d3.selectAll(selector)```对元素进行选择，并对得到的**选择集(selection)**进行操作。  
 
@@ -69,7 +69,7 @@ selection.data(dataArray);  // 绑定数据
 selection.style("color", color);  // 根据绑定数据动态设置属性
 ```
 
-DOM元素与数据元素数量不匹配问题
+DOM元素与数据个数不匹配问题
 --- 
 数据绑定的时候可能出现 DOM 元素与数据元素个数不匹配的问题，那么```enter```和```exit```就是用来处理这个问题的。```enter```操作用来添加新的 DOM 元素，```exit```操作用来移除多余的 DOM 元素。
 
