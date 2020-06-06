@@ -1,7 +1,7 @@
 ---
-title: 'D3基础操作'
-categories: ['d3']
-tags: [‘d3’]
+title: 'D3:基础操作'
+categories: ['可视化']
+tags: ['javascript', 'd3', 'visualization', '可视化-']
 resource_path: /blog/assets/2020/
 ---
 
@@ -31,9 +31,10 @@ D3 不是一个框架，因此也没有操作上的限制。没有框架的限�
 ---
 要想对元素进行操作，首先要对元素进行选择。通过 [d3-selection](https://d3js.org.cn/document/#selections-d3-selection)，我们可以通过```d3.select(selector)```和```d3.selectAll(selector)```对元素进行选择，并对得到的**选择集(selection)**进行操作。  
 
-无论是```select```还是```selectAll```，使用时都需要传入一个[选择器(selector)](https://www.runoob.com/cssref/css-selectors.html)作为参数。选择器可以是标签选择器、类选择器、ID选择器、属性选择器等等。
+无论是```select```还是```selectAll```，使用时都需要传入一个[选择器(selector)](https://www.runoob.com/cssref/css-selectors.html)作为参数。选择器可以是标签选择器、类选择器、ID选择器、属性选择器等等。  
 
-```select```与```selectAll```的区别在于，```select```会取得选择器选择结果集合中的第一个元素，而```selectAll```会取得选择器选择结果整个集合。
+
+ 注意```select```与```selectAll```的区别在于，```select```会取得选择器选择结果集合中的第一个元素，而```selectAll```会取得选择器选择结果整个集合。  
 
 ```javascript
 d3.select("h");  // 选中所有h标签生成的元素中的第一个
