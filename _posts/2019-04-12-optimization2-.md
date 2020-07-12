@@ -32,8 +32,8 @@ $$
 
 偏差修正（bias correction)
 ---
-
-在计算v的时候，我们会发现t-vt图像的前面一部分会非常低，即一开始的指数加权平均值会很小，无法代表平均值。我们可以通过偏差修正来解决这个问题。其具体操作如下：
+ 
+在计算 v 的时候，我们会发现 t-vt 图像的前面一部分会非常低，即一开始的指数加权平均值会很小，无法代表平均值。我们可以通过偏差修正来解决这个问题。其具体操作如下：
 
 $$ v_t := \frac{v_t}{1-\beta^t} $$
 
@@ -44,7 +44,7 @@ $$ v_t := \frac{v_t}{1-\beta^t} $$
 
 [上一篇](/blog/机器学习/2019/04/12/optimization_algrithms.html)讲过，与普通的批量梯度下降下降的相比，小批量梯度下降在一次迭代中可以进行多次梯度更新，使得更新速度快于批量梯度下降；但是它每次下降的方向却大多是偏离正确方向的。回想刚刚提到的指数加权平均，它以当前值为主，并且兼顾之前的值，将它应用于小批量梯度下降就会使得每次梯度更新时，不但考虑了本次的数据，还考虑到了之前的数据，使得梯度下降的方向得到了一定程度上的矫正。直观上来说就是通过取平均值，使得代价函数的值的曲线变得更直，更加平滑了。
 
-在古典力学里，动量是物体的质量和速度的乘积。它的物理意义指的是：物体在它运动方向上保持运动的趋势。可以把代价函数想象成一个凹凸不平但总体下降的斜坡，动量一方面可以使得小球在到达局部最小值点时再前进一步，有助于跳出局部最小值点。另一方面动量使得小球下降的相对更加偏向于正确的下降的方向。
+换个角度，在古典力学里，动量是物体的质量和速度的乘积。它的物理意义指的是：物体在它运动方向上保持运动的趋势。可以把代价函数想象成一个凹凸不平但总体下降的斜坡，动量一方面可以使得小球在到达局部最小值点时再前进一步，有助于跳出局部最小值点。另一方面动量使得小球下降的相对更加偏向于正确的下降的方向。
 
 $$
 \begin{align}
@@ -89,7 +89,7 @@ $$
 均方根反向传播（RMSprop，Root Mean Squared propagation）
 ---
 
-RMSprop和Momentum一样，都是为了解决代价函数在优化过程中的震荡问题，只不过考虑的角度不同。损失在下降的过程中可能会在垂直方向上出现巨大的震荡。假设只有一个w和一个b，令纵轴代表参数b，横轴代表参数w，我们所希望的是减慢垂直方向即b方向的学习，并且加速或至少不减慢水平方向的学习，这就是RMSprop算法要做的。
+RMSprop 和 Momentum 一样，都是为了解决代价函数在优化过程中的震荡问题，只不过考虑的角度不同。在权重更新过程中，Momentum 采用了固定的学习速率乘以动态的（兼顾之前的情况）更新值；RMSprop 采用了动态的（兼顾之前的情况）的学习速率乘以当前更新值（梯度）。 而 $$\alpha$$ 损失在下降的过程中可能会在某一方向上出现巨大的震荡。假设只有一个 w 和一个 b，令纵轴代表参数 b，横轴代表参数 w，假设纵轴出现巨大震荡而横轴没有，我们所希望的是减慢垂直方向即 b 方向的学习，并且加速或至少不减慢水平方向的学习（通过修改学习速率），这就是RMSprop算法要做的。
 
 $$
 \begin{align}
@@ -99,8 +99,8 @@ $$
 &\qquad 计算当前mini-batch上的dw和db\\
 &\qquad s_{dw}:=\beta s_{dw}+(1-\beta){dw}^2\\
 &\qquad s_{db} := \beta s_{db}+(1-\beta){db}^2\\
-&\qquad w := w-\alpha \frac{dw}{\sqrt{s_{dw}+\epsilon}}\\
-&\qquad b := b-\alpha \frac{db}{\sqrt{s_{db}+\epsilon}}
+&\qquad w := w - \frac{\alpha}{\sqrt{s_{dw}+\epsilon}} dw\\
+&\qquad b := b - \frac{\alpha}{\sqrt{s_{db}+\epsilon}} db
 \end{align}
 $$
 
@@ -116,7 +116,7 @@ $$
 
 在深度学习发展的过程中，研究者们提出过很多优化算法，但大都只适用于少数问题，并不能被广泛应用在各种不同类型的神经网络上。Adam优化算法是极少数真正可以广泛应用的优化算法之一。
 
-Adam优化算法本质上是将Momentum和RMSprop结合起来
+Adam 优化算法本质上是将 Momentum 和 RMSpro p结合起来
 
 $$
 \begin{align}
@@ -132,8 +132,8 @@ $$
 &\qquad v_{db}^{corrected} = v_{db}/(1-\beta_1^t)\\
 &\qquad s_{dw}^{corrected} = s_{dw}/(1-\beta_2^t)\\
 &\qquad s_{db}^{corrected} = s_{db}/(1-\beta_2^t)\\
-&\qquad w := w-\alpha \frac{v_{dw}^{corrected}}{\sqrt{s_{dw}^{corrected}+\epsilon}}\\
-&\qquad b := b-\alpha \frac{v_{db}^{corrected}}{\sqrt{s_{db}^{corrected}+\epsilon}}\\
+&\qquad w :=  w - \frac{\alpha}{\sqrt{s_{dw}^{corrected}+\epsilon}} v_{dw}^{corrected}\\
+&\qquad b :=  b - \frac{\alpha}{\sqrt{s_{db}^{corrected}+\epsilon}} v_{db}^{corrected}\\
 \end{align}
 $$
 
