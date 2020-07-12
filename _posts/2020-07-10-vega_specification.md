@@ -200,7 +200,10 @@ Scales 将数据值（numbers，dates，categories，etc）映射为视觉值（
 * **type**  
     类比D3。scale的类型，默认为linear。
 * **domain**  
-    含两个元素的一维数字数组。类比D3。定义域。注意其属性值也可以设置为 signal 引用。
+    [Domain类型](https://vega.github.io/vega/docs/scales/#domain)有三种：  
+    * 数组。比如 ```[0, 500]``` 或 ```['a', 'b', 'c']```。数组元素也可以为 signal。  
+    * 一个含有名为 signal 的属性的对象。signal 属性值为定义好的 signal 引用。signal 引用的值需为 domain 数组。比如 ```{"signal": "myDomain"}```。  
+    * 一个含有 data, field 和 sort 属性的对象。其中 data 和 field 是必需的。data 属性值为定义好的 data 引用。[field](https://vega.github.io/vega/docs/types/#Field) 表明使用的 data 中的那一列。sort 可以为布尔值或 [sort对象](https://vega.github.io/vega/docs/scales/#sort)，默认升序。
 * **domainMax**  
     设置 domain 的上限，覆盖之前的 domain。
 * **domainMin**  
@@ -303,7 +306,6 @@ axe 有以下一些属性：
         字体大小。
     * **labelPadding**  
         label 与 tick之间的距离。
-    
 * tick 相关  
     * **ticks**  
         布尔值，是否显示 tick。
@@ -333,6 +335,8 @@ axe 有以下一些属性：
     * **titleColor, titleAngle, titleFront, titleFrontSize**  
         参考 label 相关。
 * 整体相关
+    * **offset**
+        数字值，单位为像素。表明向 orientation 移动多少像素。
     * **translate**  
         轴布局的坐标空间转换偏移。默认情况下，轴的 x 和 y 坐标都以 0.5 像素的偏移量进行转换，以使描边线与像素网格对齐。然而，对于矢量图形输出来说，这些针对像素的调整可能并不可取，在这种情况下，可以更改 translate（例如，为零）。
     * **values** 
@@ -344,7 +348,7 @@ axe 有以下一些属性：
 marks
 ---
 
-将数据编码为图形标记，比如条形图中的矩形、折线图中的线和其它符号等。mark 的属性可以是简单的常量或数据字段，也可以使用比例尺将数据值映射到视觉值。
+将数据编码为图形标记，比如条形图中的矩形、折线图中的线和其它符号等。mark 的属性可以是简单的常量或数据字段，也可以使**用比例尺将数据值映射到视觉值**。
 
 vega 支持的 mark 类型有 arc, area, image, group（其它mark的容器，即 svg 中的 g 标签）, line（描线，通常用于显示随着时间推移而发生的变化）, path, rect, rule, shape, symbol, text 以及 trail（可以基于下层的数据来改变尺寸的线条）。
 
@@ -371,13 +375,15 @@ vega 支持的 mark 类型有 arc, area, image, group（其它mark的容器，�
     非必选。
 * **type**  
     必选项。字符串。其值必须为[支持的 mark 类型](https://vega.github.io/vega/docs/marks/#types)。
+* **from**  
+    一个对象。用于描述该 mark 需要可视化的数据，并根绝数据创建多个 mark。默认为空集合，此时只创建单个 mark。其值可以为顶层定义的数据集的 name。也可以提供一个分面指令，将一个数据集细分为一组 group mark。
 * **clip**  
     一个对象。指出 mark 们是否需要被裁剪为某个特定的形状。  
     clip 是一个对象，它需要从 path 和 sphere 两个属性中二选一。path 是一个 svg path。sphere 在地图投影时会用到
 * **encode**  
-    一个对象。包含 mark 属性的视觉编码规则集合。
-* **from**  
-    一个对象。用于描述该 mark 需要可视化的数据。默认为空集合。其值可以为顶层定义的数据集的 name。也可以提供一个分面指令，将一个数据集细分为一组 group mark。
+    一个对象。包含 mark 属性的视觉编码规则集合，用于设置mark的一些属性（如位置、颜色）。不同类型的 mark 有着不同的属性。  
+    标准的 encode 集合包括三个属性集合：```update```, ```enter``` 和 ```exit```。  此外，还有一个额外的 ```hover```。
+    enter 集合中的行为，当 mark 首次初始化时被调用。uppdate 集合中的行为，当数据或展示出的样子发生变化时被调用。exit 集合中的行为，当删除 mark 所对应的 data 时被调用。
 * **interactive**  
     布尔标志。默认为true。指明该 mark 是否可以作为输入事件源。
 * **key**  
