@@ -1,7 +1,7 @@
 ---
 title: Interactive Dynamics for Visual Analysis
-categories: ['temp']
-tags: ['']
+categories: ['可视化']
+tags: ['visualization', '可视化']
 resource_path: /blog/assets/2010/
 ---
 
