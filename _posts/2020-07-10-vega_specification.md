@@ -47,17 +47,17 @@ Vega specification 整体结构如下
 width, height
 ---
 
-决定绘制数据的视图范围（data rectangle 组件）。额外的组件（axes, legends）一般会占用额外的空间(将它们放置在视图外面的padding所决定的区域中)。
+数字值。决定绘制数据的视图范围（data rectangle 组件）。额外的组件（axes, legends）一般会占用额外的空间(将它们放置在视图外面的padding所决定的区域中)。
 
 padding
 ---
 
-定义 data rectangle 之外的padding。它所定义的范围用于放置额外的组件。padding 在 autosize 完成之后进行。
+数字值。定义 data rectangle 之外的padding。它所定义的范围用于放置额外的组件。padding 在 autosize 完成之后进行。
 
 autosize
 ---
 
-自动调整画布的 content 和 padding 或者组件大小。其属性值有以下几种选项：
+字符串值。自动调整画布的 content 和 padding 或者组件大小。其属性值有以下几种选项：
 
 * **"pad"**  
     默认值选项。自动设置padding，以增加空间来放置额外的 axes, legends 等组件。
@@ -200,7 +200,7 @@ Scales 将数据值（numbers，dates，categories，etc）映射为视觉值（
 * **type**  
     类比D3。scale的类型，默认为linear。
 * **domain**  
-    类比D3。定义域。注意其属性值也可以设置为 signal 引用。
+    含两个元素的一维数字数组。类比D3。定义域。注意其属性值也可以设置为 signal 引用。
 * **domainMax**  
     设置 domain 的上限，覆盖之前的 domain。
 * **domainMin**  
@@ -214,20 +214,132 @@ Scales 将数据值（numbers，dates，categories，etc）映射为视觉值（
 * **range**  
     类比D3。值域。
 * **reverse**  
-    将比例尺反向。
+    布尔值。将比例尺反向。
 * **round**  
-    sclae 输出值取整。
+    布尔值。sclae 输出值取整。
 
 axes
 ---
 
 使用刻度线、网格线和标签来将 scale 可视化。Vega 目前支持笛卡尔坐标系下的坐标轴。axes 可以在规范的顶层定义，也可以作为组标记的一部分。
 
-* **scale**  
-    必选。指出 axis组件 基于哪个 scale
-* **orient**  
-    必选。指出 axis 的 ticks 的朝向。
-* **[其它](https://vega.github.io/vega/docs/axes/axis-properties)**  
+```json
+"axes": [
+  {
+    "orient": "bottom",
+    "scale": "x",
+    "title": "X-Axis",
+    "encode": {
+      "ticks": {
+        "update": {
+          "stroke": {"value": "steelblue"}
+        }
+      },
+      "labels": {
+        "interactive": true,
+        "update": {
+          "text": {"signal": "format(datum.value, '+,')"},
+          "fill": {"value": "steelblue"},
+          "angle": {"value": 50},
+          "fontSize": {"value": 14},
+          "align": {"value": "left"},
+          "baseline": {"value": "middle"},
+          "dx": {"value": 3}
+        },
+        "hover": {
+          "fill": {"value": "firebrick"}
+        }
+      },
+      "title": {
+        "update": {
+          "fontSize": {"value": 16}
+        }
+      },
+      "domain": {
+        "update": {
+          "stroke": {"value": "#333"},
+          "strokeWidth": {"value": 1.5}
+        }
+      }
+    }
+  }
+]
+```
+
+axe 有以下一些属性：
+
+* 必选属性
+    * **scale**  
+        字符串值。必选。指出 axis 组件基于哪个 scale。
+    * **orient**  
+        字符串值。必选。指出 axis 的 ticks 的朝向。
+* domain line(axis baseline) 相关
+    * **domain**  
+        布尔值。是否显示坐标轴基线。
+    * **domainCap**  
+        domain line [两端的形状](https://docs.microsoft.com/en-us/xamarin/xamarin-forms/user-interface/graphics/skiasharp/paths/lines)。值为"butt", "round" 或 "square"
+    * **domainColor**  
+        domain line 的颜色。
+    * **domainDash**  
+        参考 [svg-dasharray](https://developer.mozilla.org/en-US/docs/Web/SVG/Attribute/stroke-dasharray)
+    * **domainOpacity**  
+        domain line 的透明度。
+    * **domainWidth**  
+        domain line 的宽度。
+* label 相关  
+    * **labels**  
+        布尔值，是否显示 labels。
+    * **format**  
+        设置 labels 的 format specifier。对于数字值，必须为合法的 [d3-format](https://github.com/d3/d3-format#locale_format) specifier。对于日期值，必须为合法的 [d3-time-format](https://github.com/d3/d3-time-format#locale_format) specifier 或 一个 [TimeMultiFormat](https://vega.github.io/vega/docs/types/#TimeMultiFormat) 对象.
+    * **formatType**  
+        指出 format 的类型。可以为 "number"，"time" 或 "utc"。
+    * **labelColor**  
+        labels 的颜色。
+    * **labelAngle**  
+        数字，单位为度。label 旋转角度。顺时针。一圈为360度。
+    * **labelFront**  
+        字符串。字体名字。
+    * **labelFrontSize**  
+        字体大小。
+    * **labelPadding**  
+        label 与 tick之间的距离。
+    
+* tick 相关  
+    * **ticks**  
+        布尔值，是否显示 tick。
+    * **bandPosition**  
+        数字值，一般取值范围 0-1。指明 band scale 中，ticks 的位置。为 0 则表示将 tick 置于 band 的最左侧。为 0.5 则表示将 tick 置于 band 中间。
+    * **tickCap, tickColor, tickDash, tickOpacity, tickWidth**  
+        参考 domain line 相关。
+    * **tickCount**  
+        若为数字，直接指定 tick 的数量。真实数量可能和设置的数量有所不同（真实数量是 nice 的，是2，5，10的倍数）。  
+        对于 time scale 或 utc scale，tickCount 的值还可以为字符串或对象。合法字符串值为"millisecond", "second", "minute", "hour", "dat", "week", "month" 和 "year"。对象的格式类似于 ```{"interval": "month", "step": 3}```。
+    * **tickMinStep**  
+        相邻两个 tick 之间的最小距离。
+* grid 相关  
+    * **grid**  
+        布尔值。是否显示网格线。  
+    * **gridScale**  
+        默认为必选属性里的 scale。也可另外定义。  
+    * **gridCap,  gridColor, gridDash, gridOpacity, gridWidth**  
+        参考 domain line 相关。  
+* title 相关  
+    * **title**  
+        字符串值。坐标轴的名字。
+    * **titleAnchor** 
+        title 摆放的位置。"start", "middle", "end" 或 "none"（默认，自动确定）。
+    * **titleX, titleY** 
+        自定义相对于坐标轴的偏移量。 
+    * **titleColor, titleAngle, titleFront, titleFrontSize**  
+        参考 label 相关。
+* 整体相关
+    * **translate**  
+        轴布局的坐标空间转换偏移。默认情况下，轴的 x 和 y 坐标都以 0.5 像素的偏移量进行转换，以使描边线与像素网格对齐。然而，对于矢量图形输出来说，这些针对像素的调整可能并不可取，在这种情况下，可以更改 translate（例如，为零）。
+    * **values** 
+        明确设置可见的轴刻度线和标签值。数组条目应该是支持刻度域中的合法值。
+    * **zindex**  
+        组件的深度。
+* [其它](https://vega.github.io/vega/docs/axes/#axis-properties)   
 
 marks
 ---
