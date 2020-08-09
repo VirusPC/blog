@@ -12,8 +12,8 @@ React: 核心概念
 
 ## 目录
 
-1. [React特性](#react-特性)
-2. [JSX 基本使用](#jsx基本使用)
+1. [React 特性](#react-特性)
+2. [JSX 的基本使用](#jsx-的基本使用)
 3. [组件的基本使用](#组件的基本使用)
 4. [组件属性: state](#组件属性-state)
 5. [组件属性: props](#组件属性-props)
@@ -38,7 +38,7 @@ React: 核心概念
 
 5. 高效（虚拟 DOM，编码人员不直接操作 DOM。DOM Diff算法，最小化页面重绘）
 
-## JSX基本使用
+## JSX 的基本使用
 
 1. jsx = javascript + xml
 
