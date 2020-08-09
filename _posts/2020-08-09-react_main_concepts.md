@@ -8,6 +8,8 @@ resource_path: /blog/assets/2020/08/09/react_main_concepts
 React: 核心概念
 ===
 
+---
+
 ## 目录
 
 1. [React特性](#react-特性)
