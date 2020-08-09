@@ -348,7 +348,7 @@ axe 有以下一些属性：
 marks
 ---
 
-将数据编码为图形标记，比如条形图中的矩形、折线图中的线和其它符号等。mark 的属性可以是简单的常量或数据字段，也可以使**用比例尺将数据值映射到视觉值**。
+将数据编码为图形标记，比如条形图中的矩形、折线图中的线和其它符号等。mark 的属性可以是简单的常量或数据字段，也可以使用比例尺将数据值映射到视觉值。
 
 vega 支持的 mark 类型有 arc, area, image, group（其它mark的容器，即 svg 中的 g 标签）, line（描线，通常用于显示随着时间推移而发生的变化）, path, rect, rule, shape, symbol, text 以及 trail（可以基于下层的数据来改变尺寸的线条）。
 
@@ -382,8 +382,8 @@ vega 支持的 mark 类型有 arc, area, image, group（其它mark的容器，�
     clip 是一个对象，它需要从 path 和 sphere 两个属性中二选一。path 是一个 svg path。sphere 在地图投影时会用到
 * **encode**  
     一个对象。包含 mark 属性的视觉编码规则集合，用于设置mark的一些属性（如位置、颜色）。不同类型的 mark 有着不同的属性。  
-    标准的 encode 集合包括三个属性集合：```update```, ```enter``` 和 ```exit```。  此外，还有一个额外的 ```hover```。
-    enter 集合中的行为，当 mark 首次初始化时被调用。uppdate 集合中的行为，当数据或展示出的样子发生变化时被调用。exit 集合中的行为，当删除 mark 所对应的 data 时被调用。
+    标准的 encode 集合包括三个属性集合：```update```, ```enter``` 和 ```exit```。  
+    enter 集合中的行为，当 mark 首次初始化时被调用。uppdate 集合中的行为，当数据或展示出的样子发生变化时被调用。exit 集合中的行为，当删除mark所对应的data时
 * **interactive**  
     布尔标志。默认为true。指明该 mark 是否可以作为输入事件源。
 * **key**  
