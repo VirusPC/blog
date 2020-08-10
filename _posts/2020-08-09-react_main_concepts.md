@@ -68,7 +68,7 @@ React: 核心概念
     比如：jsx 中 ```class``` 应改为 ```className```（js 中 ```class``` 为关键字，jsx中有可能嵌套js，避免歧义)。
     ```tabindex``` 应该为 ```tabIndex```。```onclick```应改为```onClick```。
 
-8. jsx 中不允许有多个根标签。一个虚拟 DOM 里最顶级标签唯一。
+8. jsx 中不允许有多个根标签。一个虚拟 DOM 里最顶级标签唯一。这也导致一个问题: 会有很多多余的根标签, 使得 DOM 树变得比较"深".
 
 9. 由于 jsx 表达式会被编译成 js，jsx 中可以使用 if-else 等 js 控制语句，函数定义等。
 
@@ -335,18 +335,20 @@ React: 核心概念
         * 触发条件: ```ReactDOM.unmountComponentAtNode()```
         * 流程: ```componentWillUnmount()```
 
-5. 旧版生命周期函数
-    生命周期函数|描述
-    :-|:-
-    ```componentWillMount()```|**即将过时**. 已重命名为```UNSAFE_componentWillMount```. 组件将要被挂载,(初次渲染)
-    ```componentDidMount()```|组件挂载完毕. 只执行一次. 一般在此方法里开定时器, 发送Ajax请求等.
-    ```shouldComponentUpdate(props, state): boolean```|组件更新前判断是否允许执行更新. 返回一个布尔值用来说明是否更新. 
-    ```componentWillUpdate(props, state)```|**即将过时**. 已重命名为```UNSAFE_componentWillUpdate```. 组件将要被更新(重新渲染)
-    ```componentDidUpdate(props, state[, value])```|组件更新完毕. 在旧版生命周期中使用时, 无```value```参数. 在新版中使用时, ```value```是```getSnapshotBeforeUpdate```方法的返回值.
-    ```componentWillUnmount()```|一般在此方法里做一些收尾和收集工作.
-    ```componentWillReceiveProps(props)```|**即将过时**. 已重命名为```UNSAFE_comopnentWillReceiveProps```. 组件将要接收**新的**参数. 挂载时不会触发. 从第二次传参开始被调用.
+5. 旧版生命周期函数  
+
+    生命周期函数|描述  
+    :-|:-  
+    ```componentWillMount()```|**即将过时**. 已重命名为```UNSAFE_componentWillMount```. 组件将要被挂载,(初次渲染)  
+    ```componentDidMount()```|组件挂载完毕. 只执行一次. 一般在此方法里开定时器, 发送Ajax请求等.  
+    ```shouldComponentUpdate(props, state): boolean```|组件更新前判断是否允许执行更新. 返回一个布尔值用来说明是否更新.  
+    ```componentWillUpdate(props, state)```|**即将过时**. 已重命名为```UNSAFE_componentWillUpdate```. 组件将要被更新(重新渲染)  
+    ```componentDidUpdate(props, state[, value])```|组件更新完毕. 在旧版生命周期中使用时, 无```value```参数. 在新版中使用时, ```value```是```getSnapshotBeforeUpdate```方法的返回值.  
+    ```componentWillUnmount()```|一般在此方法里做一些收尾和收集工作.  
+    ```componentWillReceiveProps(props)```|**即将过时**. 已重命名为```UNSAFE_comopnentWillReceiveProps```. 组件将要接收**新的**参数. 挂载时不会触发. 从第二次传参开始被调用.  
 
 6. 新版生命周期函数  
+
     生命周期函数|描述
     :-|:-
     ```static getDerivedStateProps(props, state)```|取代了旧版中的```componentWillMount```, ```componentWillReceiveProps``` 以及 ```componentWillUpdate```. 需要设为静态方法. 有两个参数和返回值. 返回值是新的```state```, 会作为下一步```setState(state)```的参数.
