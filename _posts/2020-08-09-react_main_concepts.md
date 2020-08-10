@@ -135,7 +135,22 @@ React: 核心概念
     }
     ```
 
-7. 组件实例对象的state：1.不能直接修改(通过```this.setState(state)```修改，注意是修改操作不是覆盖操作，属性有则修改，无则不动)。2.不能直接更新
+7. 组件实例对象的state：1.不能直接修改2.不能直接更新  
+    * 正确范例:  
+    ```js
+    comments = [{}, {}, {}];
+    let comments = [...this.state.comments]; 
+    this.setState(state);  // 是修改操作不是覆盖操作，属性有则修改，无则不动。
+    ```
+    * 错误范例:
+        * ```js
+            this.state.comments = this.state.comments.push(comment);  // 需要通过setState方法来更新
+            ```
+        * ```js
+            let comments = this.state.comments;
+            // do some change
+            this.setState({comments: comments});  // 可能出现不更新的情况, 尤其是当comments内容为对象时.
+            ```
 
 8. 为标签添加事件时, 记得加```this```  
     ```jsx
@@ -148,6 +163,7 @@ React: 核心概念
 
 9. ```render```[调用的次数为 1+n](#组件:-生命周期), 1是页面初始化时的调用次数, n是状态```state```更新的次数.
 
+10. 一个原则: 状态在哪儿, 更新状态的函数就在哪儿.
 
 ## 组件属性: props
 
@@ -184,7 +200,16 @@ React: 核心概念
 7. ES8语法: 浅复制一个对象: ```personCopy = {...person}```  
     注意,对象默认不可迭代, 不可直接通过扩展运算符展开(```console.log(...person);  /// error```).
 
-8. 虽然对象默认不可展开, 但我们在类标签中依然可以使用```...person```, 这是 react 和 babel 配合的结果. 在 js 脚本中这种写法会报错. 在 babel 脚本中, 标签之外这种写法不会报错, 也不会输出. 在标签内写可以一下子将属性批量传递过去.
+8. 虽然对象默认不可展开, 但我们在类标签中依然可以使用```...person```, 这是 react 和 babel 配合的结果. 在 js 脚本中这种写法会报错. 在 babel 脚本中, 标签之外这种写法不会报错, 也不会输出. 在标签内写可以一下子将属性批量传递过去.  
+    * 传参:  
+        ```jsx
+        comment={id:"", name:"", content:""}
+        return <Item {...comment}/>;
+        ```
+    * 使用:
+        ```jsx
+        let {id, name, content} = this.props;
+        ```
 
 9. 工厂函数组件与```props```.  
     为工厂函数添加参数, 组件标签的属性就会被传递到工厂函数内. 传递标签属性的方式与 6. 相同.  
@@ -269,6 +294,12 @@ React: 核心概念
         利用[props](#组件属性:-props)
     * 子组件向父组件传递数据  
         *React* 有一个原则, 状态在哪里, 更新状态的方法就在哪里. 子组件不可像父组件传递数据. 子组件要想修改父组件的属性, 就需要父组件先自己有一个修改该属性的方法, 绑定上父组件实例(```this```)后, 将该方法传递给子组件. 然后子组件再通过该方法修改父组件的属性.
+3. jsx表达式中出现数组, 会将数组中的每一项都进行渲染. 一般这里会用到```map```函数将js数组里的每一项转化成jsx表达式, 并且要[为每一项设置一个key](#react-中的-key).  
+    ```jsx
+    <ul className="list-group">
+        {comments.map( comment => <Item key={comment.id} {...comment}/>)}
+    </ul>
+    ```
    
 
 ## 组件: 受控组件与非受控组件
@@ -391,7 +422,7 @@ React: 核心概念
 
 
 
-## React中的key
+## React 中的 key
 
 1. React Diff 算法依赖于 key. 
 
@@ -418,3 +449,17 @@ React: 核心概念
 5. 虚拟 DOM 树以 key 为索引来构造. 假设存在一个 key 为 1 的虚拟 DOM 节点, 并有若干子节点. 若将它的 key 改为其他值, 并将另一个虚拟节点的 key 改为 1. 那么原来的那些子真实节点会原封不动的挂载到新的 key 为 1 的虚拟节点对应的真实节点上.  
     ![]({{page.resource_path}}/key_1.png) 
     ![]({{page.resource_path}}/key_2.png)
+
+6. 一个可以用来全球唯一的字符串id的库: [UUID](https://baike.baidu.com/item/UUID/5921266?fr=aladdin).  
+    * 安装:  
+        ```bash
+        yarn add uuid
+        ```
+    * 引入(一般都是默认暴露):  
+        ```
+        import 'uuid' from 'uuid'
+        ```
+    * 使用:
+        ```
+        let id = uuid();
+        ```
