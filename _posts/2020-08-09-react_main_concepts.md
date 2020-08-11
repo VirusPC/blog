@@ -79,6 +79,11 @@ React: 核心概念
     <h1 style={ {opacity: 0.5, width: "30px"} }></h1>
     ```
 
+12. react 不推荐使用 a 标签. 非要使用就用 ```onClick```来跳转(```href```属性随便设置一个锚点, 不可为空, 不可为普通链接, 不可为javscript函数...).  
+    ```jsx
+        <a href="#1" onClick=(this.func)>
+    ```
+
 
 ## 组件的基本使用
 
@@ -134,6 +139,8 @@ React: 核心概念
         this.setState({isHot: !this.state.isHot});
     }
     ```
+
+6. 箭头函数中```this```是组件的实例对象. 不可以直接用```confirm```, 需要通过```window.confirm```来使用: 当直接使用```confirm```时, 会去```this```查找, 不会去```window```查找. ```alert```可以正常使用.
 
 7. 组件实例对象的state：1.不能直接修改2.不能直接更新  
     * 正确范例:  
@@ -224,6 +231,10 @@ React: 核心概念
         )
     }
     ```
+10. 要传递的属性名不能为 key. key 有[特殊作用](#react-中的-key), 会被底层拦截. 类标签的```key```属性不会放到```props```中.  
+    ```jsx
+    <Item key="213213"/>
+    ```
 
 ## 组件属性: refs与事件处理
 
@@ -270,11 +281,30 @@ React: 核心概念
         将标签元素放入定义好的 ref 容器中.
 
 3. 事件处理函数可以有一个参数```event```, 代表当前事件(参考```DOM```). 能用它处理, **就不要用**```ref```.
-    ```javascript
-    onBlurHandler = (event) => {
-        alert(event.target.value);
-    }
-    ```
+    * 函数定义:
+        ```javascript
+        onClickHandler = (event) => {
+            alert(event.target.value);
+        }
+        ```
+    * 函数引用:
+        ```jsx
+        <Button onClick={this.onClickHandler}>button</Button>
+        ```
+4. 如果事件处理函数还想要传递其它参数, 则需要再加个箭头函数的壳.
+    * 函数定义:
+        ```javascript
+        onClickHandler = (id)=>{
+            console.log(id);
+        }
+        ```
+    * 函数引用:  
+        ```jsx
+        render() {
+            let {id} = this.props;
+            return <Button onClick={()=>{this.onClickHandler(id)}}>button</Button>;
+        }
+        ```
 
 
 ## 组件: 组合使用
@@ -292,8 +322,14 @@ React: 核心概念
 2. 组件之间传递数据(一般利用[组件之间的通信技术]()):
     * 父组件向子组件传递数据  
         利用[props](#组件属性:-props)
+    * 子组件接收父组件数据  
+        * 不需要修改```state```等操作, 可以直接在```render```中通过```this.props```来接收
+        * 需要修改```state```或其它操作, 要在[componentWillReiceiveProps](#组件-生命周期)中接收, 可以在里面利用```props```修改```state```并重新渲染组件.
     * 子组件向父组件传递数据  
-        *React* 有一个原则, 状态在哪里, 更新状态的方法就在哪里. 子组件不可像父组件传递数据. 子组件要想修改父组件的属性, 就需要父组件先自己有一个修改该属性的方法, 绑定上父组件实例(```this```)后, 将该方法传递给子组件. 然后子组件再通过该方法修改父组件的属性.
+        子组件不可直接向父组件传递数据. 子组件要想修改父组件的属性, 就需要父组件先自己有一个修改该属性的方法, 绑定上父组件实例(```this```)后, 将该方法传递给子组件. 然后子组件再通过调用该方法修改父组件的属性(如```state```).
+    * 父组件接受子组件的数据  
+        需要将一个子组件的数据传递给另一个子组件时, 需要新建```state```属性来保存. (```state```发生变化后会重新渲染, 此时通过```props```将```state```中的数据传递过去即可)
+    
 3. jsx表达式中出现数组, 会将数组中的每一项都进行渲染. 一般这里会用到```map```函数将js数组里的每一项转化成jsx表达式, 并且要[为每一项设置一个key](#react-中的-key).  
     ```jsx
     <ul className="list-group">
