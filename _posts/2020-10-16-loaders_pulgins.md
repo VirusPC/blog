@@ -10,13 +10,16 @@ resource_path: /blog/assets/2020/
 webpack能直接加载的只有js和json, 要想加载其他资源要使用loader, 想要更多功能需要plugin
 
 * [loader的使用](#loader的使用)
+
 * [plugin的使用](#plugin的使用)
+
 * [开发环境的基本配置](#开发环境的基本配置)
     * [打包样式资源](#打包样式资源)
     * [打包HTML资源](#打包HTML资源)
     * [打包图片资源](#打包图片资源)
     * [打包其他资源](#打包其他资源)
     * [devserver](#devserver)
+
 * [生产环境的基本配置](#生产环境的基本配置)
     * [提取css成单独文件](#提取css成单独文件)
     * [css兼容性处理](#css兼容性处理)
@@ -25,6 +28,7 @@ webpack能直接加载的只有js和json, 要想加载其他资源要使用loade
     * [js兼容性处理](#js兼容性处理)
     * [js压缩](#js压缩)
     * [HTML压缩](#HTML压缩)
+
 * [优化配置](#优化配置)
     * [HMR](#HMR)
     * [source-map](#source-map)
@@ -114,6 +118,8 @@ webpack不能解析html文件, 需要借助插件编译解析
     * 该loader可以处理html中的标签资源, 不止img标签)
 
 ### 打包其他资源
+    
+* 
 
 
 ### devserver
@@ -219,54 +225,6 @@ webpack不能解析html文件, 需要借助插件编译解析
 ### 多进程打包
 
 ### externals
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-## 打包html文件
-
-
-
-### HtmlWebpackPlugin
-
-* 使用: https://webpack.js.org/plugins/html-webpack-plugin/
-
-
-
-
-
-
-
-
-## 打包html中的图片资源
-
-
-
-* 使用: 
-
-
-## 打包其他资源
-
-
 
 
 ---
