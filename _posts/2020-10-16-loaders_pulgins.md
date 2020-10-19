@@ -2,7 +2,7 @@
 title: 'webpack: 常用loader与plugin'
 categories: ['前端']
 tags: ['javascript', '前端', 'webpack', 'loader', 'plugin']
-resource_path: /blog/assets/2020/
+resource_path: /blog/assets/2020/10/16/loaders_plugins/webpack.pdf
 ---
 
 # webpack: 常用loader与plugin
@@ -231,5 +231,5 @@ webpack不能解析html文件, 需要借助插件编译解析
 
 参考资料:
 
-* []()
+* [尚硅谷webpack从入门到精通]({{page.resource_path}}/webpack.pdf)
 
