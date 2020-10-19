@@ -2,7 +2,7 @@
 title: 'webpack: 常用loader与plugin'
 categories: ['前端']
 tags: ['javascript', '前端', 'webpack', 'loader', 'plugin']
-resource_path: /blog/assets/2020/10/16/loaders_plugins/webpack.pdf
+resource_path: /blog/assets/2020/10/16/loaders_plugins
 ---
 
 # webpack: 常用loader与plugin
