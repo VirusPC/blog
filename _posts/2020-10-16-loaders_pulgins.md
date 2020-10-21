@@ -11,6 +11,8 @@ webpack能直接加载的只有js和json, 要想加载其他类型的资源(样�
 
 加载资源不再与```index.html```对话, 不再通过标签引入. 而是与 entry points (入口js文件)对话, 通过```import```引入资源.
 
+常用的loader与plugin可以在webpack官网找到相应页面, 页面中有安装配置方法等.
+
 
 * [如何找到合适的plugin和loader](#如何找到合适的plugin与loader)
 
@@ -23,18 +25,18 @@ webpack能直接加载的只有js和json, 要想加载其他类型的资源(样�
     * [打包HTML资源](#打包HTML资源)
     * [打包图片资源](#打包图片资源)
     * [打包其他资源](#打包其他资源)
-    * [devserver](#devserver)
+    * [自动编译打包运行)](#自动编译打包运行)
 
 * [生产环境的基本配置](#生产环境的基本配置)
     * [提取css成单独文件](#提取css成单独文件)
     * [css兼容性处理](#css兼容性处理)
     * [压缩css](#压缩css)
-    * [js语法检查](#js语法检查)
     * [js兼容性处理](#js兼容性处理)
     * [js压缩](#js压缩)
     * [HTML压缩](#HTML压缩)
 
 * [优化配置](#优化配置)
+    * [js语法检查](#js语法检查)
     * [HMR](#HMR)
     * [source-map](#source-map)
     * [oneOf](#oneOf)
@@ -128,39 +130,73 @@ webpack能直接加载的只有js和json, 要想加载其他类型的资源(样�
     * 要配合安装less使用
     * 将less编译为css, 但不生成单独的css文件, 在内存中
 
-* 在js文件中导入样式文件  
-    ```js
-    import "index.css"
-    ```
+在入口文件中导入样式文件: 
+* ```js
+  import "index.css"
+  ```
+
+不可以加载样式文件中的图片链接. 要加载需要额外的loader, 详见该部分:[打包图片资源](#打包图片资源)
 
 ### 打包HTML资源
 
-webpack不能解析html文件, 需要借助插件编译解析
+webpack不能解析html文件, 需要借助插件编译解析. 只有打包html不是用的loader而是plugin, 不走入口文件.
 
 * ```html-webpack-plugin```
     * 注意与**html-loader**区分开, 后者用于处理html中的标签资源
+    * 注意不要再html中引入任何css和js文件
 
 ### 打包图片资源
 
+图片文件webpack不能解析, 需要借助loader编译解析. 前两个loader用于打包样式文件中的图片, 后一个loader用于打包html中的图片.
+
+
 * ```file-loader```
+    *  file-loader will copy files to the build folder and insert links to them where they are included.
 
 * ```url-loader```
+    * 是```file-loader```的上层封装, 使用时需配合```file-loader```使用
+    * url-loader will encode entire file bytes content as base64 and insert base64-encoded content where they are included. So there is no separate file.
+    * 可以设置, 使得文件图片的大小小于某个值时, 才转base64. (一般大图片, 大于8192B, 转base64会变得更大)
 
 * ```html-loader```
     * html中的图片url-loader没法处理, 它只能处理js中引入的图片/样式中的图片, 不能处理html中img标签.
     * 该loader可以处理html中的标签资源, 不止img标签)
 
-* Url-loader vs File-loader
-    * file-loader will copy files to the build folder and insert links to them where they are included. url-loader will encode entire file bytes content as base64 and insert base64-encoded content where they are included. So there is no separate file.
+Url-loader vs File-loader  
+
+* 
 
 ### 打包其他资源
     
-* 
+除了js和json及上述资源外的其他资源(如字体文件), webpack也不能解析, 需要借助loader编译解析.
 
+* ```file-loader```
+    * copy files to the build folder and insert links to them where they are included.
 
-### devserver
+* 其他loader
+    * 如css格式的字体文件需要打包样式文件的那些loader.
 
-* ```devserver```
+### 自动编译打包运行
+
+live reload, 自动刷新整个页面. 想要局部刷新, 见[HMR](#HMR)
+
+* ```webpack-dev-server```
+    * 修改```package.json```中的webpack配置对象(顶级目录下)
+      ```js
+        devServer: {
+            open: true,  // 自动打开浏览器
+            compress: true,  // 启动gzip压缩(数据由服务器传输到浏览器时是可以压缩的)
+            port: 3000 // 端口号
+        }
+      ```
+    * 修改```url-loader```部分配置
+        * 因为构建工具以build为根目录, 不用再找build了
+        * publicPath: ```'../build/images'``` --> ```publicPath: 'images'```
+    * 修改```package.json```中的scripts指令
+        * 配合```webpack-cli@3.x.x```: ```"start": "webpack-dev-server"```
+        * 配合```webpack-cli@4.x.x```: ```"start": "webpack serve"```
+        * npm 运行某些特定名称的script的时候可以省略```run```, 比如start: ```npm run start``` 等价于 ```npm start```.
+    * 运行指令: ```npm run start```
 
 
 ## 生产环境的基本配置
@@ -179,48 +215,6 @@ webpack不能解析html文件, 需要借助插件编译解析
 
 * ```optimize-css-assets-webpack-plugin```
 
-### js语法检查
-
-对js基本语法错误, 或是隐患, 进行提前检查
-
-* ```eslint```
-    * 基础, 先安装
-
-* ```eslint-loader```
-    * 在: eslint.org网站 -> userGuide -> Configuring ESLint 查看如何配置
-    * 在: eslint.org网站 -> userGuide -> Rules 查看所有规则
-    * 特殊属性
-        * ```exclude: /node_modules/```, 排除node_modules文件夹
-        * ```enforce: pre```, 提前加载使用(在被其他loader更改前就检查完)
-    * 规则不是配置在```webpack.config.js```对应rule中的```options```里, 而是放在package.json的顶级目录下
-        ```json
-        {
-            "name": "",
-            "version": "",
-            ...
-            "eslintConfig": {
-                "parserOptions": {
-                    "ecmaVersion": 6,  // 支持es6, 不加的话用es6语法会报错
-                    "sourceType": "module"  // 使用es6模块化
-                },
-                "env":{//设置环境
-                    "browser": true,  // 支持浏览器环境: 能使用window上的全局变量
-                    "node": true  // 支持服务器环境, 能使用node上global的全局变量
-                },
-                "globals": {  // 声明使用的全局变量, 这样即使没有定义也不会报错了
-                    "$": "readonly"
-                },
-                "rules": {  // eslint检查的规则(覆盖默认规则). 0 忽略, 1 警告, 2 错误
-                    "no-console": 0,  // 源代码有console忽略报错
-                    "eqeqeq": 2,  //用==而不用===就报错
-                },
-                "extends": "eslint:recommended"  // 其他的使用eslint推荐的默认规则 https://cn.eslint.org/docs/rules/
-            }
-        }
-        ```
-* ```eslint-config-airbnb-base```(可选)
-
-* ```eslint-plugin-import```(可选)
 
 ### js兼容性处理
 
@@ -277,7 +271,70 @@ webpack不能解析html文件, 需要借助插件编译解析
 
 ## 优化配置
 
+### js语法检查
+
+对js基本语法错误, 或是隐患, 进行提前检查
+
+* ```eslint```
+    * 基础, 先安装
+
+* ```eslint-loader```
+    * 在: eslint.org网站 -> userGuide -> Configuring ESLint 查看如何配置
+    * 在: eslint.org网站 -> userGuide -> Rules 查看所有规则
+    * 特殊属性
+        * ```exclude: /node_modules/```, 排除node_modules文件夹
+        * ```enforce: pre```, 提前加载使用(在被其他loader更改前就检查完)
+    * 规则不是配置在```webpack.config.js```对应rule中的```options```里, 而是放在package.json的顶级目录下
+        ```json
+        {
+            "name": "",
+            "version": "",
+            ...
+            "eslintConfig": {
+                "parserOptions": {
+                    "ecmaVersion": 6,  // 支持es6, 不加的话用es6语法会报错
+                    "sourceType": "module"  // 使用es6模块化
+                },
+                "env":{//设置环境
+                    "browser": true,  // 支持浏览器环境: 能使用window上的全局变量
+                    "node": true  // 支持服务器环境, 能使用node上global的全局变量
+                },
+                "globals": {  // 声明使用的全局变量, 这样即使没有定义也不会报错了
+                    "$": "readonly"
+                },
+                "rules": {  // eslint检查的规则(覆盖默认规则). 0 忽略, 1 警告, 2 错误
+                    "no-console": 0,  // 源代码有console忽略报错
+                    "eqeqeq": 2,  //用==而不用===就报错
+                },
+                "extends": "eslint:recommended"  // 其他的使用eslint推荐的默认规则 https://cn.eslint.org/docs/rules/
+            }
+        }
+        ```
+* ```eslint-config-airbnb-base```(可选)
+
+* ```eslint-plugin-import```(可选)
+
 ### HMR
+
+HMR(Hot Module Replacement, 热模替换, 模块热更新)可以实现局部刷新(对比webpack-dev-server自带的live reload, 真个页面刷新). 它允许在运行时更新所有类型的模块, 而无需完全刷新(只更新变化的模块, 不变化的模块不更新).
+
+详细配置见官网: Guides -> Hot Module Replacement
+
+* ```webpack-dev-server```
+    * [前置知识](#自动编译打包运行)
+    * 修改```webpack.config.js```中的devServer配置  
+        ```js
+        devServer: {
+            open:  true,  // 自动打开浏览器
+            compress: true,  // 启动gzip压缩
+            port:　3000, // 端口号
+            hot: true  // 开启HMR
+        }
+        ```
+    * **html文件不支持HMR.** 要想监测到主页面的更新. webpack 默认只能监测到入口文件中改变的东西, 除了```index.js```外, 还需要在入口中加上```index.html```. 这样一来, 更新js和css等模块时就会使用HMR, 更新主页面时就会刷新整个页面.
+        ```js
+        entry: ['./src/js/index.js', './src/index.html']
+        ```
 
 ### source-map
 
@@ -302,5 +359,5 @@ webpack不能解析html文件, 需要借助插件编译解析
 
 参考资料:
 
-* [尚硅谷webpack从入门到精通]({{page.resource_path}}/webpack.pdf)
+* [尚硅谷webpack从入门到精通(含实现各个目的的plugin和loader的配置)]({{page.resource_path}}/webpack.pdf)
 * [Url-loader vs File-loader Webpack](https://stackoverflow.com/questions/49080007/url-loader-vs-file-loader-webpack)
