@@ -13,6 +13,8 @@ webpack能直接加载的只有js和json, 要想加载其他类型的资源(样�
 
 常用的loader与plugin可以在webpack官网找到相应页面, 页面中有安装配置方法等.
 
+webpack中可能会经常遇到路径问题, 需要结合```publicPath```慢慢调试.
+
 
 * [如何找到合适的plugin和loader](#如何找到合适的plugin与loader)
 
@@ -77,7 +79,7 @@ webpack能直接加载的只有js和json, 要想加载其他类型的资源(样�
               rules: [
                   {
                       test: ...  // loader要处理的文件的名字, 一般用正则表达式表示
-                      loader: ...  // loader
+                      loader: ...  // loader = loader名字/loader列表/外部引入模块提供的对象/自定义对象(包含loader和option等), 
                   }
               ]
           }
@@ -113,6 +115,7 @@ webpack能直接加载的只有js和json, 要想加载其他类型的资源(样�
           ]
       };
       ```
+    * 一些插件可能还需要其他的配置, 比如[```mini-css-extract-plugin```](#提取css成单独文件)需要用自己的loader取代```style-loader```.
 
 
 ## 开发环境的基本配置
@@ -226,13 +229,74 @@ live reload, 自动刷新整个页面. 想要局部刷新, 见[HMR](#HMR)
 
 ### 提取css成单独文件
 
+默认不装插件的情况下, import 样式表, 会直接将其转化为内联样式, 不会生成单独的css文件.
+
 * ```mini-css-extract-plugin```
+    * 该插件会将样式文件合并成名为main的样式文件. 
+    * 引入插件  
+      ```const MiniCssExtractPlugin = require("mini-css-extract-plugin")```
+    * 配置loader  
+      ```js
+      {
+          test: /\.less$/,
+          use: [
+              MiniCssExtractPlugin.loader,  // 取代style-loader
+              'css-loader',
+              'less-loader'
+          ]
+      }
+      ```
+    * 配置plugin  
+      ```js
+      new MiniCssExtractPlugin({
+          filename: "css/[name].css", // 原来的所有css,less等类型的文件, 合并成一个名为main的css文件.
+      })
+      ```
 
 ### css兼容性处理
 
 * ```postcss-loader```
 
-* ```postcss-preset-env```
+    * https://webpack.js.org/loaders/postcss-loader/
+
+    * 很多教程只安装这个, 不装下面的一些package. 但是只安装这个对IE兼容性不太好
+
+    * 需要配合其他package使用
+        * ```postcss-preset-env```: 指定运行环境
+        * ```postcss-flexbugs-fixes```
+        * ```postcss-normalize```: 加上后对老浏览器的支持比较好, react在用
+        * ```autoprefixer```
+
+    * 配置loader 
+      ```js
+      {
+        loader: 'postcss-loader',
+        options: {
+          postCssOptions: {
+            ident: 'postcss',
+            plugins: () => [
+              require('postcss-flexbugs-fixes'),
+              require('postcss-preset-env')({
+                autoprefixer: {
+                  flexbox: "no-2009"  // flex老语法新浏览器反而不支持
+                },
+                stage: 3,  // 兼容级别
+              }),
+              require('postcss-normalize')(),
+            ]
+          }
+        },
+      }
+      ```
+    * 添加配置文件: ```.browserslistrc```(直接在package.json中顶级目录配置```browserlist```的话, 有些文件可能会失效)
+      ```
+      last 1 version
+      > 1%
+      IE 10 # sorry
+      ```
+
+
+
 
 ### 压缩css
 
@@ -395,7 +459,7 @@ HMR(Hot Module Replacement, 热模替换, 模块热更新)可以实现局部刷�
 
 * ```clean-webpack-plugin```
     * 引入插件(需要解构赋值)
-        * ```const {CleanWebpackPlugin} = require("clean-webpack-plugin);```
+        * ```const {CleanWebpackPlugin} = require("clean-webpack-plugin");```
 
 ### oneOf
 
@@ -423,3 +487,4 @@ HMR(Hot Module Replacement, 热模替换, 模块热更新)可以实现局部刷�
 * [Url-loader vs File-loader Webpack](https://stackoverflow.com/questions/49080007/url-loader-vs-file-loader-webpack)
 * [Error: Cannot find module 'webpack-cli/bin/config-yargs'](https://github.com/webpack/webpack-dev-server/issues/2029)
 * [【JS基础】sourceMap是个啥(含原理)](https://segmentfault.com/a/1190000020213957)
+* [Template strings](https://webpack.js.org/configuration/output/#template-strings)
