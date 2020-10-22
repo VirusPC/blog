@@ -9,11 +9,13 @@ resource_path: /blog/assets/2020/10/16/loaders_plugins
 
 webpack能直接加载的只有js和json, 要想加载其他类型的资源(样式文件, 图片文件等)要使用loader, 想要更多功能(打包优化, 压缩等)需要plugin.
 
+loader都是官方出品, 配置方法比较规范. plugin就不一定了.
+
 加载资源不再与```index.html```对话, 不再通过标签引入. 而是与 entry points (入口js文件)对话, 通过```import```引入资源.
 
-常用的loader与plugin可以在webpack官网找到相应页面, 页面中有安装配置方法等.
 
 webpack中可能会经常遇到路径问题, 需要结合```publicPath```慢慢调试.
+
 
 
 * [如何找到合适的plugin和loader](#如何找到合适的plugin与loader)
@@ -57,11 +59,14 @@ webpack中可能会经常遇到路径问题, 需要结合```publicPath```慢慢�
 
 ## 如何找到合适的loader与plugin
 
-官网上列出了一些优秀的loader与plugin(以及配置方法)
-* loader: https://webpack.js.org/loaders/
-* plugin: https://webpack.js.org/plugins/
+* 方法一
+      * 官网上列出了一些优秀的loader与plugin(**以及配置方法**)
+          * loader: https://webpack.js.org/loaders/
+          * plugin: https://webpack.js.org/plugins/
+      * 利用 ctrl+f 在页面中搜索
 
-利用 ctrl+f 在页面中搜索
+* 方法二
+    * 不知道用什么loader或plugin时, 可以参考React和Vue.
 
 
 
@@ -207,24 +212,28 @@ live reload, 自动刷新整个页面. 想要局部刷新, 见[HMR](#HMR)
 
 ## 生产环境的基本配置
 
-1. 创建文件夹```config```, 将```webpack.config.js```复制两份:
-* ```./config/webpack.dev.js```
-* ```./config/webpack.prod.js```
+* In production, our goals shift to a focus on minified bundles, lighter weight source maps, and optimized assets to improve load time.
 
-2. 修改```webpack.prod.js```配置, 删除```webpack-dev-server```配置, 修改配置中的路径等.
+* 配置
+    1. 创建文件夹```config```, 将```webpack.config.js```复制两份:
+        * ```./config/webpack.dev.js```
+        * ```./config/webpack.prod.js```
 
-3. 修改package.json的指令(有时start可能替换为dev)  
-    ```json
-    scripts: {
-     "start": "webpack-dev-server --config ./config/webpack.dev.js",  // 开发环境指令, 不需要先build, 不生成真实dist文件夹
-     "build": "webpack --config ./config/webpack.prod.js"  // 生产环境指令
-    }
-    ```
+    2. 修改```webpack.prod.js```配置, 删除```webpack-dev-server```配置, 修改配置中的路径等.
 
-注意, 生产环境代码需要部署到服务器上才能运行(serve这个库能帮助我们快速搭建一个静态资源服务器)
+    3. 修改package.json的指令(有时start可能替换为dev)  
+        ```json
+        scripts: {
+         "start": "webpack-dev-server --config ./config/webpack.dev.js",  // 开发环境指令, 不需要先build, 不生成真实dist文件夹
+         "build": "webpack --config ./config/webpack.prod.js"  // 生产环境指令
+        }
+        ```
+
+ * 注意, 生产环境代码需要部署到服务器上才能运行(serve这个库能帮助我们快速搭建一个静态资源服务器)
     * 安装package: ```npm i serve -g```
     * 以dist文件夹为根目录启动服务器: ```serve dist```
 
+本节提到的plugin只安装在```webpack.prod.js```, 不安装在```webpack.dev.js```.
 
 
 ### 提取css成单独文件
@@ -261,13 +270,13 @@ live reload, 自动刷新整个页面. 想要局部刷新, 见[HMR](#HMR)
 
     * 很多教程只安装这个, 不装下面的一些package. 但是只安装这个对IE兼容性不太好
 
-    * 需要配合其他package使用
+    * 需要配合其他针对于该loader的plugin使用(注意不是webpack总的pulgin, 只在该loader的option内配置). 目前有些还不支持postcss8.
         * ```postcss-preset-env```: 指定运行环境
         * ```postcss-flexbugs-fixes```
         * ```postcss-normalize```: 加上后对老浏览器的支持比较好, react在用
         * ```autoprefixer```
 
-    * 配置loader 
+    * 配置loader(postcss8及之后的版本不适用) 
       ```js
       {
         loader: 'postcss-loader',
@@ -300,7 +309,26 @@ live reload, 自动刷新整个页面. 想要局部刷新, 见[HMR](#HMR)
 
 ### 压缩css
 
+调成production模式只能压缩js, 不能压缩css. 想要压缩css, 我们需要借助其他的插件.
+
 * ```optimize-css-assets-webpack-plugin```
+    * 压缩css的插件有很多, vue和react里用的是这个
+    * 引入插件  
+        * ```const OptimizeCssAssetsPlugin = require("optimize-css-assets-webpack-plugin");```
+    * 配置插件(React中的配置)
+        * ```js
+          new OptimizeCssAssetsPlugin({
+            cssProcessorPluginOptions: {
+              preset: ['default', { descardComments: { removeAll: true } }],
+            },
+            cssProcessorOptions: {
+              map: {
+                inline: false,
+                annotation: true,
+              }
+            }
+          })
+          ```
 
 
 ### js兼容性处理
@@ -343,11 +371,20 @@ live reload, 自动刷新整个页面. 想要局部刷新, 见[HMR](#HMR)
             new HtmlWebpackPlugin({
                 template: './src/index.html',
                 // 压缩html代码
-                mainfy: {
-                    // 移除空格
+                minify: {
+                    removeComments: true,
+                    removeRedundantAttributes: true,  // 移除无用的标签
+                    removeEmptyAttributes: true,  // 移除空标签
+                    removeStyleLinkTypeAttributes: true,  // 移除rel="stylesheet"
+
+                    /* html文档中可能有嵌入js,css等, 精简它们 */
+                    minifyJS: true, 
+                    minifyCSS: true,
+                    minifyURLs: true,
+
                     collapseWhitespace: true,
-                    // 移除注释
-                    removeComments: true
+                    useShortDoctype: true,  // 使用短的文档申明
+                    keepClosingSlash: true,  // 自结束
                 }
             })
         ],
