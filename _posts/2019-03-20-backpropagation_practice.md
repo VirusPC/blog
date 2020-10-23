@@ -1,5 +1,5 @@
 ---
-title: 反向传播实践
+title: "神经网络: 反向传播实践"
 categories: ['机器学习']
 tags: []
 resource_path: /blog/assets/2019/03/20/practice

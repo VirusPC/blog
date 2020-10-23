@@ -1,5 +1,5 @@
 ---
-title: 反向传播（backpropagation）
+title: "神经网络: 反向传播原理"
 categories: ['机器学习']
 tags: []
 resource_path: /blog/assets/2019/03/16/backpropagation

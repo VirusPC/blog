@@ -1,5 +1,5 @@
 ---
-title: 神经网络的应用 
+title: 神经网络:应用 
 categories: ['机器学习']
 tags: ['神经网络']
 resource_path: /blog/assets/2019/03/14/applications

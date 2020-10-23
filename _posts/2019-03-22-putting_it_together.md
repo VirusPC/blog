@@ -1,5 +1,5 @@
 ---
-title: 建立神经网络总结
+title: "神经网络: 总结"
 categories: ['机器学习']
 tags: []
 resource_path: /blog/assets/2019/

@@ -1,5 +1,5 @@
 ---
-title: 神经网络（Neural Networks）
+title: "神经网络: 模型表示与正向传播"
 categories: ['机器学习']
 tags: []
 resource_path: /blog/assets/2019/03/12/neural_networks
