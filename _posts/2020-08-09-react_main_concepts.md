@@ -245,7 +245,7 @@ React: 核心概念
 
 2. 定义和使用 ref 的三种语法:
     1. 字符串 ref 方式(方便, 不推荐) 
-        1. ```render```方法中定义:
+        1. ```render```方法中定义:  
             ```jsx
             <input type="text" ref="input1">
             ```
@@ -254,7 +254,7 @@ React: 核心概念
             this.refs.input1
             ```
     2. 回调 ref 方式  
-        1. ```render```方法中定义:
+        1. ```render```方法中定义:  
             ```jsx
             <input type="text" ref={(input) => {this.input1 = input}}/>
             ```  
@@ -269,7 +269,7 @@ React: 核心概念
             // 创建 ref 容器. 专人专用
             input1 = React.createRef();
             ```
-        2. ```render```方法中引用
+        2. ```render```方法中引用  
             ```jsx
             // 不是为 ref 赋值, 而是将 ref 所在的标签元素放入定义好的容器中
             <input type="text" ref={this.input1}>
