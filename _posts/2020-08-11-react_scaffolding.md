@@ -98,7 +98,7 @@ React: 脚手架
 2. 项目结构(其它):  
     ReactNews  
     　　|--public  
-    　　　　|--css-------------成型的第三方库. 如 bootstrap.css. 其它地方通过link引用.
+    　　　　|--css-------------成型的第三方库. 如 bootstrap.css. 其它地方通过link引用.  
     　　　　|--logo192.png-----192x192. manifest.json中会用到.  
     　　　　|--logo512.png-----512x512. manifest.json中会用到.  
     　　　　|--manifest.json---生成手机应用时用到的配值.  
