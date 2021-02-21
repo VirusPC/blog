@@ -68,7 +68,22 @@ React: 核心概念
     比如：jsx 中 ```class``` 应改为 ```className```（js 中 ```class``` 为关键字，jsx中有可能嵌套js，避免歧义)。
     ```tabindex``` 应该为 ```tabIndex```。```onclick```应改为```onClick```。
 
-8. jsx 中不允许有多个根标签。一个虚拟 DOM 里最顶级标签唯一。这也导致一个问题: 会有很多多余的根标签, 使得 DOM 树变得比较"深".
+8. jsx 中不允许有多个根标签。一个虚拟 DOM 里最顶级标签唯一。这也导致一个问题: 会有很多多余的根标签, 使得 DOM 树变得比较"深". 
+
+9. 要想解决上条带来的问题, 在 React 16 之后的版本可以使用 ```Fragment```标签, 用它来做最外层的标签. ```Frangment```最后不会转换成任何标签, 只做占位符. 它还有一个短语法, 可以直接写成空标签```<></>```
+```jsx
+import Fragment from 'react'
+//...
+return (
+  <Fragment>
+    <div><input/><button>submit</button></div>
+    <ul>
+        <li>Learning English</li>
+        <li>Learning React</li>
+    <ul>
+  </Fragment>
+)
+```
 
 9. 由于 jsx 表达式会被编译成 js，jsx 中可以使用 if-else 等 js 控制语句，函数定义等。
 
@@ -86,6 +101,8 @@ React: 核心概念
 
 
 ## 组件的基本使用
+
+1. 组件名必须以大写字母开头
 
 1. 简单组件用工厂模式创建（无state）。复杂的用ES6类组件创建（含state）。
     ```jsx
@@ -151,11 +168,14 @@ React: 核心概念
     ```
     * 错误范例:
         * ```js
-            this.state.comments = this.state.comments.push(comment);  // 需要通过setState方法来更新
+            this.state.comments.push(comment);  // 需要通过setState方法来更新
+            ```
+        * ```js
+            this.state.comments.push(comment);
+            this.setState({comments: this.state.comments});  // react提倡immutable, 不要直接对state进行修改, 不利于后面的优化.
             ```
         * ```js
             let comments = this.state.comments;
-            // do some change
             this.setState({comments: comments});  // 可能出现不更新的情况, 尤其是当comments内容为对象时.
             ```
 
