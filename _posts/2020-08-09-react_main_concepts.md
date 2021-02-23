@@ -34,9 +34,15 @@ React: 核心概念
 
 3. 一次学习，随处编写（React native）
 
-4. 单向数据流，而非 Vue 那样的双向数据流
+4. 单向数据流，而非 Vue 那样的双向数据流.  父组件可以向子组件传递数据, 子组件可以读取但不要直接对数据进行修改. 修改时 react 会报只读错误. 这样方便维护和 debug, 若渲染和期望不一致直接去父组件找问题就可以, 不需要挨个查子组件是否也有问题.
 
 5. 高效（虚拟 DOM，编码人员不直接操作 DOM。DOM Diff算法，最小化页面重绘）
+
+6. 视图层框架. 复杂项目需借助 redux 等数据层框架.
+
+7. 函数式编程. 方便测试, 方便拆分复杂函数等.
+
+8. 可以与其他框架并存. 只管理指定的 DOM 节点.
 
 ## JSX 的基本使用
 
@@ -99,6 +105,29 @@ return (
         <a href="#1" onClick=(this.func)>
     ```
 
+13. jsx中推荐在花括号内写注释而非用按xml写注释. 这样最后注释不会生成到html文件中.
+    ```jsx
+    (<Fragment>
+        {/* this is comment */}
+        <div></div>
+    <Fragment>)
+    ```
+
+14. 尽量不要在render返回的jsx表达式中参杂复杂逻辑. 如果必须要复杂逻辑(如TodoList中需要用map来生成子项), 就抽象出一个函数来, 再在jsx表达式中调用该函数.
+    ```jsx
+    render() {
+        return (<ul>
+                    {this.getTodoItems()}
+                </ul>);
+    }
+    getTodoItems = () => {
+        return this.state.list.map((item, i) => (
+            <Fragment key={item.id}>
+                <TodoItem item={item} onClick={() => this.handleItemDelete(item.id)} />
+            </Fragment>
+        ))
+    }
+    ```
 
 ## 组件的基本使用
 
@@ -161,11 +190,23 @@ return (
 
 7. 组件实例对象的state：1.不能直接修改2.不能直接更新  
     * 正确范例:  
-    ```js
-    comments = [{}, {}, {}];
-    let comments = [...this.state.comments]; 
-    this.setState(state);  // 是修改操作不是覆盖操作，属性有则修改，无则不动。
-    ```
+        * ```js
+            comments = [{}, {}, {}];
+            // ...
+            let comments = [...this.state.comments]; 
+            // do some change on comments.
+            this.setState({comments: comments}) // 是修改操作不是覆盖操作，属性有则修改，无则不动。
+            ```
+        * ```js
+            comments = [{}, {}, {}];
+            // ...
+            // 新版react16推荐下面的写法, 下面的是异步的, 有性能提升, 且可传入之前的state.
+            this.setState((prevState) => {
+                const {comments} = prevState;
+                // do some change on comments.
+                return {comments: comments};
+            }); 
+            ```
     * 错误范例:
         * ```js
             this.state.comments.push(comment);  // 需要通过setState方法来更新
@@ -192,6 +233,8 @@ return (
 
 10. 一个原则: 状态在哪儿, 更新状态的函数就在哪儿.
 
+11. 如果在短时间内连续调用多次异步```setState```, react 会把多个```setState```合并成一个```setState```.[#](https://www.cnblogs.com/qsmsfon/p/13613869.html)
+
 ## 组件属性: props
 
 1. ```state```用于保存一些用于动态变化的数据. ```props```用于保存组件标签的属性.  
@@ -200,20 +243,32 @@ return (
 
 3. ```PropTypes```用于限制传递标签属性的: 类型, 必要性.  
     ```javascript
-    static propTypes = {
-        name: PropTypes.string.isRequired,  // 字符串, 必需
-        gender: PropTypes.string,  // 字符串, 非必需
-        age: PropTypes.number,  // 数值, 非必需
+    import PropTypes from 'prop-types';
+    //...
+    class MyComponent extends Component{
+        static propTypes = {
+            name: PropTypes.string.isRequired,  // 字符串, 必需
+            gender: PropTypes.oneOf(['Male', 'Female'])  // 二选一字符串, 非必需
+            age: PropTypes.instanceOf(Number),  // 数值, 非必需
+        }
+        //...
     }
     ```
 
 4. 可通过设置组件类的```defaultProps```属性来设置默认值.  
     ```javascript
-    static defaultProps = {
-        name: "anonymous",
-        age:10
+    import PropTypes from 'prop-types';
+    //...
+    class MyComponent extends Component{
+        static defaultProps = {
+            name: "anonymous",
+            age:10
+        }
+        //...
     }
     ```
+
+5. ```propTypes```在运行阶段检查, typescript 在编译阶段检查.
 
 5. 现实开发中一般不限制```props```的类型和必要性, 也不设置默认值. 组件要传递的属性太多时, 写起来比较麻烦...
 
@@ -311,20 +366,29 @@ return (
         ```jsx
         <Button onClick={this.onClickHandler}>button</Button>
         ```
-4. 如果事件处理函数还想要传递其它参数, 则需要再加个箭头函数的壳.
+4. 如果事件处理函数还想要传递其它参数, 则需要再加个箭头函数的壳, 或是利用bind方法.
     * 函数定义:
         ```javascript
         onClickHandler = (id)=>{
             console.log(id);
         }
         ```
-    * 函数引用:  
+    * 函数引用(箭头函数):  
         ```jsx
         render() {
             let {id} = this.props;
             return <Button onClick={()=>{this.onClickHandler(id)}}>button</Button>;
         }
         ```
+    * 函数引用(bind)(最好在constructor里bind. 下面这样会影响性能):
+        ```jsx
+        render() {
+            let {id} = this.props;
+            return <Button onClick={this.onClickHandler.bind(this, id)}>button</Button>;
+        }
+        ```
+
+5. 自定义的组件并不是一个真实的DOM元素，不是最终渲染的页面的元素, 不存在事件。所有的事件处理函数都必须要绑定到真实的DOM上。如果试图为组件添加```onClick={this.onClickHandler}```，组件只会认为它是个名为onClick的```prop```.
 
 
 ## 组件: 组合使用
@@ -349,13 +413,19 @@ return (
         子组件不可直接向父组件传递数据. 子组件要想修改父组件的属性, 就需要父组件先自己有一个修改该属性的方法, 绑定上父组件实例(```this```)后, 将该方法传递给子组件. 然后子组件再通过调用该方法修改父组件的属性(如```state```).
     * 父组件接受子组件的数据  
         需要将一个子组件的数据传递给另一个子组件时, 需要新建```state```属性来保存. (```state```发生变化后会重新渲染, 此时通过```props```将```state```中的数据传递过去即可)
+
+3. 单向数据流, 父组件可以向子组件传递数据, 子组件可以读取但不要直接对数据进行修改. 修改时react会报只读错误. 这样方便维护和debug, 若渲染和期望不一致直接去父组件找问题就可以, 不需要挨个查子组件是否也有问题.
     
-3. jsx表达式中出现数组, 会将数组中的每一项都进行渲染. 一般这里会用到```map```函数将js数组里的每一项转化成jsx表达式, 并且要[为每一项设置一个key](#react-中的-key).  
+4. jsx表达式中出现数组, 会将数组中的每一项都进行渲染. 一般这里会用到```map```函数将js数组里的每一项转化成jsx表达式, 并且要[为每一项设置一个key](#react-中的-key).  
     ```jsx
     <ul className="list-group">
         {comments.map( comment => <Item key={comment.id} {...comment}/>)}
     </ul>
     ```
+
+5. react只是视图层框架, 有时还需借助数据层框架. 对于复杂的项目, 两个组件之间的通信可能会很麻烦, 需要从一个组件沿着虚拟dom树一层一层向上找到公共的组件组件, 再向下传递到另一个组件. 为了解决这个问题, 就产生了flux, redux等工具.
+
+6. 子组件render被重新调用(重新生成虚拟DOM节点, 不一定会更新真实DOM节点)的两种情况: 父组件重新渲染, 或者给子组件传入新的props. (父组件不会直接改变子组件的state)
    
 
 ## 组件: 受控组件与非受控组件
@@ -460,22 +530,29 @@ return (
 
 1. 基本原理  
     1. 初始化显示界面
-        1. 创建虚拟 DOM 树(一般 js 对象)
-        2. 真实 DOM 树
+        1. 数据(state) + 模板(JSX) => 虚拟 DOM 树(一般 js 对象, 比[DocumentFragment](https://developer.mozilla.org/en-US/docs/Web/API/DocumentFragment)还简单)
+        2. 虚拟 DOM 树 => 真实 DOM 树
         3. 绘制界面显示
     2. 更新界面
-        1. ```setState()```更新状态
-        2. 重新创建虚拟 DOM 树
+        1. ```setState()```/```forceUpdate```/new props
+        2. 创建新的虚拟 DOM 树
         3. 新/旧虚拟 DOM 树比较差异, 得到 Patch(s)(需要修改的部分)
         4. 更新差异对应的真实 DOM
         5. 局部界面重绘
 
 2. 虚拟 DOM + DOM Diff 算法: 最小化页面重绘.
 
-3. 重绘最小粒度为标签(DOM 节点).
+3. 用js生成生成一个js对象(虚拟DOM), 代价是很小的; 生成一个 DOM 元素, 需要调用 web application 级别的API, 代价是非常大的. 生成虚拟 DOM 的时间 + DOM diff + 更新差异 DOM 节点的时间, 大多情况下小于直接更新整个DOM树的时间.
 
-4. 若父虚拟 DOM 节点发生变化, 子节点未发生变化, 则子虚拟 DOM 节点会继续重复使用。
+4. 重绘最小粒度为标签(DOM 节点).
 
+5. 若父虚拟 DOM 节点发生变化, 子节点未发生变化, 则子虚拟 DOM 节点会继续重复使用(父节点变化, 子节点的```render```也会被调用, 但r```ender```后生成的是虚拟 DOM, 真实页面上子节点的DOM不一定会改变)。
+
+6. 虚拟 DOM 的比对是一层一层的同层比对, 一旦发现一个节点不同, 就会替换以该节点为根节点的子真实 DOM 树的所有节点.
+
+8. 虚拟DOM优点:
+    1. 性能提升了
+    2. 使得跨端应用得以实现. 相当于把虚拟DOM树作为中间语言. React Native
 
 
 ## React 中的 key
@@ -487,7 +564,7 @@ return (
 3. 虚拟 DOM 的 key 的作用?
     * 简单的说: key 是虚拟 DOM 对象的标识, 在更新显示时 key 起着极其重要的作用.
     * 详细的说: 当状态数据发生变化时, React 会生成新的虚拟 DOM, 随后 React 将之前的旧虚拟 DOM 与新的虚拟 DOM 进行 diff 比较.   
-        以新的虚拟 DOM 树为基准， 对其中的每一个节点, 在旧的虚拟 DOM 树中寻找是否存在具有相同 key 的节点:  
+        以新的虚拟 DOM 树为基准， 对其中的每一个节点, 在旧的虚拟 DOM 树中寻找是否存在具有相同 key 的节点(一层一层的比对):  
         * 旧的虚拟 DOM 中**找到了**相同的 key:
             * 若虚拟 DOM 没变, 直接使用原来的真实 DOM , 不去刷新页面的真实 DOM.
             * 若虚拟 DOM 变了, 先更新虚拟 DOM, 随后刷新页面的真实 DOM. (子节点另外观察, 父节点更新, 子节点不一定更新)
