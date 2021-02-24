@@ -466,6 +466,10 @@ return (
 
 ## 组件: 生命周期
 
+1. 生命周期图示(点击函数可跳到介绍页面): https://projects.wojtekmaj.pl/react-lifecycle-methods-diagram/  
+  声明周期介绍: https://reactjs.org/docs/react-component.html#reference
+
+
 1. 组件生命周期: 挂载 -> 更新 -> 卸载
 
 2. 生命周期函数 == 生命周期钩子 == 生命周期回调函数 == 生命周期回调钩子(叫钩子是因为React底层有一个监视组件的监视者, 每当组件处于不同状态时, 就将这些特定函数钩到主线程来执行)
@@ -518,10 +522,16 @@ return (
 
 6. 新版生命周期函数  
 
-    生命周期函数|描述
-    :-|:-
-    ```static getDerivedStateProps(props, state)```|取代了旧版中的```componentWillMount```, ```componentWillReceiveProps``` 以及 ```componentWillUpdate```. 需要设为静态方法. 有两个参数和返回值. 返回值是新的```state```, 会作为下一步```setState(state)```的参数.
-    ```getSnapshotBeforeUpdate(props, state): any```|新增的放置在```render```与```comopnentDidUpdate```之间的钩子. 需要返回一个任意类型的值. 必须与```componentDidUpdate(props, state, value)```一起使用, 返回值会作为其```value```参数.
+    生命周期函数|描述|```this.state```与```this.props```
+    :-|:-|:-
+    ```constructor(props)``` | 只用于两种 | / 
+    ```static getDerivedStateProps(props, state)```|取代了旧版中的```componentWillMount```, ```componentWillReceiveProps``` 以及 ```componentWillUpdate```. 需要设为静态方法. 有两个参数和返回值. 返回值是新的```state```, 会作为下一步```setState(state)```的参数.|静态方法没有```this```
+    ```render```
+    ```componentDidMount()``` | 在组件被挂载到真实DOM树之后立刻被调用 | 指向初始```state```和```props```
+    ```sholdComponentUpdate(nextProps, nextState)``` | props/state的改变不一定需要引起重新渲染时使用.<br/> (1) 只应该用于性能优化.<br/> (2) 用之前先考虑是否可以用[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)的默认实现.<br/> (3) 不推荐在里面使用JSON.stringify或深度相等判断, 十分影响性能 (4) 返回```false```不会阻止子组件的重新渲染 | 指向旧的
+    ```getSnapshotBeforeUpdate(prevProps, prevState, snapshot): any```|新增的放置在```render```与```comopnentDidUpdate```之间的钩子. 需要返回一个任意类型的值. 必须与```componentDidUpdate(props, state, value)```一起使用, 返回值会作为其```value```参数. | 指向新的
+    ```componentDidUpdate(prevProps, prevState, snapshot)``` | 在真实DOM树更新后被立刻调用.|指向新的
+    ```componentWillUnmount()``` | 组件被卸载销毁后立刻执行, 在这里面做必要的清理工作 | /
 
 
 6. componentWillxxx: 组件将要xxx. componentDidxxx: 组件做完了xxx. shouldComponentxxx: 组件是否应该xxx. 除了最后删除组件的钩子, 其它三个 componentWillxxx 即将过时.
@@ -534,7 +544,12 @@ return (
         新版: 令```getDerivedStateProps()```返回空对象.
     * ```state```不更新, 页面更新:  
         方法中调用```this.forceUpdate()```或更新```props```(父组件重新render).
-9. 为什么要在```componentDidUpdate(props, state)```之前添加一个```getSnapshotBeforeUpdate(props, state): any```, 并且传递一个```value```?  
+
+9. ```React.PureComponent```
+
+9. ```getDerivedStateFromProps(props, state)```[#](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops): 只为一种目的而存在: 允许一个组件根据Props的变化来更新内部状态. 尽量不要使用它, 如果使用先确认一下自己是否知道一些[更简单的替代方案](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html)
+
+10. 为什么要在```componentDidUpdate(prevProps, prevState, snapshot)```之前添加一个```getSnapshotBeforeUpdate(prevProps, prevState): any```, 并且传递一个```value```?  
     使得组件能在发生更改之前从 DOM 中捕获一些信息(例如:滚动位置). 此生命周期的任何返回值将作为参数传递给```componentDidUpdate()```
 
 
