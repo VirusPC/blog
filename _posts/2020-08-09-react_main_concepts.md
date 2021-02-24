@@ -186,9 +186,9 @@ return (
     }
     ```
 
-6. 箭头函数中```this```是组件的实例对象. 不可以直接用```confirm```, 需要通过```window.confirm```来使用: 当直接使用```confirm```时, 会去```this```查找, 不会去```window```查找. ```alert```可以正常使用.
+7. 箭头函数中```this```是组件的实例对象. 不可以直接用```confirm```, 需要通过```window.confirm```来使用: 当直接使用```confirm```时, 会去```this```查找, 不会去```window```查找. ```alert```可以正常使用.
 
-7. 组件实例对象的state：1.不能直接修改2.不能直接更新  
+8. 组件实例对象的state：1.不能直接修改2.不能直接更新  
     * 正确范例:  
         * ```js
             comments = [{}, {}, {}];
@@ -200,7 +200,7 @@ return (
         * ```js
             comments = [{}, {}, {}];
             // ...
-            // 新版react16推荐下面的写法, 下面的是异步的, 有性能提升, 且可传入之前的state.
+            // 新版react16推荐下面的写法, 这样react会把短时间内连续多个setState合并.
             this.setState((prevState) => {
                 const {comments} = prevState;
                 // do some change on comments.
@@ -220,7 +220,7 @@ return (
             this.setState({comments: comments});  // 可能出现不更新的情况, 尤其是当comments内容为对象时.
             ```
 
-8. 为标签添加事件时, 记得加```this```  
+9. 为标签添加事件时, 记得加```this```  
     ```jsx
     render(){
         //render
@@ -229,13 +229,19 @@ return (
     }
     ```
 
-9. ```render```[调用的次数为 1+n](#组件:-生命周期), 1是页面初始化时的调用次数, n是状态```state```更新的次数.
+10. ```render```[调用的次数为 1+n](#组件:-生命周期), 1是页面初始化时的调用次数, n是状态```state```更新的次数.
 
-10. 一个原则: 状态在哪儿, 更新状态的函数就在哪儿.
+11. 一个原则: 状态在哪儿, 更新状态的函数就在哪儿.
 
-11. 如果在短时间内连续调用多次异步```setState```, react 会把多个```setState```合并成一个```setState```.[#](https://www.cnblogs.com/qsmsfon/p/13613869.html)
+12. ```setState()``` 将组件状态的更改放入一个队列. 应该视```setState()```为一个请求而不是立即执行的命令. 为了性能上的提升, React 可能会延迟更新, 然后一下子更新多个组件. [#1](https://reactjs.org/docs/faq-state.html#what-is-the-difference-between-passing-an-object-or-a-function-in-setstate)[#2](https://reactjs.org/docs/state-and-lifecycle.html)
+
+13.  ```setState()```不总是立即更新组件, 它可能会晚些进行批处理或延迟更新, 这使得在调用完```setState()```后立刻读取```this.state```或是获取state对应的真实DOM会读取到更新前的数据.
+
+14. 为什么传入函数而不是传入对象: 二者在事件处理函数中都是异步的. 但传入函数允许编程人员在函数内安全的通过参数访问当前的state. 由于```setState```调用是批处理的, 这使得你可以将更新串起来, 并且保证他们按序执行, 避免冲突. [#](https://reactjs.org/docs/faq-state.html#what-is-the-difference-between-passing-an-object-or-a-function-in-setstate)
 
 ## 组件属性: props
+
+1. 官网各类型示例: https://reactjs.org/docs/typechecking-with-proptypes.html
 
 1. ```state```用于保存一些用于动态变化的数据. ```props```用于保存组件标签的属性.  
 
@@ -247,9 +253,13 @@ return (
     //...
     class MyComponent extends Component{
         static propTypes = {
-            name: PropTypes.string.isRequired,  // 字符串, 必需
             gender: PropTypes.oneOf(['Male', 'Female'])  // 二选一字符串, 非必需
             age: PropTypes.instanceOf(Number),  // 数值, 非必需
+            item: PropTypes.exact({  // 用于限制对对象, 比objectOf和shape更严格
+                id: PropTypes.string.isRequired,
+                name: PropTypes.oneOfType([PropTypes.string, PropTypes.string]), // 二选一类型
+            }), 
+            onClick: PropTypes.func
         }
         //...
     }
@@ -312,6 +322,8 @@ return (
     ```
 
 ## 组件属性: refs与事件处理
+
+1. react 中并不建议使用ref, 更推荐使用数据驱动的方式编写代码, 尽量不要直接操作 DOM.
 
 1. 可以为标签增加一个```ref```属性, 其值唯一, 用于引用. 组件类的实例就会将该标签的DOM元素保存到自己的```refs```属性中. 这样就可以在方法中引用相应的标签的DOM元素了. 假设一个标签的```id```和```ref```值都为```input```, 则:   
     ```jsx
