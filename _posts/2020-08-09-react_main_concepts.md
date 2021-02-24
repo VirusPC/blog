@@ -76,7 +76,7 @@ React: 核心概念
 
 8. jsx 中不允许有多个根标签。一个虚拟 DOM 里最顶级标签唯一。这也导致一个问题: 会有很多多余的根标签, 使得 DOM 树变得比较"深". 
 
-9. 要想解决上条带来的问题, 在 React 16 之后的版本可以使用 ```Fragment```标签, 用它来做最外层的标签. ```Frangment```最后不会转换成任何标签, 只做占位符. 它还有一个短语法, 可以直接写成空标签```<></>```
+9. 要想解决上条带来的问题, 在 React 16 之后的版本可以使用 ```Fragment```标签, 用它来做最外层的标签. ```Frangment```最后不会转换成任何标签, 只做占位符. 它还有一个短语法, 可以直接写成空标签```<></>```. 它只允许```key```这一种属性
 ```jsx
 import Fragment from 'react'
 //...
@@ -238,6 +238,15 @@ return (
 13.  ```setState()```不总是立即更新组件, 它可能会晚些进行批处理或延迟更新, 这使得在调用完```setState()```后立刻读取```this.state```或是获取state对应的真实DOM会读取到更新前的数据.
 
 14. 为什么传入函数而不是传入对象: 二者在事件处理函数中都是异步的. 但传入函数允许编程人员在函数内安全的通过参数访问当前的state. 由于```setState```调用是批处理的, 这使得你可以将更新串起来, 并且保证他们按序执行, 避免冲突. [#](https://reactjs.org/docs/faq-state.html#what-is-the-difference-between-passing-an-object-or-a-function-in-setstate)
+
+15. 不要再构造函数中, 直接复制```props```到```state```. 这不但没有必要(你可以直接用```this.props.color```), 还会带来bug(```props```更新时, ```state```不会跟着更新). 只有当你有意用```props```来初始化state且忽略```props```的更新的时候才用, 此时应将```color```命名为```initialColor```或```defaultColor```.
+    ```js
+    constructor(props) {
+    super(props);
+    // Don't do this!
+    this.state = { color: props.color };
+    }
+    ```
 
 ## 组件属性: props
 
@@ -524,7 +533,8 @@ return (
 
     生命周期函数|描述|```this.state```与```this.props```
     :-|:-|:-
-    ```constructor(props)``` | 只用于两种 | / 
+    ```constructor(props)``` | 只用于两种目的:<br>(1)通过直接赋值来初始化```this.state```<br>(2)为事件处理函数绑定```this``` | / 
+    ```render()``` | 唯一一个必须的方法. 返回值可能是[很多种类型](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html). 不应该在里面修改```state``` | 指向新的
     ```static getDerivedStateProps(props, state)```|取代了旧版中的```componentWillMount```, ```componentWillReceiveProps``` 以及 ```componentWillUpdate```. 需要设为静态方法. 有两个参数和返回值. 返回值是新的```state```, 会作为下一步```setState(state)```的参数.|静态方法没有```this```
     ```render```
     ```componentDidMount()``` | 在组件被挂载到真实DOM树之后立刻被调用 | 指向初始```state```和```props```
@@ -545,7 +555,7 @@ return (
     * ```state```不更新, 页面更新:  
         方法中调用```this.forceUpdate()```或更新```props```(父组件重新render).
 
-9. ```React.PureComponent```
+9. ```React.PureComponent```: ```React.PureComponent```与```React.Component```类似. 它们之间的区别在于```React.Component并```未实现```shouldComponentUpdate()```, 但是```React.PureComponent```却通过浅层的prop和状态比较来实现. 如果您的React组件的```render()```函数在相同的```props```和```state```下呈现相同的结果, 则在某些情况下, 您可以使用```React.PureComponent```来提高性能. 此外, ```React.PureComponent```的```shouldComponentUpdate()```会跳过整个组件子树的prop更新.请确保所有子组件也都是"纯"的. [#](https://reactjs.org/docs/react-api.html#reactpurecomponent)
 
 9. ```getDerivedStateFromProps(props, state)```[#](https://reactjs.org/docs/react-component.html#static-getderivedstatefromprops): 只为一种目的而存在: 允许一个组件根据Props的变化来更新内部状态. 尽量不要使用它, 如果使用先确认一下自己是否知道一些[更简单的替代方案](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html)
 

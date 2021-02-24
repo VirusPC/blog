@@ -8,6 +8,11 @@ Functional programming is the process of building software by composing **pure f
 
 Functional programming is **declarative** rather than imperative, and application state flows through pure functions. Contrast with object oriented programming, where application state is usually shared and colocated with methods in objects.
 
+可以将函数拆分成多个函数. 面向对象比较麻烦.
+一个个函数组成, 方便测试
+
+
+
 
 
 declarative programming 与 lambda?
