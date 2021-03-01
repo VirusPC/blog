@@ -562,6 +562,9 @@ return (
 10. 为什么要在```componentDidUpdate(prevProps, prevState, snapshot)```之前添加一个```getSnapshotBeforeUpdate(prevProps, prevState): any```, 并且传递一个```value```?  
     使得组件能在发生更改之前从 DOM 中捕获一些信息(例如:滚动位置). 此生命周期的任何返回值将作为参数传递给```componentDidUpdate()```
 
+11. 在只与更新相关的生命周期函数中, 在render前的会接受新的```props```和```state```, ```this.props```和```this.state```指向旧的. 在render后的与之相反, 且会多出一个```snapshot```参数.
+
+12. ajax请求请求一次就好, 最好放在```componentDidMount```里. 虽然```constructor```也只执行一次, 但最好不要将它用于初始化state和为监听函数绑定实例对象之外的功能. 另外由于ajax是异步的, 不能在constructor里的ajax里直接为```this.state```赋值. 
 
 ## 虚拟 DOM 与 DOM Diff 算法
 
