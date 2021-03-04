@@ -11,8 +11,9 @@ Redux
 - [Redux](#redux)
   - [什么是 Redux](#什么是-redux)
   - [Redux 的工作流程](#redux-的工作流程)
-  - [Store](#store)
   - [Redux DevTools](#redux-devtools)
+  - [Store, Reducer 与获取 state](#store-reducer-与获取-state)
+  - [Action 与修改 state](#action-与修改-state)
 
 ---
 
@@ -41,12 +42,23 @@ Reducers: 图书放置位置的记录本
 
 改数据: React Component 向 Store 发出改数据的 Action Creator, Store 查阅 Reducer 以获取改数据的方式, 改完数据后通知 Components.
 
-Store
+Redux DevTools
 ---
 
-创建 store, 并从 store 获取数据的基本流程.
+1. 在chrome商店里找到这个插件, 安装
+2. 修改代码中的```store```
 
-1. reducer, ```src/store/reducer.js```:
+  ```js
+  const store = createStore(
+      reducer,
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  );
+  ```
+
+Store, Reducer 与获取 state
+---
+
+1. 创建 Reducer, ```src/store/reducer.js```:
 
   ```js
   const defaultState = {
@@ -59,7 +71,7 @@ Store
   }
   ```
 
-2. 利用 reducer 创建 store, ```src/store/index.js```:
+2. 利用 Reducer 创建 Store, ```src/store/index.js```:
 
   ```js
   import { createStore } from "redux"
@@ -70,7 +82,7 @@ Store
   export default store;
   ```
 
-3. component 通过 store 获取 reducer 中的数据, ```src/component/Todolist.js```
+3. 获取Reducer中的数据: Reducer => Store => React Components, ```src/component/Todolist.js```
 
   ```js
   import {Component} from 'react'
@@ -79,20 +91,53 @@ Store
   class TodoList extends Component {
     constructor(props){
       super(props);
-      this.state = store.getState
+      this.state = store.getState()
     }
   }
   ```
 
-Redux DevTools
+Action 与修改 state
 ---
 
-1. 在chrome商店里找到这个插件, 安装
-2. 修改代码中的```store```
+component 发出 action, 修改 state 的过程:
+
+1. React Components => Action Creators, ```src/component/Todolist.js```:
 
   ```js
-  const store = createStore(
-      reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+    const action = {
+      type: 'change_input_value',
+      value: e.target.value,
+    }
+  ```
+
+2. Action Creators => Store, ```src/component/Todolist.js```:
+
+  ```js
+    store.dispatch(action);
+  ```
+
+3. Store => Reducers => Store, ```src/store/reducer.js```:  
+   Store 自动将 ```prevState``` 和 ```action``` 传递给 Reducer, Reducer 对 action 进行处理, 并返回新的 state 给 Store.
+
+  ```js
+  // reducer 可以接收 state, 但是绝不能修改 state.
+  export default (state = defaultState, action) => {
+      if(action.type === 'change_input_value') {
+        const newState = JSON.parse(JSON.stringify(state));
+        newState.inputValue = action.value;
+        console.log(newState);
+        return newState;
+      }
+      return state;
+  }
+  ```
+   
+4. Store => Component, ```src/component/Todolist.js```:
+
+  组件监听数据发生的变化. 只要 Store 发生了变化, Component 就会重新从 Store 取一次数据, 替换 Component 中的数据.
+
+  ```js
+  componentDidMount = () => {
+    store.subscribe(() => this.setState(store.getState()));
+  }
   ```
