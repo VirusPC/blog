@@ -5,13 +5,13 @@ tags: [‘react’, 'redux']
 resource_path: /blog/assets/2020/
 ---
 
-Redux
+Redux基础
 ===
 
 Table of Contents
 ---
 
-- [Redux](#redux)
+- [Redux基础](#redux基础)
   - [Table of Contents](#table-of-contents)
   - [什么是 Redux](#什么是-redux)
   - [Redux 的工作流程](#redux-的工作流程)
@@ -55,55 +55,55 @@ Redux DevTools
 1. 在chrome商店里找到这个插件, 安装
 2. 修改代码中的```store```
 
-  ```js
-  const store = createStore(
-      reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
-  ```
+    ```js
+    const store = createStore(
+        reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    );
+    ```
 
 Store, Reducer 与获取 state
 ---
 
 1. 创建 Reducer, ```src/store/reducer.js```:
 
-  最开始 Store 会给 Reducer 穿空参数, 此时设置 ```state``` 为自定义的 ```state```
+    最开始 Store 会给 Reducer 穿空参数, 此时设置 ```state``` 为自定义的 ```state```
 
-  ```js
-  const defaultState = {
-      initialValue: 'initial value',
-      list: ["c", "java", "javascript"],
-  }
+    ```js
+    const defaultState = {
+        initialValue: 'initial value',
+        list: ["c", "java", "javascript"],
+    }
 
-  export default (state = defaultState, action) => {
-      return state;
-  }
-  ```
+    export default (state = defaultState, action) => {
+        return state;
+    }
+    ```
 
 2. 利用 Reducer 创建 Store, ```src/store/index.js```:
 
-  ```js
-  import { createStore } from "redux"
-  import reducer from './reducer'
+    ```js
+    import { createStore } from "redux"
+    import reducer from './reducer'
 
-  const store = createStore(reducer);
+    const store = createStore(reducer);
 
-  export default store;
-  ```
+    export default store;
+    ```
 
 3. 获取Reducer中的数据: Reducer => Store => React Components, ```src/component/Todolist.js```
 
-  ```js
-  import {Component} from 'react'
-  import store from '../store'
+    ```js
+    import {Component} from 'react'
+    import store from '../store'
 
-  class TodoList extends Component {
-    constructor(props){
-      super(props);
-      this.state = store.getState()
+    class TodoList extends Component {
+      constructor(props){
+        super(props);
+        this.state = store.getState()
+      }
     }
-  }
-  ```
+    ```
 
 Action 与修改 state (不使用 Action Creator)
 ---
@@ -112,41 +112,42 @@ Action 与修改 state (不使用 Action Creator)
 
 1. React Components (=> 不使用 Action Creators) => Store, ```src/component/Todolist.js```:
 
-  ```js
-  handleInputChange = (e) => {
-    const action = {
-      type: 'change_input_value',
-      value: e.target.value,
+    ```js
+    handleInputChange = (e) => {
+      const action = {
+        type: 'change_input_value',
+        value: e.target.value,
+      }
+      store.dispatch(action);
     }
-    store.dispatch(action);
-  }
-  ```
+    ```
 
 2. Store => Reducers => Store, ```src/store/reducer.js```:  
-   Store 自动将 ```prevState``` 和 ```action``` 传递给 Reducer, Reducer 对 action 进行处理, 并返回新的 state 给 Store.
 
-  ```js
-  // reducer 可以接收 state, 但是绝不能修改 state.
-  export default (state = defaultState, action) => {
-      if(action.type === 'change_input_value') {
-        const newState = JSON.parse(JSON.stringify(state));
-        newState.inputValue = action.value;
-        console.log(newState);
-        return newState;
+    Store 自动将 ```prevState``` 和 ```action``` 传递给 Reducer, Reducer 对 action 进行处理, 并返回新的 state 给 Store.
+
+      ```js
+      // reducer 可以接收 state, 但是绝不能修改 state.
+      export default (state = defaultState, action) => {
+          if(action.type === 'change_input_value') {
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.inputValue = action.value;
+            console.log(newState);
+            return newState;
+          }
+          return state;
       }
-      return state;
-  }
-  ```
-   
+      ```
+
 3. Store => Component, ```src/component/TodoList.js```:
 
-  组件监听数据发生的变化. 只要 Store 发生了变化, Component 就会重新从 Store 取一次数据, 替换 Component 中的数据.
+    组件监听数据发生的变化. 只要 Store 发生了变化, Component 就会重新从 Store 取一次数据, 替换 Component 中的数据.
 
-  ```js
-  componentDidMount = () => {
-    store.subscribe(() => this.setState(store.getState()));
-  }
-  ```
+    ```js
+    componentDidMount = () => {
+      store.subscribe(() => this.setState(store.getState()));
+    }
+    ```
 
 ActionTypes的拆分
 ---
@@ -172,27 +173,71 @@ export const DELETE_TODO_ITEM = 'delete_todo_item';
 
 1. 创建 action creators, ```src/store/actionCreators.js```:
 
-  ```js
-  import { CHANGE_INPUT_VALUE } from "./actionTypes";
+    ```js
+    import { CHANGE_INPUT_VALUE } from "./actionTypes";
 
-  export const getInputChangeAction = (value) => ({
-    type: CHANGE_INPUT_VALUE,
-    value: value,
-  })
-  ```
+    export const getInputChangeAction = (value) => ({
+      type: CHANGE_INPUT_VALUE,
+      value: value,
+    })
+    ```
 
 2. 使用 action creators, ```src/component/TodoList.js```
 
-  ```javascript
-  import { getInputChangeAction } from "../store/actionCreators.js"
+    ```javascript
+    import { getInputChangeAction } from "../store/actionCreators.js"
 
-  handleInputChange = (e) => {
-    const action = getInputChangeAction(e.target.value);
-    store.dispatch(action);
-  }
-  ```
+    handleInputChange = (e) => {
+      const action = getInputChangeAction(e.target.value);
+      store.dispatch(action);
+    }
+    ```
 
 Redux 设计和使用的三项原则
 ---
 
-1. store 是唯一的  
+1. store 是唯一的.  
+  
+    整个应用中只有一个 store 公共存储空间.
+
+2. 只有 store 能够改变自己的内容.  
+  
+    reducer 返回给 store 一个新的 state, store 拿到 reduer 的数据后, 自己对自己的内容进行更新. 所以不要在 reducer 中直接对传入的 state 进行操作, 修改前先用 ```JSON.PARSE(json.stringify(state)``` 复制一份.
+
+3. reducer 必须是纯函数(pure function).  
+  
+    纯函数指的是, 给定固定的输入, 就一定会有固定的输出, 而且不会有任何副作用.  
+  
+    1. 一旦一个函数中有 ```setTimeout```, *Ajax* 请求或是和时间相关的操作, 它就不是纯函数.
+  
+        具体到 reducer, 是指当传入的 state 和 action 固定时, 返回的结果是固定的. 一个不固定的例子如下:
+
+        ```js
+        import CHANGE_INPUT_VALUE from "./actionTypes"
+
+        export default (state = defaultState, action) = {
+          if (action.type === CHANGE_INPUT_VALUE) {
+            const newState = JSON.parse(JSON.stringify(state));
+            newState.inputValue = new Date();  // 不固定
+            return newState;
+          }
+
+          // ...
+        }
+        ```
+
+    2. reducer 中一旦对参数直接进行了修改, 就产生了副作用. 一个具有副作用的例子如下:
+
+        ```js
+        import CHANGE_INPUT_VALUE from "./actionTypes"
+
+        export default (state = defaultState, action) = {
+          if (action.type === CHANGE_INPUT_VALUE) {
+            state.inputValue = '';
+            const newState = JSON.parse(JSON.stringify(state));
+            return newState;
+          }
+
+          // ...
+        }
+ 
