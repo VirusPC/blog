@@ -61,6 +61,7 @@ componentDidMount = () => {
 步骤一: 启用 Redux Thunk (同时也启动 Redux DevTools) :
 
 ```js
+/* store.js */
 import { createStore, applyMiddleware, compose } from "redux"
 import reducer from './reducer'
 import thunk from "redux-thunk"
@@ -78,7 +79,7 @@ const store = createStore(
 export default store;;
 ```
 
-步骤二: 正常情况下, actionCreator 应该返回一个对象. 用了 thunk 之后, 它可以返回一个函数了. 我们可以把复杂逻辑放到这个函数里. 这个函数有一个参数```dispatch```, 相当于```store.dispatch```. 我们在这个函数里写逻辑继续dispatch其他action即可.
+步骤二: 正常情况下, actionCreator 应该返回一个对象. 用了 thunk 之后, 它可以返回一个函数了. 我们可以把复杂逻辑放到这个函数里. 这个函数有一个参数```dispatch```, 相当于```store.dispatch```. 我们在这个函数里写逻辑继续dispatch其他action来修改state即可.
 
 ```js
 /* actionCreators.js */
@@ -103,12 +104,21 @@ componentDidMount = () => {
   const action = getTodoList();
   store.dispatch(action);
 }
-
 ```
+
+除了可以简化组件外, 这种方式还十分利于自动化测试.
 
 ## 什么是 Redux 的中间件
 
+![Redux Data Flow](./redux-data-flow.png)
+
+Redux 中间件是位于 Action 和 Store 之间. 不使用中间件时, action 是一个对象, 直接派发给 store. 有了中间件后, action可以是函数了, 这个函数实际上就是对```store.dispatch```的封装. dispatch 可以区分对象和函数. dispatch 一个函数, 不会直接将它传给 store, 它会直接让函数执行.
+
+除了 redux-thunker 外, 还有 redux-logger (可以记录 action 每次发送的日志), redux-saga (类似 redux-thunker)等.
+
 ## Redux-saga 中间件使用入门
+
+redux-saga 类似 redux-thunker, 但 redux-thunker 是把异步操作放入action中, redux-saga 的设计思路是单独将异步操作拆分出来放到专门的文件中进行管理
 
 ## 如何使用 Rect- redux
 
