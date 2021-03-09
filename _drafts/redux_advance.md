@@ -17,7 +17,7 @@ resource_path: /blog/assets/2020/
   - [使用 Redux-thunk 中间件实现 ajax 数据请求](#使用-redux-thunk-中间件实现-ajax-数据请求)
   - [什么是 Redux 的中间件](#什么是-redux-的中间件)
   - [Redux-saga 中间件使用入门](#redux-saga-中间件使用入门)
-  - [如何使用 Rect- redux](#如何使用-rect--redux)
+  - [如何使用 React- redux](#如何使用-react--redux)
   - [使用 React-redux 完成 TodoList 功能](#使用-react-redux-完成-todolist-功能)
 
 ## UI 组件和容器组件
@@ -114,12 +114,78 @@ componentDidMount = () => {
 
 Redux 中间件是位于 Action 和 Store 之间. 不使用中间件时, action 是一个对象, 直接派发给 store. 有了中间件后, action可以是函数了, 这个函数实际上就是对```store.dispatch```的封装. dispatch 可以区分对象和函数. dispatch 一个函数, 不会直接将它传给 store, 它会直接让函数执行.
 
-除了 redux-thunker 外, 还有 redux-logger (可以记录 action 每次发送的日志), redux-saga (类似 redux-thunker)等.
+除了 *redux-thunker* 外, 还有 *redux-logger* (可以记录 action 每次发送的日志), *redux-saga* (类似 *redux-thunker*)等.
 
 ## Redux-saga 中间件使用入门
 
-redux-saga 类似 redux-thunker, 但 redux-thunker 是把异步操作放入action中, redux-saga 的设计思路是单独将异步操作拆分出来放到专门的文件中进行管理
+[*redux-saga*](https://github.com/corupta/redux-saga) 类似 *redux-thunker*, 但 *redux-thunker* 是把异步操作放入action中, redux-saga 的设计思路是单独将异步操作拆分出来放到专门的文件中进行管理
 
-## 如何使用 Rect- redux
+步骤一: 配置saga中间件
+
+```js
+/* store/index.jx */
+import { createStore, applyMiddleware, compose } from "redux"
+import reducer from './reducer'
+import createSagaMiddleware from "redux-saga"
+import todoSagas from './sagas'
+
+const sagaMiddleware = createSagaMiddleware();
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+const store = createStore(
+  reducer,
+  composeEnhancers(
+    applyMiddleware(
+     sagaMiddleware 
+    )
+  )
+);
+
+sagaMiddleware.run(todoSagas);
+
+export default store;
+```
+
+步骤二, 创建 ```saga.js```, export default 一个 **generator**. ```takeEvery(actionType, worker)```会捕捉每一个action类型, 并执行对应方法```worker```. ```worker``` 可以是普通函数, 也可以是 generator, 最好用 generator (注意在 generator 中 ajax 不必使用 promise). 在```worker```中我们可以继续 dispatch action, 但不是用的```store.dispatch```, 也不是像 redux-thunk 那样会通过参数传入 ```dispatch``` 方法, 而是通过导入 ```reeux-saga/effects``` 中的 ```put``` 来进行dispatch.
+
+```js
+/* sagas.js */
+import { takeEvery, put } from "redux-saga/effects"
+import { GET_INIT_LIST }  from './actionTypes'
+import axios from "axios"
+import { initListAction } from './actionCreators'
+
+function* getInitList() {
+  try{
+    const res = yield axios.get("http://localhost:3000/data");
+    const action = initListAction(res.data);
+    yield put(action);
+  } catch(e) {
+    console.error("list request error!")
+  }
+}}
+
+function* mySaga() {
+  //console.log("mysaga");
+  // 捕捉每一个action类型, 执行对应方法. 之前只能在reducer内捕获action类型
+  yield takeEvery(GET_INIT_LIST, getInitList);
+}
+
+export default mySaga;
+```
+
+步骤三: 创建 mySaga 要捕获的 action 类型的 action creator.
+
+```js
+import { GET_INIT_LIST } from "./actionTypes"
+export const getInitListAction = () => ({
+  type: GET_INIT_LIST
+})
+```
+
+与 *redux-thunk* 相比, 他们都添加了中间 action, 通过发送中间 action 间接发送最终所需要的 action. 但是, *redux-thunk* 使得 store 不但可以 dispatch 一个对象, 还可以直接 dispatch 一个函数, 我们将异步请求或复杂逻辑放到这个函数形式的 action 中, 然后在这个 action 中继续 dispatch 最终所需的会直接改变状态的 action. 而使用 *redux-saga* 后, store 依旧是只能 dispatch 对象, 但是 *redux-saga* 可以捕获指定 type 的 action, 并执行对应的方法, 在这个方法中通过自己的```put```方法来继续 dispatch aciton.
+
+此外, *redux-saga* 要比 *redux-thunk* 复杂得多, 它具有非常丰富的 API.
+
+## 如何使用 React- redux
 
 ## 使用 React-redux 完成 TodoList 功能
