@@ -11,6 +11,7 @@ Table of contents
     - [The Undefined Type](#the-undefined-type)
     - [The Null Type](#the-null-type)
     - [The Boolean Type](#the-boolean-type)
+    - [The Symbol Type](#the-symbol-type)
   - [Operators](#operators)
   - [Statements](#statements)
   - [Functions](#functions)
@@ -163,7 +164,23 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
     let messageAsBoolean = Boolean(message);
     ```
 
-2. 
+2. Data types and their specific conversions
+
+    If the value is omitted or is `0`, `-0`, `null`, `false`, `NaN`, `undefined`, or the empty string (`""`), the object has an initial value of `false`. All other values, including any object, an empty array (`[]`), or the string `"false"`, create an object with an initial value of `true`.
+
+    DATA TYPE | VALUES CONVERTED TO TRUE | VALUES CONVERTED TO FALSE
+    :- | :- | :-
+    Boolean | true | false
+    Number | Any nonzero number(including infinity) | 0, NaN
+    String | Any nonempty string | ""(empty string)
+    Undefined | n/a | undefined
+    Symbol | Any symbol | /
+    Object | Any object | null
+
+
+### The Symbol Type
+
+1. Symbol值只能转换为字符串值或者布尔值。
 
 ---
 
