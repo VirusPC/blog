@@ -1,8 +1,8 @@
 ---
 title: Redux 进阶
 categories: ['前端']
-tags: [‘react’, 'redux']
-resource_path: /blog/assets/2020/
+tags: ['react', 'redux']
+resource_path: /blog/assets/2020/03/23
 ---
 
 # Redux 进阶
@@ -25,17 +25,17 @@ resource_path: /blog/assets/2020/
 
 UI组件:
 
-![UI comopnent](./ui-component.png)
+![UI comopnent]({{page.resource_path}}/ui-component.png)
 
 容器组件:
 
-![container comopnent](./container-component.png)
+![container comopnent]({{page.resource_path}}/container-component.png)
 
 ## 无状态组件
 
 当一个组件里的方法只有```render```时, 我们可以将其写成一个函数, 称之为无状态组件. 上面定义的UI组件可以写成一个无状态组件, 它可以写成下面这样的函数形式:
 
-![UI comopnent](./ui-component2.png)
+![UI comopnent]({{page.resource_path}}/ui-component2.png)
 
 无状态组件的优势在于它的性能比较高, 因为它就是一个简单函数, 而我们之前定义的组件是一个类.
 
@@ -109,7 +109,7 @@ componentDidMount = () => {
 
 ## 什么是 Redux 的中间件
 
-![Redux Data Flow](./redux-data-flow.png)
+![Redux Data Flow]({{page.resource_path}}/redux-data-flow.png)
 
 Redux 中间件是位于 Action 和 Store 之间. 不使用中间件时, action 是一个对象, 直接派发给 store. 有了中间件后, action可以是函数了, 这个函数实际上就是对```store.dispatch```的封装. dispatch 可以区分对象和函数. dispatch 一个函数, 不会直接将它传给 store, 它会直接让函数执行.
 
@@ -256,4 +256,4 @@ const mapDispatchToProps = (dispatch) => {
     }
   }
 }
-````
+```
