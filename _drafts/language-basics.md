@@ -446,6 +446,44 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
         ```
 
 6. **Using Symbols as Properties**:
+    1. Anywhere you can normally use a string or number property, you can also use a symbol. An object literal can only use a symbol as a property inside the computed property syntax.
+        ```javascript
+        let s1 = Symbol('foo');
+        let s2 = Symbol('bar');
+        let s3 = Symbol('baz');
+
+        let o = {
+          [s1]: 'fool val',
+          property1: "hello",
+        };
+        o[s2] = 'bar val';
+
+        Object.defineProperty(o, s3, { value: 'baz val' });
+        console.log(Object.keys(o)); // ['property1']
+        console.log(o);  
+        //{
+        //  property1: 'hello', 
+        //  [Symbol(foo)]: 'fool val',
+        //  [Symbol(bar)]: 'bar val'
+        //}
+        ```
+    2. Just as `Object.getOwnPropertyNames()` returns an array of regular properties on an object instance, `Object.getOwnPropertySymbols()` returns an array of symbol properties on an object instance. The return values of these two methods are mutually **exclusive**. `Object .getOwnPropertyDescriptors()` will return an object containing both regular and symbol property descriptors. `Reflect.ownKeys()` will return both types of keys.
+    ```javascript
+    let s1 = Symbol('foo'), s2 = Symbol('bar');
+    let o = {
+      [s1]: 'foo val', 
+      [s2]: 'bar val', 
+      baz: 'baz val', 
+      qux: 'qux val'
+    };
+
+    console.log(Object.getOwnPropertySymbols(o)); // [Symbol(foo), Symbol(bar)]
+    console.log(Object.getOwnPropertyNames(o)); // ["baz", "qux"]
+    console.log(Object.getOwnPropertyDescriptors(o)); // {baz: {...}, qux: {...}, Symbol(foo): {...}, Symbol(bar): {...}}
+    console.log(Reflect.ownKeys(o));
+    // ["baz", "qux", Symbol(foo), Symbol(bar)]
+    ```
+
 
 
 7. Symbol值只能转换为字符串值或者布尔值。
