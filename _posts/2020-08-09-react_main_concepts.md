@@ -12,17 +12,19 @@ React: 核心概念
 
 ## 目录
 
-1. [React 特性](#react-特性)
-2. [JSX 的基本使用](#jsx-的基本使用)
-3. [组件的基本使用](#组件的基本使用)
-4. [组件属性: state](#组件属性-state)
-5. [组件属性: props](#组件属性-props)
-6. [组件属性: refs与事件处理](#组件属性-refs与事件处理)
-7. [组件: 组合使用](#组件-组合使用)
-8. [组件: 受控组件与非受控组件](#组件-受控组件与非受控组件)
-9. [组件: 生命周期](#组件-生命周期)
-10. [虚拟 DOM 与 DOM Diff 算法](#虚拟-dom-与-dom-diff-算法)
-11. [React 中的 key](#react-中的-key)
+- [React: 核心概念](#react-核心概念)
+  - [目录](#目录)
+  - [React 特性](#react-特性)
+  - [JSX 的基本使用](#jsx-的基本使用)
+  - [组件的基本使用](#组件的基本使用)
+  - [组件属性: state](#组件属性-state)
+  - [组件属性: props](#组件属性-props)
+  - [组件属性: refs与事件处理](#组件属性-refs与事件处理)
+  - [组件: 组合使用](#组件-组合使用)
+  - [组件: 受控组件与非受控组件](#组件-受控组件与非受控组件)
+  - [组件: 生命周期](#组件-生命周期)
+  - [虚拟 DOM 与 DOM Diff 算法](#虚拟-dom-与-dom-diff-算法)
+  - [React 中的 key](#react-中的-key)
 
 ---
 
@@ -71,25 +73,26 @@ React: 核心概念
 6. js 中可以使用 jsx 表达式；jsx 表达式中也可以嵌套 js 表达式（js 语句不可）。可层层嵌套。
 
 7. 比起 HTML，jsx 更像是 js。React DOM 使用驼峰式属性命名方式而非 HTML 属性名。
-    比如：jsx 中 ```class``` 应改为 ```className```（js 中 ```class``` 为关键字，jsx中有可能嵌套js，避免歧义)。
-    ```tabindex``` 应该为 ```tabIndex```。```onclick```应改为```onClick```。
+    比如：jsx 中 `class`应改为 `className`（js 中 `class` 为关键字，jsx中有可能嵌套js，避免歧义)。
+    `tabindex` 应该为 `tabIndex`。`onclick`应改为`onClick`。
 
 8. jsx 中不允许有多个根标签。一个虚拟 DOM 里最顶级标签唯一。这也导致一个问题: 会有很多多余的根标签, 使得 DOM 树变得比较"深". 
 
-9. 要想解决上条带来的问题, 在 React 16 之后的版本可以使用 ```Fragment```标签, 用它来做最外层的标签. ```Frangment```最后不会转换成任何标签, 只做占位符. 它还有一个短语法, 可以直接写成空标签```<></>```. 它只允许```key```这一种属性
-```jsx
-import Fragment from 'react'
-//...
-return (
-  <Fragment>
-    <div><input/><button>submit</button></div>
-    <ul>
-        <li>Learning English</li>
-        <li>Learning React</li>
-    <ul>
-  </Fragment>
-)
-```
+9. 要想解决上条带来的问题, 在 React 16 之后的版本可以使用 `Fragment`签, 用它来做最外层的标签. `Frangment`最后不会转换成任何标签, 只做占位符. 它还有一个短语法, 可以直接写成空标签`<></>`. 它只允许`key`这一种属性
+
+    ```jsx
+    import Fragment from 'react'
+    //...
+    return (
+    <Fragment>
+        <div><input/><button>submit</button></div>
+        <ul>
+            <li>Learning English</li>
+            <li>Learning React</li>
+        <ul>
+    </Fragment>
+    )
+    ```
 
 9. 由于 jsx 表达式会被编译成 js，jsx 中可以使用 if-else 等 js 控制语句，函数定义等。
 
