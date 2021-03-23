@@ -18,7 +18,6 @@ resource_path: /blog/assets/2020/
   - [什么是 Redux 的中间件](#什么是-redux-的中间件)
   - [Redux-saga 中间件使用入门](#redux-saga-中间件使用入门)
   - [如何使用 React-Redux](#如何使用-react-redux)
-  - [使用 React-redux 完成 TodoList 功能](#使用-react-redux-完成-todolist-功能)
 
 ## UI 组件和容器组件
 
@@ -209,34 +208,32 @@ function App() {
 }
 
 export default App;
-}
+
 ```
 
-第二步, 从```react-redux```中导入```connect```, 利用```connect```和两个后续创建的映射规则创建连接, 将```TodoList```组件包裹起来. 不再直接导出```TodoList```, 而是导出包裹后的. ```TodoList```中也无需再导入```store```并调用```store.subscribe(this.setState)```, 不再通过```this.state```访问, 而是通过```this.props```来访问. props 是两个映射结果的合并.
+第二步, 从`react-redux`中导入`connect`, 利用`connect`和两个后续创建的映射规则创建连接, 将`TodoList`组件包裹起来. 不再直接导出`TodoList`, 而是导出包裹后的. `TodoList`中也无需再导入`store`并调用`store.subscribe(this.setState)`, 不再通过`this.state`访问, 而是通过`this.props`来访问. props 是两个映射结果的合并. `connect`将组件拆分成容器组件与UI组件. (`connect(mapStateToProps, mapDispatchToProps)`相当于返回容器组件, `TodoList`相当于容器组件)
 
 ```js
 import { connect } from 'react-redux'
 
-class TodoList extends Component {
-  render(){
-    const { inputValue, list } = this.props;
-    return (
+const TodoList = (props) => {  // 使用react-redux, 组件可直接定义为无状态组件
+  const { inputValue, list } = props;
+  return (
+    <div>
       <div>
-        <div>
-          <input value={inputValue} onChange={this.props.changeInputValue}/>
-          <button>提交</button>
-        </div>
-        <ul>
-          {list.map((entry, i) => <li key={i}>{entry}</li>)}
-        </ul>
-      </div>)
-  }
+        <input value={inputValue} onChange={this.props.changeInputValue}/>
+        <button>提交</button>
+      </div>
+      <ul>
+        {list.map((entry, i) => <li key={i}>{entry}</li>)}
+      </ul>
+    </div>)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodoList);
 ```
 
-第三步, 定义第一个映射规则. 创建一个函数, 这个函数用于将 state 映射为 props, 这个函数可命名为```mapStateToProps```.
+第三步, 定义第一个映射规则. 创建一个函数, 这个函数用于将 state 映射为 props, 这个函数可命名为`mapStateToProps`.
 
 ```js
 /* Todolist.jsx */
@@ -248,7 +245,7 @@ const mapStateToProps = (state) => {
 }
 ```
 
-第四步, 定义第二个映射规则. 创建一个函数, 这个函数用于将 state 映射为 props, 这个函数可命名为```mapDispatchToProps```. ```dispatch``` 其实就是 ```store.dispatch```. component 中我们不再导入 store, 我们只能从这个函数中间接使用```store.dispatch```来修改 state. 由于 state 在这里被修改, 所以事件监听函数也放在这里, 再作为 props 传给 component.
+第四步, 定义第二个映射规则. 创建一个函数, 这个函数用于将 state 映射为 props, 这个函数可命名为`mapDispatchToProps`. `dispatch` 其实就是 `store.dispatch`. component 中我们不再导入 store, 我们只能从这个函数中间接使用`store.dispatch`来修改 state. 由于 state 在这里被修改, 所以事件监听函数也放在这里, 再作为 props 传给 component.
 
 ```js
 const mapDispatchToProps = (dispatch) => {
@@ -260,5 +257,3 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 ````
-
-## 使用 React-redux 完成 TodoList 功能
