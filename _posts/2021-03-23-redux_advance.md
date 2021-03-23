@@ -2,10 +2,12 @@
 title: Redux 进阶
 categories: ['前端']
 tags: ['react', 'redux']
-resource_path: /blog/assets/2020/03/23
+resource_path: /blog/assets/2021/03/23
 ---
 
 # Redux 进阶
+
+---
 
 ## Table of Contents
 
@@ -18,6 +20,8 @@ resource_path: /blog/assets/2020/03/23
   - [什么是 Redux 的中间件](#什么是-redux-的中间件)
   - [Redux-saga 中间件使用入门](#redux-saga-中间件使用入门)
   - [如何使用 React-Redux](#如何使用-react-redux)
+
+---
 
 ## UI 组件和容器组件
 
