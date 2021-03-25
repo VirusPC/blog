@@ -9,6 +9,7 @@ Table of Contents
     - [特性](#特性)
     - [基本用法](#基本用法)
     - [样式组件](#样式组件)
+  - [Reset.css](#resetcss)
   - [使用 iconfont 嵌入头部图标](#使用-iconfont-嵌入头部图标)
   - [搜索框动画效果实现](#搜索框动画效果实现)
   - [使用 React-Redux 进行应用数据的管理](#使用-react-redux-进行应用数据的管理)
@@ -142,7 +143,40 @@ Table of Contents
 
 ---
 
+## Reset.css
+
+为了保证页码在所有浏览器上的展示效果的一致性, 可以使用Reset.css, 覆盖掉浏览器默认样式. 直接把主页的css复制过来用就可以, 然后用`styled-components` 的 `createGlobalStyle` 设置为全局样式
+
+一些相关文章:
+
+- [到底该不该用 CSS reset?](https://www.zhihu.com/question/23554164/answer/34482613)
+- [Reset.css](https://meyerweb.com/eric/tools/css/reset/)
+- [Normalize.css](https://necolas.github.io/normalize.css/)
+- [About normalize.css](http://nicolasgallagher.com/about-normalize-css/)
+- [Applying Normalize.css Reset](https://blog.teamtreehouse.com/applying-normalize-css-reset-quick-tip)
+
+---
+
 ## 使用 iconfont 嵌入头部图标
+
+1. 网址: https://www.iconfont.cn/
+
+2. iconfont 的一般使用方法有三种: Unicode, Font class 以及 Symbol, 使用方法在下载解压后的`demo_index.html`里都有详细.
+
+3. iconfont 结合 styled-component 的使用方式:
+   1. 图标下载到本地解压后, 只取`iconfont.css`, `iconfont.eot`, `iconfont.svg`, `iconfont.ttf` 以及 `iconfont.woff` 五个文件即可. (其他文件是和使用说明相关的)  
+      ![iconfont](./iconfont.png)
+
+   2. 将`iconfont.css`中的绝对路径修改为相对路径. 并只保留`@font-family`和`.iconfont`  
+     ![iconfont2](./iconfont2.png)
+
+   3. 将css改为styled-component的格式. 注意 iconfont 应该作为全局样式.  
+     ![iconfont3](./iconfont3.png)
+
+   4. 挑选相应图标并获取字体变法, 应用于界面. 字体的unicode编码可以在`demo_index.html`中看到, 也可以在`iconfont.css` 或 iconfont网站上自己的对应项目中看到.
+     ![iconfont4](./iconfont4.png)
+
+---
 
 ## 搜索框动画效果实现
 
