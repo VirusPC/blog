@@ -483,16 +483,71 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
     console.log(Reflect.ownKeys(o));
     // ["baz", "qux", Symbol(foo), Symbol(bar)]
     ```
+    3. Symbols are not lost if directly created and used as properties.Declining to keep an explicit reference to a property means that traversing all the object’s symbol properties will be required to recover the property key (The only way to get ):
+    ```javascript
+    let o = { 
+      [Symbol('foo')]: 'foo val', 
+      [Symbol('bar')]: 'bar val'
+    };
+    let barSymbol = Object.getOwnPropertySymbols(o) .find((symbol) => symbol.toString().match(/bar/));
+    console.log(barSymbol);  // Symbol(bar)
+    ```
+8. **Well-Known Symbols**:  
+    1. ECMAScript 6 also introduced a collection of well-known symbols that would be used throughout the language to **expose internal language behaviors** for direct access, overriding, or emulating. These well-known symbols exist as string properties on the Symbol factory function.
+    2. One of the primary utilities of these well-known symbols is redefining them as to alter the behavior of the native language constructs.
+    3. Each well-defined symbol property is non-writeable, non-enumerable, and non-configurabl.
+    4. 为一个对象设置well-known symbols, 可以使得对象可以作为它们对应的操作的操作对象.
+    5. 当目标对象作为某个操作的参数时, 会调用该对象上的, 操作所对应的well-known symbol的值. 注意下面代码中是调用了`Replace1`对象的`Symbol.replace`, 而非`"foo"`的. 如果代码改成调用`match`, 并把`Symbol.replace`改为`Symbol.match`, 会发现传入的`string2`为undefined, 因为`match`函数本就只能接受一个参数. 当然也可以直接设为`false`, 意为不支持该方法的调用.
+        ```javascript
+        class Replace1 {
+            constructor(value) {
+                this.value = value;
+            }
+            [Symbol.replace](string, string2) {
+                console.log(string, string2); // foo 123
+                return `s/${this.value}/${string2}/g`;
+            }
+        }
+        console.log('foo'.replace(new Replace1('bar'), 123));
+        // "s/bar/123/g"
+        ```
+    6. Well-known symbols 的值一般是一个函数(可能为非函数, 用于特殊用途, 见mdn `Symbol.match`), 其接受的参数依次为调用自己的对象, 以及对应函数除自己外的剩余的其他参数.
+    7. Well-known symbols:
+       1. `Symbol.iterator`[#1](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/iterator)[#2](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols): It specifies the default iterator for an object. Used by `for...of`. Its value is a function or generator, with no arguments, and the returned iterator is used to obtain the values to be iterated.
+       2. `Symbol.asyncIterator`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/asyncIterator): It specifies the default AsyncIterator for an object. If this property is set on an object, it is an async iterable and can be used in a `for await...of` loop. In many cases, this will take the form of an AsyncGenerator. There are currently no built-in JavaScript objects that have the `[Symbol.asyncIterator]` key set by default.s
+       3. `Symbol.hasInstance`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/hasInstance): It is used to determine if a constructor object recognizes an object as its instance. The `instanceof` operator's behavior can be customized by this symbol.  Because the instanceof operator will seek the property definition on the prototype chain like any other property, it is possible to redefine the function on an inherited class as a *static* method. Its value is a function returns boolean.
+       4. `Symbol.isConcatSpreadable`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/isConcatSpreadable):  It is used to configure if an object(array-like) should be flattened to its array elements when using the `Array.prototype.concat()` method. Its value is a boolean.
+       5. `Symbol.match`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/match)It specifies the matching of a regular expression against a string. This function is called by the `String.prototype.match()` method.
+       6. `Symbol.replace`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/replace): It specifies the method that replaces matched substrings of a string. This function is called by the `String.prototype.replace()` method. 
+       7.  `Symbol.search`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/search): It specifies the method that returns the index within a string that matches the regular expression. This function is called by the `String.prototype.search()` method.
+       8.  `Symbol.species`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/species): It specifies a function-valued property that the `constructor` function uses to create derived objects.
+       9.  `Symbol.toPrimitive`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toPrimitive): It specifies a function valued property that is called to convert an object to a corresponding primitive value.
+       10. `Symbol.toStringTag`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/toStringTag): It is a string valued property that is used in the creation of the default string description of an object. It is accessed internally by the `Object.prototype.toString()` method.
+       11. `Symbol.unscopables`[#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/unscopables): It is used to specify an object value of whose own and inherited property names are excluded from the with environment bindings of the associated object.
 
-
-
-7. Symbol值只能转换为字符串值或者布尔值。
+9.  Symbol值只能转换为字符串值或者布尔值. 不可转数字.
 
 ### The Object Type
+
+1. If the constructor has no arguments, then the parentheses can be omitted safely (though that’s not recommended):: `let o = new Object`. 
+
+2. Each Object instance has the following properties and methods:
+    1. `constructor` 
+    2. `hasOwnproperty(propertyName)`
+    3. `isPrototypeof(object)`
+    4. `propertyIsEnumerable(propertyName)`
+    5. `toLocaleString()`
+    6. `toString()`
+    7. `valueOf()`
+    8. ......
 
 ---
 
 ## Operators
+
+1. When used on objects, operators typically call the valueOf() and/or toString() method to retrieve a value they can work with.
+
+2. 
 
 ---
 
