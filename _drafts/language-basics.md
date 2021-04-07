@@ -16,6 +16,7 @@ Table of contents
     - [The Symbol Type](#the-symbol-type)
     - [The Object Type](#the-object-type)
   - [Operators](#operators)
+    - [Increment/Decrement](#incrementdecrement)
   - [Statements](#statements)
   - [Functions](#functions)
 
@@ -215,7 +216,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
         4. If the string contains a valid hexadecimal format, such as `"0xf"`, it is converted into an integer that matches the hexadecimal value.
         5. If the string is empty (contains no characters), it is **converted to 0**.
         6. If the string contains anything other than these previous formats, it is converted into `NaN`.
-    7. When applied to **objects**, the `valueOf()` method is called and the returned value is converted based on the previously described rules. If that conversion results in `NaN`, the `toString()` method is called and the rules for converting strings are applied.
+    7. When applied to **objects**, the `valueOf()` method is called and the returned value is converted based on the previously described rules. If that conversion results in primitive value, the `toString()` method is called and the rules for converting strings are applied.
 
     ```javascript
     let num1 = Number(" +123");  // 123
@@ -545,9 +546,32 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
 
 ## Operators
 
-1. When used on objects, operators typically call the valueOf() and/or toString() method to retrieve a value they can work with.
+When used on objects, operators typically call the `valueOf()` and/or `toString()` method to retrieve a value they can work with.
 
-2. 
+
+### Increment/Decrement
+
+1. Prefix increment / decrement: the variable’s value is changed before the statement is evaluated. 
+
+2. Postfix increment / decrement: the increment or decrement doesn’t occur until after the containing statement has been evaluated.
+
+```js
+let num1 = 2; 
+let num2 = 20;
+let num3 = num1-- + num2; 
+let num4 = num1 + num2; 
+console.log(num3); // 22
+console.log(num4); // 21
+```
+
+3.  All four of these operators work on any values, meaning not just integers but strings, Booleans, floating-point values, and objects. The increment and decrement operators follow these rules regarding values:
+    1. When used on a string that is a valid representation of a number, convert to a number and apply the change. The variable is changed from a string to a number.
+    2. When used on a string that is not a valid number, the variable’s value is set to NaN. The variable is changed from a string to a number.
+    3. When used on a Boolean value that is false, convert to 0 and apply the change. The variable is changed from a Boolean to a number.
+    4. When used on a Boolean value that is true, convert to 1 and apply the change. The variable is changed from a Boolean to a number.
+    5. When used on a floating-point value, apply the change by adding or subtracting
+    6. When used on an object, call its `valueOf()` method (discussed more in Chapter 5) to get a value to work with. Apply the other rules. If the result is `NaN`, then call `toString()` and apply the other rules again. The variable is changed from an object to a number.
+
 
 ---
 
