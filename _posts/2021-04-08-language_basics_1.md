@@ -194,7 +194,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
 
 3. **Hexademical Literal**: For an hexadecimal literal, you must make the first two characters 0x (case insensitive).
 
-4. Floating-Point: Because storing floating-point values uses twice as much memory as storing integer values, ECMAScript always looks for ways to **convert values into integers**. When there is no digit after the decimal point, the number becomes an integer. Another important thing is, adding 0.1 and 0.2 yields 0.30000000000000004 instead of 0.3. So `0.1 + 0.2 === 0.3` returns false. **Never compare float-point values**!
+4. **Floating-Point**: Because storing floating-point values uses twice as much memory as storing integer values, ECMAScript always looks for ways to **convert values into integers** ([depends on the implementation of browsers](https://stackoverflow.com/questions/32276562/javascript-numbers-all-the-same-size-in-memory)). When there is no digit after the decimal point, the number becomes an integer. Another important thing is, adding 0.1 and 0.2 yields 0.30000000000000004 instead of 0.3. So `0.1 + 0.2 === 0.3` returns false. **Never compare float-point values**!
 
 5. **E-Notion**: For very large or very small numbers, floating-point values can be represented using e-notation, such as `let floatNum = 3.125e-7`;
 
@@ -562,3 +562,4 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
 References
 
 - Professional JavaScript for Web Developers 4th Edition
+- [JavaScript numbers, all the same size in memory? - stackoverflow](https://stackoverflow.com/questions/32276562/javascript-numbers-all-the-same-size-in-memory)
