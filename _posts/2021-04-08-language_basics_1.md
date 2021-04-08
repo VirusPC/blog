@@ -1,8 +1,15 @@
-# Language Basics
+---
+title: "Chapter 3 - Syntax, Variables and Data Types" 
+categories: ['Professional Javascript']
+tags: ['frontend', 'javascript']
+resource_path: /blog/assets/2021/04/08
+---
+
+# Language Basics - Syntax, Variables and Data Types
 
 Table of contents
 
-- [Language Basics](#language-basics)
+- [Language Basics - Syntax, Variables and Data Types](#language-basics---syntax-variables-and-data-types)
   - [Syntax Best Practices](#syntax-best-practices)
   - [Variables](#variables)
     - [Declaration Styles and Best Practices](#declaration-styles-and-best-practices)
@@ -15,10 +22,6 @@ Table of contents
     - [The String Type](#the-string-type)
     - [The Symbol Type](#the-symbol-type)
     - [The Object Type](#the-object-type)
-  - [Operators](#operators)
-    - [Increment/Decrement](#incrementdecrement)
-  - [Statements](#statements)
-  - [Functions](#functions)
 
 ---
 
@@ -204,19 +207,31 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
 8. **Number Conversions**: There are three functions to convert nonumeric values into numbers: the `Number()` casting function, the`parseInt()`function, and the `parseFloat()` function.  The first function, Number(), can be used on any data type; the other two functions are used specifically for converting strings to numbers.
 
 9. `Number()`: The `Number()` function performs conversions based on these rules:
-    1. When applied to **Boolean** values, true and false get converted into 1 and 0, respectively.
-    2. When applied to **numbers**, the value is simply passed through and returned.
-    3. When applied to `null`, Number() returns 0.
-    4. When applied to `undefined`, Number() returns `NaN`.
-    5. When applied to **symbols**, throw `TypeError`.
-    6. When applied to **strings**, the following rule are applied:
+    1. When applied to **Boolean** values:  
+       * `true` => `1`, `false` => `0`;
+    2. When applied to **numbers**: 
+       * the value is simply passed through and returned.
+    3. When applied to **null**: 
+       * => `0`.
+    4. When applied to **undefined**: 
+       * => `NaN`.
+    5. When applied to **symbols**: 
+       * throw `TypeError`.
+    6. When applied to **strings**:
         1. leading and end white space is ignored.
-        2. If the string contains only numeric characters, optionally preceded by a plus or minus sign, it is always converted to a **decimal number**, so `Number("+123")` becomes 123, `Number("011")` becomes 11 (note: **leading zeros are ignored**)
-        3. If the string contains a valid floating-point format, such as `"1.1"`, it is converted into the appropriate floating-point numeric value(**leading zeros are ignored**)
-        4. If the string contains a valid hexadecimal format, such as `"0xf"`, it is converted into an integer that matches the hexadecimal value.
-        5. If the string is empty (contains no characters), it is **converted to 0**.
-        6. If the string contains anything other than these previous formats, it is converted into `NaN`.
-    7. When applied to **objects**, the `valueOf()` method is called and the returned value is converted based on the previously described rules. If that conversion results in primitive value, the `toString()` method is called and the rules for converting strings are applied.
+        2. If the string contains only numeric characters, optionally preceded by a plus or minus sign, such as `"012"`, `"+12"`: 
+           * => **decimal number**. 
+        3. If the string contains a valid floating-point format, such as `"1.1"`: 
+           * => **floating-point** numeric value(leading zeros are ignored)
+        4. If the string contains a valid hexadecimal format, such as `"0xf"`: 
+           * => **hexadecimal** value.
+        5. If the string is empty (contains no characters): 
+           * => `0`
+        6. If the string contains anything other than these previous formats: 
+           * => `NaN`.
+    7. When applied to **objects**:
+       1. `(typeof o.valueOf()) !== object` => `o.valueOf()`
+       2. => `Number(o.toString())`
 
     ```javascript
     let num1 = Number(" +123");  // 123
@@ -541,45 +556,6 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
     6. `toString()`
     7. `valueOf()`
     8. ......
-
----
-
-## Operators
-
-When used on objects, operators typically call the `valueOf()` and/or `toString()` method to retrieve a value they can work with.
-
-
-### Increment/Decrement
-
-1. Prefix increment / decrement: the variable’s value is changed before the statement is evaluated. 
-
-2. Postfix increment / decrement: the increment or decrement doesn’t occur until after the containing statement has been evaluated.
-
-```js
-let num1 = 2; 
-let num2 = 20;
-let num3 = num1-- + num2; 
-let num4 = num1 + num2; 
-console.log(num3); // 22
-console.log(num4); // 21
-```
-
-3.  All four of these operators work on any values, meaning not just integers but strings, Booleans, floating-point values, and objects. The increment and decrement operators follow these rules regarding values:
-    1. When used on a string that is a valid representation of a number, convert to a number and apply the change. The variable is changed from a string to a number.
-    2. When used on a string that is not a valid number, the variable’s value is set to NaN. The variable is changed from a string to a number.
-    3. When used on a Boolean value that is false, convert to 0 and apply the change. The variable is changed from a Boolean to a number.
-    4. When used on a Boolean value that is true, convert to 1 and apply the change. The variable is changed from a Boolean to a number.
-    5. When used on a floating-point value, apply the change by adding or subtracting
-    6. When used on an object, call its `valueOf()` method (discussed more in Chapter 5) to get a value to work with. Apply the other rules. If the result is `NaN`, then call `toString()` and apply the other rules again. The variable is changed from an object to a number.
-
-
----
-
-## Statements
-
----
-
-## Functions
 
 ---
 
