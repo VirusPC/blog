@@ -292,12 +292,14 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
    2. If the value is `null`, `"null"` is returned.
    3. If the value is `undefined`, `"undefined"` is returned.
 
-6. **Adding an empty string**: You can also convert a value to a string by adding an empty string (`""`) to that value using the plus operator.
+6. 默认的 `Object` 的 `toString()` 方法返回 `[object Object]`.
+   
+7. **Adding an empty string**: You can also convert a value to a string by adding an empty string (`""`) to that value using the plus operator. (See operator section in the next chapter)
     ```javascript
     let result = "" + 123; 
     console.log(typeof result)  // string
     ```
-7. **Template Literals**: Unlike their single and double quoted counterparts, template literals **respect new line characters**, and **can be defined spanning multiple lines**:
+8. **Template Literals**: Unlike their single and double quoted counterparts, template literals **respect new line characters**, and **can be defined spanning multiple lines**:
 
     ```javascript
     let myMultiLineString = 'first line\nsecond line';
@@ -310,7 +312,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
     // second line"
     ```
 
-8. **Template Literals Notes**: Because template literals will exactly match the whitespace inside the backticks, special care will need to be applied when defining them.
+9.  **Template Literals Notes**: Because template literals will exactly match the whitespace inside the backticks, special care will need to be applied when defining them.
 
     ```javascript
     // This template literal has 25 spaces following the line return character 
@@ -319,7 +321,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
     console.log(myTemplateLiteral.length); // 47
     ```
 
-9. *Template Literals Interpolation**: The value being interpolated will eventually be coerced into a string using `toString()`. Additionally, templates can safely **interpolate their previous value**:
+10. *Template Literals Interpolation**: The value being interpolated will eventually be coerced into a string using `toString()`. Additionally, templates can safely **interpolate their previous value**:
     ```javascript
     let foo = { toString: () => 'World' }; 
     console.log(`Hello, ${ foo }!`);  // Hello, World!
@@ -331,7 +333,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
     append(); // abcabcabc
     ```
 
-10. **Template Literal Tag Functions**: It allows to define custom interpolation behavior by define *tag functions*. A tag function is defined as a **regular function** and is applied to a template literal by being prepended to it.  The tag function will be passed the template literal split into its pieces: the first argument is an array of the raw strings, and the remaining arguments are the results of the evaluated expressions.
+11. **Template Literal Tag Functions**: It allows to define custom interpolation behavior by define *tag functions*. A tag function is defined as a **regular function** and is applied to a template literal by being prepended to it.  The tag function will be passed the template literal split into its pieces: the first argument is an array of the raw strings, and the remaining arguments are the results of the evaluated expressions.
     
     ```javascript
     let a = 6;
@@ -359,7 +361,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
     console.log(taggedResult);  // "foobar"
     ```
 
-11. Raw String: 
+12. Raw String: 
     1.  `String.raw` tag function gives you access to the raw tempolate literal contents. Through this function, you get exactly what the template looks like.
 
         ```javascript
