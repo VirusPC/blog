@@ -230,7 +230,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
         6. If the string contains anything other than these previous formats: 
            * => `NaN`.
     7. When applied to **objects**:
-       1. `(typeof o.valueOf()) !== object` => `o.valueOf()`
+       1. `o.valueOf && ( (typeof o.valueOf()) !== object )` => `o.valueOf()`
        2. => `Number(o.toString())`
 
     ```javascript
