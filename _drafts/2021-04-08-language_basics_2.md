@@ -87,7 +87,7 @@ console.log(num2); // -26
 console.log(nume); // -26
 ```
 
-1. The bitwise NOT is represented by a tilde (`~`) and simply returns the one’s **complement** (补码) of the number. It negates the number and subtracts 1.
+1. The bitwise NOT is represented by a tilde (`~`) and simply returns the one’s **complement** (反码) of the number. It negates the number and subtracts 1.
 
 2. Realistically, though this returns the same result, the bitwise operation is much faster because it works at the very lowest level of numeric representation.
 
@@ -190,9 +190,9 @@ console.log(result); //  undefined
 Multiplier1\Multiplier2| other number | `0` | `Infinity` / `-Infinity` | `NaN`
 :- | :- | :- | :- | :-
 **other number** | other number / `Infinity` / `-Infinity` | `0` | `Infinity` / `-Infinity` | `NaN`
-`0` | `0` | `0` | `NaN` | `NaN`
-`Infinity` / `-Infinity` | `Infinity` / `-Infinity` | `NaN` | `Infinity` / `-Infinity` | `NaN`
-`NaN` | `NaN` | `NaN` | `NaN` | `NaN`
+**`0`** | `0` | `0` | `NaN` | `NaN`
+**`Infinity` / `-Infinity`** | `Infinity` / `-Infinity` | `NaN` | `Infinity` / `-Infinity` | `NaN`
+**`NaN`** | `NaN` | `NaN` | `NaN` | `NaN`
 
 ### Devide 
 
@@ -210,9 +210,9 @@ Multiplier1\Multiplier2| other number | `0` | `Infinity` / `-Infinity` | `NaN`
 Dividend\Divisor | other number | `0` | `Infinity` / `-Infinity` | `NaN`
 :- | :- | :- | :- | :-
 **other number** | other number / `Infinity` / `-Infinity` | `Infinity` / `-Infinity` | `0` | `NaN`
-`0` | `0` | `NaN` | `0` | `NaN`
-`Infinity` / `-Infinity` | `Infinity` / `-Infinity` | `Infinity` / `-Infinity` | `NaN` | `NaN`
-`NaN` | `NaN` | `NaN` | `NaN` | `NaN`
+**`0`** | `0` | `NaN` | `0` | `NaN`
+**`Infinity` / `-Infinity`** | `Infinity` / `-Infinity` | `Infinity` / `-Infinity` | `NaN` | `NaN`
+**`NaN`** | `NaN` | `NaN` | `NaN` | `NaN`
 
 
 ### Modulus 
@@ -229,9 +229,9 @@ Dividend\Divisor | other number | `0` | `Infinity` / `-Infinity` | `NaN`
 Dividend\Divisor | other number | `0` | `Infinity` / `-Infinity` | `NaN`
 :- | :- | :- | :- | :-
 **other number** | other number | `NaN`| other number | `NaN`
-`0` | `0` | `NaN` | `0` | `NaN`
-`Infinity` / `-Infinity` | `NaN` | `NaN` | `NaN` | `NaN`
-`NaN` | `NaN` | `NaN` | `NaN` | `NaN`
+**`0`** | `0` | `NaN` | `0` | `NaN`
+**`Infinity` / `-Infinity`** | `NaN` | `NaN` | `NaN` | `NaN`
+**`NaN`** | `NaN` | `NaN` | `NaN` | `NaN`
 
 ---
 
