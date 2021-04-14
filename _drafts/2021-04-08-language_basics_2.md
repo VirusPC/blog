@@ -26,6 +26,15 @@ When used on objects, operators typically call the `valueOf()` and/or `toString(
     - [Multiply](#multiply)
     - [Devide](#devide)
     - [Modulus](#modulus)
+  - [Exponentiation Operator](#exponentiation-operator)
+  - [Additive Operators](#additive-operators)
+    - [Add](#add)
+    - [Subtract](#subtract)
+  - [Relational Operators](#relational-operators)
+  - [Equality Operators](#equality-operators)
+  - [Conditional Operator](#conditional-operator)
+  - [Assignment Operators](#assignment-operators)
+  - [Comma Operator](#comma-operator)
 
 ---
 
@@ -223,6 +232,72 @@ Dividend\Divisor | other number | `0` | `Infinity` / `-Infinity` | `NaN`
 `0` | `0` | `NaN` | `0` | `NaN`
 `Infinity` / `-Infinity` | `NaN` | `NaN` | `NaN` | `NaN`
 `NaN` | `NaN` | `NaN` | `NaN` | `NaN`
+
+---
+
+## Exponentiation Operator
+
+```js
+console.log(Math.pow(3, 2); // 9
+console.log(3 ** 2); // 9
+
+console.log(Math.pow(16, 0.5); // 4
+console.log(16** 0.5); // 4
+
+let squared = 3; 
+squared **= 2;
+console.log(squared); // 9
+```
+
+---
+
+## Additive Operators
+
+As with the multiplicative operators, conversions occur behind the scenes for different data types.
+
+### Add
+
+
+1. The addition operator either performs string concatenation or numeric addition.
+
+2. Numeric addition: If the **two operands are numbers**, they perform an arithmetic add and return the result according to the following rules:
+    1. If either operand is `NaN`, the result is `NaN`.
+    2. If `Infinity` is added to `Infinity`, the result is `Infinity`. 
+    3. If `–Infinity` is added to `–Infinity`, the result is `–Infinity`. 
+    4. If `Infinity` is added to `–Infinity`, the result is `NaN`. 
+    5. If `+0` is added to `+0`, the result is `+0`. 
+    6. If `–0` is added to `+0`, the result is `+0`.
+    7. If `–0` is added to `–0`, the result is `–0`. 
+
+3. The operation return the result according to the following rules:
+   1. If **one of the operands is a symbol**, convert it to number using `Number()`, and throw error:
+   2. If **one of the operands is a string**, then the following rules apply:
+      1. If both operands are strings, the second string is concatenated to the first.
+      2. If only one operand is a string, the other operand is converted to a string and the result is the concatenation of the two strings.  
+   3. For other primitive values, perform the numeric addition.
+   4. If **one of the operands is an object**, call `valueOf()` first. If it return an object, call `toString()` method subsequently. and Apply the rules below.
+
+### Subtract
+
+---
+
+## Relational Operators
+
+---
+
+## Equality Operators
+
+---
+
+## Conditional Operator
+
+---
+
+## Assignment Operators
+
+---
+
+## Comma Operator
 
 
 ---
