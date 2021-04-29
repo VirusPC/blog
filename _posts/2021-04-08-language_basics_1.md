@@ -54,7 +54,7 @@ There are three keywords that can be used to declare a variable: `var`, which is
 
 Keyword\Feature| Declaration Scope | Declaration Hoisting | Redundant Declarations | Attach to `window` when declaring in the global context
 :- | :-: | :-: | :-: | :-:
-No Keyword | global | \ | yes | yes
+No Keyword | global | no | yes | yes
 `var` | function | yes | yes | yes 
 `let` | block | no | no | no
 `const` | block | no | no | no 
