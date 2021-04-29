@@ -21,6 +21,7 @@ Table of contents
     - [The Number Type](#the-number-type)
     - [The String Type](#the-string-type)
     - [The Symbol Type](#the-symbol-type)
+    - [The BigInt type](#the-bigint-type)
     - [The Object Type](#the-object-type)
 
 ---
@@ -94,7 +95,7 @@ No Keyword | global | no | yes | yes
 
 ## Data Types
 
-**six simple data types:** (also called primitive types): Undefined, Null, Boolean, Number, String, and Symbol(ES6).
+**seven simple data types:** (also called primitive types): Undefined, Null, Boolean, Number, String, Symbol(ES6) and BigInt(ES11).
 
 **one complex data type:** Object, which is an **unordered list** of name–value pairs. 
 
@@ -177,12 +178,13 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
 
     DATA TYPE | VALUES CONVERTED TO TRUE | VALUES CONVERTED TO FALSE
     :- | :- | :-
-    Boolean | true | false
-    Number | Any nonzero number(including infinity) | 0, NaN
-    String | Any nonempty string | ""(empty string)
-    Undefined | n/a | undefined
+    Boolean | `true` | `false`
+    Number | Any nonzero number(including infinity) | `0`, `NaN`
+    String | Any nonempty string | `""`(empty string)
+    Undefined | n/a | `undefined`
     Symbol | Any symbol | /
-    Object | Any object | null
+    BigInt | any nonzero number | `0n`
+    Object | Any object | `null`
 
 3. Flow-control statements, such as the if statement, **automatically** perform this Boolean conversion.
 
@@ -202,7 +204,7 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
 
 7. `NaN`: It is used to indicate when an **operation** intended to return a number has failed (**as opposed to throwing an error**). For example, dividing any number by 0 typically causes an error in other programming languages, halting code execution. In ECMAScript, `0 / 0` results in a `NaN`, which allows other processing to continue. It has several properties:
     1. Any operation involving `NaN` always returns `NaN`.
-    2. Second, NaN is not equal to any value, including NaN. You should use `isNaN` to determine whether a varivable is `NaN`: `cosole.log(isNaN("blue")) // false`
+    2. Second, `NaN` is not equal to any value, including `NaN`. You should use `isNaN` to determine whether a varivable is `NaN`: `cosole.log(isNaN("blue")) // false`
 
 8. **Number Conversions**: There are three functions to convert nonumeric values into numbers: the `Number()` casting function, the`parseInt()`function, and the `parseFloat()` function.  The first function, Number(), can be used on any data type; the other two functions are used specifically for converting strings to numbers.
 
@@ -545,6 +547,37 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
 
 9.  Symbol值只能转换为字符串值或者布尔值. 不可转数字.
 
+### The BigInt type
+
+1. It created by appending `n` to the end of an integer literal, or by calling the `BigInt()` constructor (but without the new operator) and giving it an integer value or string value.
+    ```js
+    const previouslyMaxSafeInteger = 9007199254740991n
+
+    const alsoHuge = BigInt(9007199254740991)
+    // ↪ 9007199254740991n
+    ```
+
+2. A BigInt value is not strictly equal to a Number value, but it is loosely so:
+    ```js
+    0n === 0 // false
+    0n == 0 // true
+
+3. BigInt values are similar to Number values in some ways, but also differ in a few key matters: 
+   1. Cannot be used with methods in the built-in Math object
+   2. Cannot be mixed with a Number value in operations
+   3. The precision of a BigInt value may be lost when it is coerced to a Number value.
+   4. Bitwise operators are supported, except `>>>` (zero-fill right shift), as every BigInt value is signed.
+   5. Unary operator(+) is not supported. [#](https://github.com/tc39/proposal-bigint/blob/master/ADVANCED.md#dont-break-asmjs)
+
+4. A BigInt value behaves like a Number value in cases where:
+   1. it is converted to a Boolean: via the Boolean function;
+   2. when used with logical operators ||, &&, and !; or\
+   3. within a conditional test like an if statement.
+
+5. Usage recommendations:
+   1. Only use a BigInt value when values greater than 253 are reasonably expected.
+   2. Don’t coerce between BigInt values and Number values.
+
 ### The Object Type
 
 1. If the constructor has no arguments, then the parentheses can be omitted safely (though that’s not recommended):: `let o = new Object`. 
@@ -565,3 +598,4 @@ References
 
 - Professional JavaScript for Web Developers 4th Edition
 - [JavaScript numbers, all the same size in memory? - stackoverflow](https://stackoverflow.com/questions/32276562/javascript-numbers-all-the-same-size-in-memory)
+- [BigInt - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
