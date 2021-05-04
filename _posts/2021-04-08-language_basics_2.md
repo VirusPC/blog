@@ -319,11 +319,17 @@ As with the multiplicative operators, conversions occur behind the scenes for di
 1. Both operators do conversions to determine if two operands are equal (often called type coercion).
 
 2. When performing conversions, the equal and not-equal operators follow these basic rules:
-   1. Primitive value except null and undefined will converted to number type for comparison.
-      1. If either operand is `NaN`, the equal operator returns `false` and the `not-equal` operator returns true. Important note: even if both operands are `NaN`, the equal operator returns `false` because, by rule, `NaN` is not equal to `NaN`.
-   2. Values of `null` and `undefined` are equal. And they cannot be converted into any other values for equality checking. (`null == 0` returns `false`)
-   3. If one operand is object and the other is not, the `valueOf()` and `toString` methods are called on the object in order to retrieve a **primitive** value to compare according to the previous rules.
-   4. If both operands are objects, then they are compared to see if they are the same object. If both operands point to the same object, then the equal operator returns true. Otherwise, the two are not equal.
+    1. If the operands are both primitive value
+        1. If they have the same type
+            - String: return true only if both operands have the same characters in the same order.
+            - Number: return true only if both operands have the same value. +0 and -0 are treated as the same value. If either operand is NaN, return false.
+            - Boolean: return true only if operands are both true or both false.
+        2. If they are different types
+            1. Values of `null` and `undefined` are equal. And they cannot be converted into any other values for equality checking. (`null == 0` returns `false`)
+            2. Primitive value except `null` and `undefined` will converted to number type for comparison.
+                - If either operand is `NaN`, the equal operator returns `false` and the `not-equal` operator returns true. Important note: even if both operands are `NaN`, the equal operator returns `false` because, by rule, `NaN` is not equal to `NaN`.
+    2. If one operand is object and the other is not, the `valueOf()` and `toString` methods are called on the object in order to retrieve a **primitive** value to compare according to the previous rules.
+    3. If both operands are objects, then they are compared to see if they are the same object. If both operands point to the same object, then the equal operator returns true. Otherwise, the two are not equal.
 
 ```js
 let result1 = (null < 0); // false, null is converted to 0; 
