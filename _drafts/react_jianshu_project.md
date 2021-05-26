@@ -11,7 +11,8 @@ Table of Contents
     - [样式组件](#样式组件)
   - [Reset.css](#resetcss)
   - [使用 iconfont 嵌入头部图标](#使用-iconfont-嵌入头部图标)
-  - [搜索框动画效果实现](#搜索框动画效果实现)
+  - [使用 react-transition-group 实现搜索框动画效果](#使用-react-transition-group-实现搜索框动画效果)
+    - [CSSTransition 基本用法](#csstransition-基本用法)
   - [使用 React-Redux 进行应用数据的管理](#使用-react-redux-进行应用数据的管理)
   - [使用 combineReducers 完成对数据的拆分管理](#使用-combinereducers-完成对数据的拆分管理)
   - [actionCreators 与 constants 的拆分](#actioncreators-与-constants-的拆分)
@@ -178,7 +179,40 @@ Table of Contents
 
 ---
 
-## 搜索框动画效果实现
+## 使用 react-transition-group 实现搜索框动画效果
+
+### CSSTransition 基本用法
+
+1. 网址: https://reactcommunity.org/react-transition-group/css-transition
+
+2. 概述
+    1. 暴露了组件 transition 的步骤, 使得用户可以在 transition 的不同阶段执行想要的操作
+    2. 由四部分组成: `Transition`, `CSSTransition`, `SwitchTransition` 以及 `TransitionGroup`
+    3. `Transition` 组件允许您使用简单的声明性API来描述一段时间内一个组件从状态到另一个状态的转换。常用于动画组件的安装和卸载，也可以用于描述原位过渡状态。
+    4. `Transition` 组件是一个平台无关的组件. 如果使用CSS中的transition, 则最好使用`CSSTransition`. 后者继承了前者的所有功能, 并添加了 css transtiion 相关的其他功能.
+
+3. 核心思想
+    1. transition 有 enter 和 exit 两个过程, 每个过程有准备执行和执行中两个阶段, 为每个阶段提供了插入操作的hook.
+    2. 四个阶段分别为:
+        1. enter
+        2. enter-active
+        3. exit
+        4. exit-active
+
+4. `CSSTransition` 使用方式:
+    1. `import {CSSTransition} from 'react-transition-group'`, 使用 `<CSSTransition>` 标签将要添加动画的组件包裹起来
+    2. 为 `CSSTransition` 标签指定属性, 有三个最重要的属性: `classNames`, `in` 和 `timeout`
+        ```jsx
+        <CSSTransition in={inProp} timeout={200} classNames="my-node">
+          <div>
+            {"I'll receive my-node-* classes"}
+          </div>
+        </CSSTransition>
+        ```
+        1. CSSTransition forces a reflow between before adding the example-enter-active. This is an important trick because it allows us to transition between example-enter and example-enter-active even though they were added immediately one after another.
+    3. 
+
+---
 
 ## 使用 React-Redux 进行应用数据的管理
 
