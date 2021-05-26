@@ -2,7 +2,7 @@
 title: "Chapter 4 - Primitive and Reference Values in Variables" 
 categories: ['Professional Javascript']
 tags: ['frontend', 'javascript']
-resource_path: /blog/assets/2021/05/11
+resource_path: /blog/assets/2021/05/16
 ---
 
 # Working with primitive and reference values in variables
