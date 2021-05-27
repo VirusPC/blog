@@ -10,9 +10,9 @@ resource_path: /blog/assets/2021/05/27
 - [Introduction to Asynchronous Programming](#introduction-to-asynchronous-programming)
   - [Synchronous vs. Asynchronous JavaScript](#synchronous-vs-asynchronous-javascript)
   - [Legacy Asynchronous Programming Patterns](#legacy-asynchronous-programming-patterns)
-    - [1. Returning Asynchronous Values](#1-returning-asynchronous-values)
-    - [2. Handling Failure](#2-handling-failure)
-    - [3. Nesting Asynchronous Callbacks](#3-nesting-asynchronous-callbacks)
+    - [1. Returning Asynchronous Values - `success`](#1-returning-asynchronous-values---success)
+    - [2. Handling Failure - `failure`](#2-handling-failure---failure)
+    - [3. Nesting Asynchronous Callbacks - nesting](#3-nesting-asynchronous-callbacks---nesting)
 
 ---
 
@@ -44,7 +44,12 @@ setTimeout(() => x = x + 4, 1000);
     double(3)  // 6 (printed after roughly 1000 ms)
     ```
 
-### 1. Returning Asynchronous Values
+4. **the full version of the using of an async function**:
+    ```js
+    asyncfunc(values, success, failure);
+    ```
+
+### 1. Returning Asynchronous Values - `success`
 
 If the `setTimeout` returns a useful value, we should wrap the code depends on the value into a callback, and pass the callback to the asynchronous operation.
     
@@ -55,7 +60,7 @@ function double(value, callback) {
 double(3, (x) => console.log(`I was given: ${x}`));
 ```
 
-### 2. Handling Failure
+### 2. Handling Failure - `failure`
 
 ```js
 function double(value, success, failure) { 
@@ -79,7 +84,7 @@ double(3, successCallback, failureCallback);  // the callbacks must be defined b
 
 This format is already undesirable, as the callbacks must be defined when the asynchronous operation is initialized (the last line).
 
-### 3. Nesting Asynchronous Callbacks
+### 3. Nesting Asynchronous Callbacks - nesting
 
 This callback strategy does not scale well as code complexity grows. The “**callback hell**” colloquialism is well-deserved, as JavaScript codebases that were afflicted with
 such a structure became nearly **unmaintainable**.
