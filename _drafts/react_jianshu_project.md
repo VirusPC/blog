@@ -5,8 +5,8 @@
 Table of Contents
 
 - [React 简书项目实战](#react-简书项目实战)
-  - [styled-components 与 Reset.css](#styled-components-与-resetcss)
-  - [Reset.css](#resetcss)
+  - [使用 styled-components 为组件添加样式](#使用-styled-components-为组件添加样式)
+  - [使用 reset.css 覆盖浏览器默认样式](#使用-resetcss-覆盖浏览器默认样式)
   - [使用 iconfont 嵌入头部图标](#使用-iconfont-嵌入头部图标)
   - [使用 react-transition-group 实现搜索框动画效果](#使用-react-transition-group-实现搜索框动画效果)
   - [使用 React-Redux 进行应用数据的管理](#使用-react-redux-进行应用数据的管理)
@@ -23,7 +23,7 @@ Table of Contents
 
 ---
 
-## styled-components 与 Reset.css
+## 使用 styled-components 为组件添加样式
 
 1. 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
 
@@ -126,7 +126,7 @@ Table of Contents
 
 ---
 
-## Reset.css
+## 使用 reset.css 覆盖浏览器默认样式
 
 为了保证页码在所有浏览器上的展示效果的一致性, 可以使用Reset.css, 覆盖掉浏览器默认样式. 直接把主页的css复制过来用就可以, 然后用`styled-components` 的 `createGlobalStyle` 设置为全局样式
 
@@ -244,3 +244,8 @@ Table of Contents
 ## 换页旋转动画效果的实现
 
 ## 避免无意义的请求发送
+
+---
+
+Reference:
+> React开发简书项目 从零基础入门到实战 https://coding.imooc.com/class/229.html
