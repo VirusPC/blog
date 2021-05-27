@@ -27,7 +27,7 @@ Table of Contents
 
 1. 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
 
-2. 特性: 包括刚才说的, styled components 具有以下特性:
+2. 为什么使用它? (特性): 包括刚才说的, styled components 具有以下特性:
     - **Automatic critical CSS**: 样式化组件跟踪页面上呈现的组件，并完全自动地注入它们的样式。
     - **No class name bugs**: 为样式生成唯一的类名.
     - **Easier deletion of CSS**: 很难知道样式文件中的某个类作用于代码中的哪个地方. styled-components 使得所有样式都紧密的与某个组件相关联, 很容易知道某个样式作用于哪里.
@@ -128,15 +128,18 @@ Table of Contents
 
 ## 使用 reset.css 覆盖浏览器默认样式
 
-为了保证页码在所有浏览器上的展示效果的一致性, 可以使用Reset.css, 覆盖掉浏览器默认样式. 直接把主页的css复制过来用就可以, 然后用`styled-components` 的 `createGlobalStyle` 设置为全局样式
+1. 为什么使用它?
+   1. 为了保证页码在所有浏览器上的展示效果的一致性, 可以使用Reset.css, 覆盖掉浏览器默认样式. 
 
-一些相关文章:
+2. 使用方式
+   1. 直接把主页的css复制过来用就可以, 然后用`styled-components` 的 `createGlobalStyle` 设置为全局样式
 
-- [到底该不该用 CSS reset?](https://www.zhihu.com/question/23554164/answer/34482613)
-- [Reset.css](https://meyerweb.com/eric/tools/css/reset/)
-- [Normalize.css](https://necolas.github.io/normalize.css/)
-- [About normalize.css](http://nicolasgallagher.com/about-normalize-css/)
-- [Applying Normalize.css Reset](https://blog.teamtreehouse.com/applying-normalize-css-reset-quick-tip)
+3. 一些相关文章:
+    - [到底该不该用 CSS reset?](https://www.zhihu.com/question/23554164/answer/34482613)
+    - [Reset.css](https://meyerweb.com/eric/tools/css/reset/)
+    - [Normalize.css](https://necolas.github.io/normalize.css/)
+    - [About normalize.css](http://nicolasgallagher.com/about-normalize-css/)
+    - [Applying Normalize.css Reset](https://blog.teamtreehouse.com/applying-normalize-css-reset-quick-tip)
 
 ---
 
@@ -144,9 +147,12 @@ Table of Contents
 
 1. 网址: https://www.iconfont.cn/
 
-2. iconfont 的一般使用方法有三种: Unicode, Font class 以及 Symbol, 使用方法在下载解压后的`demo_index.html`里都有详细.
+2. 为什么使用它?
+    1. 海量图标库
 
-3. iconfont 结合 styled-component 的使用方式:
+3. iconfont 的一般使用方法有三种: Unicode, Font class 以及 Symbol, 使用方法在下载解压后的`demo_index.html`里都有详细.
+
+4. iconfont 结合 styled-component 的使用方式:
    1. 图标下载到本地解压后, 只取`iconfont.css`, `iconfont.eot`, `iconfont.svg`, `iconfont.ttf` 以及 `iconfont.woff` 五个文件即可. (其他文件是和使用说明相关的)  
       ![iconfont](./iconfont.png)
 
@@ -172,25 +178,31 @@ Table of Contents
     4. *Transition* 组件是一个平台无关的组件. 如果使用CSS中的transition, 则最好使用*CSSTransition*. **后者继承了前者的所有功能**, 并添加了 css transtiion 相关的其他功能.
 
 3. 核心思想
-    1. 将 transition 的过程划分成多个阶段, 并在各阶段之间提供了slot 来供用户操作.
+    1. 将 transition 的过程划分成多个阶段, 并将他们暴露出来, 在各阶段之间提供了slot 来供用户操作.
+    2. > "exposes simple components useful for defining entering and exiting transitions…it does not animate styles by itself. Instead it exposes transition stages, manages classes and group elements and manipulates the DOM in useful ways, making the implementation of actual visual transitions much easier."
 
-4. *Transition* 与 *CSSTransition* 的区别
+4. 为什么使用它?
+   1. 比 css transition 的阶段划分更灵活.
+   2. 可以在各个阶段中间插入回调函数, 回调函数中可以直接操作 dom.
+   3. 其他?
+
+5. *Transition* 与 *CSSTransition* 的区别
     1. `Transition` 的子元素为函数, `CSSTransition` 的子元素为组件或基本元素.
     2. *Transition* 在不同阶段为函数传入不同的状态字符串, *CSSTransition* 在不同阶段为组件设置不同的 css class.
     3. 比起*Transition*, *CSSTransition* 将 appear 阶段 (组件刚挂载且 in 为`true`) 从 enter 阶段 (in 为 `true`) 中拆了出来.
         1. *Transition* 的阶段与 slots:
             1. **当 in=true**: (onEnter) => **entering** => (onEntering) => **entered** => (onEntered)
             2. **当 in=false**: (onExit) => **exiting** => (onExiting) => **exited** => (onExited)
-        1. *CSSTransition*的阶段与挂载的 css class (设*CSSTransition*的类名为 `*` ):
+        2. *CSSTransition*的阶段与挂载的 css class (设*CSSTransition*的类名为 `*` ):
             1. **当 in=true 且组件首次挂载**: *-appear, *-appear-active, *-appear-done
             2. **当 in=true**: *-enter, *-enter-active, *-enter-done
             3. **当 in=false**: *-exit, *-exit-active, *-exit-done
 
-5. 其他注意事项
+6. 其他注意事项
     1. *Transition* 中, `appear` 属性默认为 `false`，即组件刚 mount 时不会触发 enter 。为 `true` 时会。
     2. `timeout={{appear: 1, enter: 1, exit: 1}}` 等价于 `timeout={1}`
 
-6. *CSSTransition* 使用方式:
+7. *CSSTransition* 使用方式:
     1. `import {CSSTransition} from 'react-transition-group'`, 使用 `<CSSTransition>` 标签将要添加动画的组件包裹起来
     2. 设置一个 state 用来控制 transition 是 enter 还是 exit
         ```js
@@ -249,3 +261,4 @@ Table of Contents
 
 Reference:
 > React开发简书项目 从零基础入门到实战 https://coding.imooc.com/class/229.html
+> 
