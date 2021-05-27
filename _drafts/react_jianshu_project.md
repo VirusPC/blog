@@ -183,25 +183,43 @@ Table of Contents
 
 ### CSSTransition 基本用法
 
-1. 网址: https://reactcommunity.org/react-transition-group/css-transition
+1. 网址: https://reactcommunity.org/react-transition-group/
 
 2. 概述
     1. 暴露了组件 transition 的步骤, 使得用户可以在 transition 的不同阶段执行想要的操作
-    2. 由四部分组成: `Transition`, `CSSTransition`, `SwitchTransition` 以及 `TransitionGroup`
-    3. `Transition` 组件允许您使用简单的声明性API来描述一段时间内一个组件从状态到另一个状态的转换。常用于动画组件的安装和卸载，也可以用于描述原位过渡状态。
-    4. `Transition` 组件是一个平台无关的组件. 如果使用CSS中的transition, 则最好使用`CSSTransition`. 后者继承了前者的所有功能, 并添加了 css transtiion 相关的其他功能.
+    2. 由四部分组成: *Transition*, *CSSTransition*, *SwitchTransition* 以及 *TransitionGroup*
+    3. *Transition* 组件允许您使用简单的声明性API来描述一段时间内一个组件从状态到另一个状态的转换。常用于动画组件的安装和卸载，也可以用于描述原位过渡状态。
+    4. *Transition* 组件是一个平台无关的组件. 如果使用CSS中的transition, 则最好使用*CSSTransition*. **后者继承了前者的所有功能**, 并添加了 css transtiion 相关的其他功能.
 
 3. 核心思想
-    1. transition 有 enter 和 exit 两个过程, 每个过程有准备执行和执行中两个阶段, 为每个阶段提供了插入操作的hook.
-    2. 四个阶段分别为:
-        1. enter
-        2. enter-active
-        3. exit
-        4. exit-active
+    1. 将 transition 的过程划分成多个阶段, 并在各阶段之间提供了slot 来供用户操作.
 
-4. `CSSTransition` 使用方式:
+4. *Transition* 与 *CSSTransition* 的区别
+    1. `Transition` 的子元素为函数, `CSSTransition` 的子元素为组件或基本元素.
+    2. *Transition* 在不同阶段为函数传入不同的状态字符串, *CSSTransition* 在不同阶段为组件设置不同的 css class.
+    3. 比起*Transition*, *CSSTransition* 将 appear 阶段 (组件刚挂载且 in 为`true`) 从 enter 阶段 (in 为 `true`) 中拆了出来.
+        1. *Transition* 的阶段与 slots:
+            1. **当 in=true**: (onEnter) => **entering** => (onEntering) => **entered** => (onEntered)
+            2. **当 in=false**: (onExit) => **exiting** => (onExiting) => **exited** => (onExited)
+        1. *CSSTransition*的阶段与挂载的 css class (设*CSSTransition*的类名为 `*` ):
+            1. **当 in=true 且组件首次挂载**: *-appear, *-appear-active, *-appear-done
+            2. **当 in=true**: *-enter, *-enter-active, *-enter-done
+            3. **当 in=false**: *-exit, *-exit-active, *-exit-done
+
+5. 其他注意事项
+    1. *Transition* 中, `appear` 属性默认为 `false`，即组件刚 mount 时不会触发 enter 。为 `true` 时会。
+    2. `timeout={{appear: 1, enter: 1, exit: 1}}` 等价于 `timeout={1}`
+
+6. *CSSTransition* 使用方式:
     1. `import {CSSTransition} from 'react-transition-group'`, 使用 `<CSSTransition>` 标签将要添加动画的组件包裹起来
-    2. 为 `CSSTransition` 标签指定属性, 有三个最重要的属性: `classNames`, `in` 和 `timeout`
+    2. 设置一个 state 用来控制 transition 是 enter 还是 exit
+        ```js
+        class MyComponent{
+          state = {inProp = true}
+          /* ... */
+        }
+        ```
+    3. 为 `CSSTransition` 标签指定属性, 有三个最重要的属性: `in`, `classNames` 和 `timeout`
         ```jsx
         <CSSTransition in={inProp} timeout={200} classNames="my-node">
           <div>
@@ -209,8 +227,19 @@ Table of Contents
           </div>
         </CSSTransition>
         ```
-        1. CSSTransition forces a reflow between before adding the example-enter-active. This is an important trick because it allows us to transition between example-enter and example-enter-active even though they were added immediately one after another.
-    3. 
+    4. 设置相应的 css class:
+        ```css
+        .my-node-enter{
+          /* ... */
+        }
+        .my-node-enter-active{
+          /* ... */
+        }
+        .my-node-enter-done{
+          /* ... */
+        }
+        
+        ```
 
 ---
 
