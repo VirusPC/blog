@@ -16,8 +16,9 @@ resource_path: /blog/assets/2021/05/27
 
 ---
 
-A browser’s console output will often print information about objects that is not otherwise available to the JavaScript runtime (such as the
-state of a promise).
+Throughout this chapter, examples make extensive use of **asynchronous logging** `setTimeout(console.log, 0, ...params)` to demonstrate order of operation and other asynchronous behavior characteristics.
+
+Note: A browser’s console output will often print information about objects that is not otherwise available to the JavaScript runtime (such as the state of a promise).
 
 ## Synchronous vs. Asynchronous JavaScript
 
