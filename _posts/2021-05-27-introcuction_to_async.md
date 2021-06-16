@@ -23,6 +23,10 @@ Throughout this chapter, examples make extensive use of **asynchronous logging**
 
 Note: A browser’s console output will often print information about objects that is not otherwise available to the JavaScript runtime (such as the state of a promise).
 
+javascript 是单线程的, 但是浏览器是多线程的. JavaScript 单线程是指只有一条线程来执行脚本. 所谓的异步都是借助浏览器的其他线程实现的. 如 `setTimeout()` 使用了浏览器的定时器线程, ajax 请求使用了浏览器的 HTTP 请求线程.
+
+Promise 并不能将普通代码变成异步的, 它只是用来组织多个异步行为.
+
 ## Synchronous vs. Asynchronous JavaScript
 
 ```js
@@ -42,7 +46,7 @@ setTimeout(() => x = x + 4, 1000);
 
 1. In early versions of the language, an asynchronous operation only supported definition of a **callback** function to indicate that the asynchronous operation had completed. 
 
-2. Serializing asynchronous behavior was a common problem, usually solved by a codebase full of nested callback functions—colloquially referred to as ''**callback hell**''.
+2. **Serializing asynchronous behavior** was a common problem, usually solved by a codebase full of nested callback functions—colloquially referred to as ''**callback hell**''.
 
 3. In the following code, after 1000ms, the JavaScript *runtime* will schedule the callback for execution by pushing it onto JavaScript’s *message queue*.
     ```js
