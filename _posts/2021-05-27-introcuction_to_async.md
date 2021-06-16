@@ -16,6 +16,9 @@ resource_path: /blog/assets/2021/05/27
 
 ---
 
+Asynchronous behavior is borne out of the need to optimize for higher computational throughput in the face of high-latency
+operations. 
+
 Throughout this chapter, examples make extensive use of **asynchronous logging** `setTimeout(console.log, 0, ...params)` to demonstrate order of operation and other asynchronous behavior characteristics.
 
 Note: A browser’s console output will often print information about objects that is not otherwise available to the JavaScript runtime (such as the state of a promise).
@@ -29,7 +32,11 @@ setTimeout(() => x = x + 4, 1000);
 
 1. We use the `setTimeout` function for example.
    
-2. you are generally unable to assert when the system state will change after the callback is scheduled
+2. Asynchronous behavior is analogous to interrupts, where an entity **external to the current process** is able to trigger code execution. (`setTimeout()` 将函数丢给浏览器, 脱离js运行的主线程, 到达给定时间后再将函数丢回主线程排队执行)
+
+3. The second chunk of instructions (the addition operation and assignment) are triggered by a system timer, which will generate an interrupt to enqueue execution. 
+
+4. Nevertheless, you are generally unable to assert when the system state will change after the callback is scheduled.
 
 ## Legacy Asynchronous Programming Patterns
 
