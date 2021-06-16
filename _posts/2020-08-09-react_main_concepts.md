@@ -539,17 +539,16 @@ React: 核心概念
 
 6. 新版生命周期函数  
 
-    生命周期函数|描述|```this.state```与```this.props```
-    :-|:-|:-
+    生命周期函数|描述|```this.state```与```this.props```  
+    :-|:-|:-  
     ```constructor(props)``` | 只用于两种目的:<br>(1)通过直接赋值来初始化```this.state```<br>(2)为事件处理函数绑定```this``` | / 
-    ```render()``` | 唯一一个必须的方法. 返回值可能是[很多种类型](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html). 不应该在里面修改```state``` | 指向新的
-    ```static getDerivedStateProps(props, state)```|取代了旧版中的```componentWillMount```, ```componentWillReceiveProps``` 以及 ```componentWillUpdate```. 需要设为静态方法. 有两个参数和返回值. 返回值是新的```state```, 会作为下一步```setState(state)```的参数.|静态方法没有```this```
-    ```render```
-    ```componentDidMount()``` | 在组件被挂载到真实DOM树之后立刻被调用 | 指向初始```state```和```props```
-    ```sholdComponentUpdate(nextProps, nextState)``` | props/state的改变不一定需要引起重新渲染时使用.<br/> (1) 只应该用于性能优化.<br/> (2) 用之前先考虑是否可以用[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)的默认实现.<br/> (3) 不推荐在里面使用JSON.stringify或深度相等判断, 十分影响性能 (4) 返回```false```不会阻止子组件的重新渲染 | 指向旧的
-    ```getSnapshotBeforeUpdate(prevProps, prevState, snapshot): any```|新增的放置在```render```与```comopnentDidUpdate```之间的钩子. 需要返回一个任意类型的值. 必须与```componentDidUpdate(props, state, value)```一起使用, 返回值会作为其```value```参数. | 指向新的
-    ```componentDidUpdate(prevProps, prevState, snapshot)``` | 在真实DOM树更新后被立刻调用.|指向新的
-    ```componentWillUnmount()``` | 组件被卸载销毁后立刻执行, 在这里面做必要的清理工作 | /
+    ```render()``` | 唯一一个必须的方法. 返回值可能是[很多种类型](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html). 不应该在里面修改```state``` | 指向新的  
+    ```static getDerivedStateProps(props, state)``` | 取代了旧版中的```componentWillMount```, ```componentWillReceiveProps``` 以及 ```componentWillUpdate```. 需要设为静态方法. 有两个参数和返回值. 返回值是新的```state```, 会作为下一步```setState(state)```的参数. | 静态方法没有```this```  
+    ```componentDidMount()``` | 在组件被挂载到真实DOM树之后立刻被调用 | 指向初始```state```和```props```  
+    ```sholdComponentUpdate(nextProps, nextState)``` | props/state的改变不一定需要引起重新渲染时使用.<br/> (1) 只应该用于性能优化.<br/> (2) 用之前先考虑是否可以用[PureComponent](https://reactjs.org/docs/react-api.html#reactpurecomponent)的默认实现.<br/> (3) 不推荐在里面使用JSON.stringify或深度相等判断, 十分影响性能 (4) 返回```false```不会阻止子组件的重新渲染 | 指向旧的  
+    ```getSnapshotBeforeUpdate(prevProps, prevState, snapshot): any```|新增的放置在```render```与```comopnentDidUpdate```之间的钩子. 需要返回一个任意类型的值. 必须与```componentDidUpdate(props, state, value)```一起使用, 返回值会作为其```value```参数. | 指向新的  
+    ```componentDidUpdate(prevProps, prevState, snapshot)``` | 在真实DOM树更新后被立刻调用.|指向新的  
+    ```componentWillUnmount()``` | 组件被卸载销毁后立刻执行, 在这里面做必要的清理工作 | /  
 
 
 6. componentWillxxx: 组件将要xxx. componentDidxxx: 组件做完了xxx. shouldComponentxxx: 组件是否应该xxx. 除了最后删除组件的钩子, 其它三个 componentWillxxx 即将过时.
