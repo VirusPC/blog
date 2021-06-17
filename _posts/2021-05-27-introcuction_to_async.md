@@ -34,7 +34,7 @@ Note: A browser’s console output will often print information about objects th
 
 5. 并行一定可以并发. 异步(非阻塞)是实现并发的手段之一.
 
-6. 浏览器中一个页面只有一个线程来执行脚本, 是**串行**的. 浏览器 Web API (如 XMLHttpRequest, setTimeout 等) 提供了一些**异步**操作的 API, 可用来实现并发.
+6. 浏览器中一个页面只有一个线程来执行脚本, 是**串行**的. 浏览器和Node.js提供了一些**异步**操作的 API, 如`setTimeout`, `XMLHttpRequest`[#](https://www.zhihu.com/question/408642963/answer/1356774295).
 
 7. JavaScript 是单线程的, 只能有一条线程来执行脚本, **串行** 执行. 但是浏览器是多线程的. 所谓的 **异步** 就是借助浏览器的其他线程实现的. 如 `setTimeout()` 使用了浏览器的定时器线程, ajax 请求使用了浏览器的 HTTP 请求线程.
 
@@ -164,3 +164,4 @@ Reference:
 - [Concurrency model and the event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
 - [Concurrency Models](http://tutorials.jenkov.com/java-concurrency/concurrency-models.html#reactive-event-driven-systems)
 - [Single-threaded Concurrency](http://tutorials.jenkov.com/java-concurrency/single-threaded-concurrency.html)
+- [关于js异步任务有哪些](https://www.zhihu.com/question/408642963/answer/1356774295]()
