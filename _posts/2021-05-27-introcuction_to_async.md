@@ -9,6 +9,7 @@ resource_path: /blog/assets/2021/05/27
 
 - [Introduction to Asynchronous Programming](#introduction-to-asynchronous-programming)
   - [基本背景](#基本背景)
+  - [Event Loop](#event-loop)
   - [Synchronous vs. Asynchronous JavaScript](#synchronous-vs-asynchronous-javascript)
   - [Legacy Asynchronous Programming Patterns](#legacy-asynchronous-programming-patterns)
     - [1. Returning Asynchronous Values - `success`](#1-returning-asynchronous-values---success)
@@ -43,7 +44,11 @@ Note: A browser’s console output will often print information about objects th
 9. Promise, async/await 并不能将普通代码变成异步的, 它只是用来更方便的组织多个异步行为. async/await 是 generator 的语法糖.
 
 <!-- 异步是实现并发的手段之一. 同步 (非阻塞) 同样可以实现并发, 参考 Java Netty -->
+## Event Loop
 
+1. js异步任务分微任务(micro task)和宏任务(task). 这是为了将异步队列任务划分优先级，使得微任务可以插队。 
+
+占坑, 待填
 
 ## Synchronous vs. Asynchronous JavaScript
 
@@ -164,4 +169,5 @@ Reference:
 - [Concurrency model and the event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
 - [Concurrency Models](http://tutorials.jenkov.com/java-concurrency/concurrency-models.html#reactive-event-driven-systems)
 - [Single-threaded Concurrency](http://tutorials.jenkov.com/java-concurrency/single-threaded-concurrency.html)
-- [关于js异步任务有哪些](https://www.zhihu.com/question/408642963/answer/1356774295]()
+- [关于js异步任务有哪些](https://www.zhihu.com/question/408642963/answer/1356774295)
+- [JS为什么要区分微任务和宏任务？](https://www.zhihu.com/question/316514618)
