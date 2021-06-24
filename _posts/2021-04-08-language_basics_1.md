@@ -60,9 +60,11 @@ No Keyword | global | no | yes | yes
 `let` | block | no | no | no
 `const` | block | no | no | no 
 
-1. Strict mode throws a ReferenceError when an undeclared variable is assigned a value.
+1. 函数声明也会有声明提升(declaration hoisting). 但是 block 中的函数声明会产生奇怪的行为, 具体取决于浏览器实现. [#](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
 
-2. The declaration *redundancy* errors are not a function of order, and are not affected if `let` is mixed with `var`. The different keywords do not declare different types of variables—they just specify how the variables exist **inside the relevant scope**.
+2. Strict mode throws a ReferenceError when an undeclared variable is assigned a value.
+
+3. The declaration *redundancy* errors are not a function of order, and are not affected if `let` is mixed with `var`. The different keywords do not declare different types of variables—they just specify how the variables exist **inside the relevant scope**.
 
     ```js
     var name;
@@ -72,9 +74,9 @@ No Keyword | global | no | yes | yes
     var age; // SyntaxError
     ```
 
-3. You cannot rely on a conditional declaration pattern with this new ES6 declaration keyword.
+4. You cannot rely on a conditional declaration pattern with this new ES6 declaration keyword.
 
-4. For Loop: When using `var`, a frequent problem encountered was the singular declaration and modification of the iterator variable. This happens because the loop exits with its iterator variable still set to the value that caused the loop to exit: `5`. When the timeouts later execute, they reference this same variable, and consequently `console.log` its final value.
+5. For Loop: When using `var`, a frequent problem encountered was the singular declaration and modification of the iterator variable. This happens because the loop exits with its iterator variable still set to the value that caused the loop to exit: `5`. When the timeouts later execute, they reference this same variable, and consequently `console.log` its final value.
 
     ```js
     for (var i = 0; i < 5; ++i) {
@@ -599,3 +601,4 @@ References
 - Professional JavaScript for Web Developers 4th Edition
 - [JavaScript numbers, all the same size in memory? - stackoverflow](https://stackoverflow.com/questions/32276562/javascript-numbers-all-the-same-size-in-memory)
 - [BigInt - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
+- [block - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)

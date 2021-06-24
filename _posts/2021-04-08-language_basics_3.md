@@ -146,8 +146,17 @@ confusion, especially during debugging.
    2. No named parameter can be named `eval` or `arguments`.
    3. No two named parameters can have the same name.
 
+3. Function 有声明提升(declaration hoisting).
+
+4. 块内函数声明:
+    1. ES5规定, 严格模式和非严格模式都不允许在块级作用域中进行函数声明, 只允许在函数作用域中声明. 但各浏览器在实际实现中都允许, 用function声明函数就像用var声明变量一样,会无视大括号, 即使块永远不会执行(如函数被`if(false){}`包裹着).
+    2. ES6中, 严格模式下, 不允许在块级作用域中进行函数声明. 只有非严格模式下才允许.
+    3. ES6中, 非严格模式下, 块内的函数声明的行为取决于浏览器具体实现.
+        > In non-strict code, function declarations inside blocks behave strangely. Do not use them.
+
 ---
 
 Reference:
 
 - Professional JavaScript for Web Developers 4th Edition
+- [block - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
