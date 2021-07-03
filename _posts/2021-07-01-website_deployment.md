@@ -1,10 +1,19 @@
-# 在一台服务器上部署多个网站
+---
+title: "在一台主机上部署多个网站" 
+categories: ['后端']
+tags: ['backend', 'nginx', 'tomcat', 'htpp']
+resource_path: /blog/assets/2021/07/01
+---
 
-- [在一台服务器上部署多个网站](#在一台服务器上部署多个网站)
+# 在一台主机上部署多个网站
+
+- [在一台主机上部署多个网站](#在一台主机上部署多个网站)
   - [背景](#背景)
   - [网站访问过程](#网站访问过程)
   - [服务器如何区分对不同网站的请求](#服务器如何区分对不同网站的请求)
   - [Nginx ，Apache 与 Tomcat](#nginx-apache-与-tomcat)
+    - [Nginx/Apache VS Tomcat](#nginxapache-vs-tomcat)
+    - [Nginx VS Apache](#nginx-vs-apache)
   - [实际操作](#实际操作)
     - [方案一: 只用Tomcat](#方案一-只用tomcat)
     - [方案二: Nginx + Tomcat](#方案二-nginx--tomcat)
@@ -40,11 +49,15 @@
 
 ## Nginx ，Apache 与 Tomcat
 
-简单介绍一下常用的三个 web server：Nginx，Apache（Apache HTTPD Server） 与 Tomcat（Apache Tomcat）。
+简单对比下三个常用的 web server：Nginx，Apache（Apache HTTPD Server） 与 Tomcat（Apache Tomcat）。
+
+### Nginx/Apache VS Tomcat 
 
 首先，Nginx和Apache是一类，Tomcat是一类。Nginx和Apache都是http server，关心的是 HTTP 协议层面的传输和访问控制。而Tomcat是application server，本质是一个servelet应用的容器，是apache之上的扩展，可以运行java，可以连接数据库，可以动态生成网页。前两个虽然有局限性，但也有很多优点，比如：对静态网站的访问速度更快，稳定性更好（长时间不用重新启动），安全性更高，对套接字处理的更好等[#](https://wiki.apache.org/tomcat/FAQ/Connectors#Q3)。**一般用前两个做静态网站部署、反向代理和反向代理之上的负载均衡等，用tomcat做java web应用部署。**
 
 Nginx和Apache也各有各的优势[#](https://www.zhihu.com/question/19571087/answer/133244938)。核心区别在于，apache是同步多进程模型，一个连接对应一个进程；nginx是异步的，多个连接（万级别）可以对应一个进程。
+
+### Nginx VS Apache
 
 Nginx相对于Apache的优点：
 
@@ -83,7 +96,7 @@ Tomcat的配置整体结构介绍可以看下文末的“[详解Tomcat 配置文
 
 要想每个域名对应到自己的网站，我们需要配置更上一级的Host(一个Host相当于一个虚拟主机):
 
-![tomcat_multi_host](./tomcat_multi_host.png)
+![tomcat_multi_host]({{page.resource_path}}/tomcat_multi_host.png)
 
 然后把静态网站的文件夹放到指定位置即可。
 
@@ -105,7 +118,7 @@ tomcat停了之后，就可以正常用`sudo apt-get install nginx`来安装ngin
 
 接下来让nginx来监听80端口，转发host为第一个网站域名的数据转发给tomcat的8080端口。nginx配置文件的绝对路径是`/etc/nginx/nginx.conf`。打开配置文件，找到http这个key，我们需要在它的里面添加server:
 
-![nginx_config1](./nginx_config1.png)
+![nginx_config1]({{page.resource_path}}/nginx_config1.png)
 
 这里带‘ssl’字眼的那五行可以先忽略，那是在配置https相关的东西。关键在于：
 
@@ -125,7 +138,7 @@ tomcat停了之后，就可以正常用`sudo apt-get install nginx`来安装ngin
 
 以后，对nginx进行简单配置即可。在之前的server下再配置一个新的server。与第一个网站的server相比，这里不需要对请求进行转发，而是需要直接指定项目的根目录。
 
-![nginx_config1](./nginx_config1.png)
+![nginx_config1]({{page.resource_path}}/nginx_config1.png)
 
 除了`listen`和`server_name`外，还有两个关键配置：
 
