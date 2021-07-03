@@ -53,7 +53,9 @@ resource_path: /blog/assets/2021/07/01
 
 ### Nginx/Apache VS Tomcat 
 
-首先，Nginx和Apache是一类，Tomcat是一类。Nginx和Apache都是http server，关心的是 HTTP 协议层面的传输和访问控制。而Tomcat是application server，本质是一个servelet应用的容器，是apache之上的扩展，可以运行java，可以连接数据库，可以动态生成网页。前两个虽然有局限性，但也有很多优点，比如：对静态网站的访问速度更快，稳定性更好（长时间不用重新启动），安全性更高，对套接字处理的更好等[#](https://wiki.apache.org/tomcat/FAQ/Connectors#Q3)。**一般用前两个做静态网站部署、反向代理和反向代理之上的负载均衡等，用tomcat做java web应用部署。**
+首先，Nginx和Apache是一类，Tomcat是一类。
+
+Nginx和Apache都是http server，关心的是 HTTP 协议层面的传输和访问控制。而Tomcat是application server，本质是一个servelet应用的容器，是apache之上的扩展，可以运行java，可以连接数据库，可以动态生成网页。前两个虽然有局限性，但也有很多优点，比如：对静态网站的访问速度更快，稳定性更好（长时间不用重新启动），安全性更高，对套接字处理的更好等[#](https://wiki.apache.org/tomcat/FAQ/Connectors#Q3)。**一般用前两个做静态网站部署、反向代理和反向代理之上的负载均衡等，用tomcat做java web应用部署。**
 
 Nginx和Apache也各有各的优势[#](https://www.zhihu.com/question/19571087/answer/133244938)。核心区别在于，apache是同步多进程模型，一个连接对应一个进程；nginx是异步的，多个连接（万级别）可以对应一个进程。
 
