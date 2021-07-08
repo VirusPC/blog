@@ -41,7 +41,7 @@ Table of Contents
     2. 编写样式组件. 当你定义样式时, 你是真的在创建一个普通的具有指定样式 React 组件.
     3. 用样式组件将目标组件包裹起来.
 
-4. 具体用法
+4. 具体用法-基本
    1. 创建样式组件
       1. 利用 tagged template literals 创建.  
           ```js
@@ -54,96 +54,37 @@ Table of Contents
           const Thing = styled.div(props => {color: props.color}); // 函数, 返回样式对象
           ```
    2. 继承
-      1. 不改变目标组件, 直接继承
+      1. 不改变目标组件的html元素类型, 直接继承
           ```js
           const Div = styled.div`color:blue`;
           const Div2 = styled(Div);
           ```
-      2. 改变目标组件, 在目标组件上加`as`
+      2. 改变目标组件的html元素类型, 在目标组件上加`as`
           ```jsx
           const Div = styled.div`color:blue`;
           const link = <Div as="a" href="/">a link</Div>
           ```
-   4. **Styling any component**: `styled` 方法适用于所有的自定义的或者任何第三方组件, 只要他们将传入的 `className` 这一 prop 给到 DOM 元素上. [#](https://styled-components.com/docs/basics#styling-any-component)
-   5. **Passed props**: styled-components 会自动对传入的属性做区分, 如果添加样式的目标是基础元素, 会从传入的属性拆分出基本的 HTML 属性直接添加到元素上, 并将剩余属性作为 props 传递给 interpolation. [#](https://styled-components.com/docs/basics#passed-props)
-   6. **Pseudoelements, pseudoselectors, and nesting**: [#](https://styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting)
-       1. ampersand (`&`) 可以用来引用组件本身.
-           ```js
-           const Thing = styled.div`
-             color: blue
-
-             &: hover {
-               color: red;
-             }
-
-             & + & {
-               background: line;
-             }
-           `
-           ```
-       2. 如果使用不带 `&` 的 selector, 他们会指向组件的孩子.
-           ```js
-           const Thing = styled.div`
-             color: blue;
-
-             .something {
-               color: red;
-             }
-           `
-           ```
-       3. `&` 可以被用于提升组件的规则的 specificity.
-           ```jsx
-           const Thing = styled.div`
-             && {
-               color: blue;
-             }
-           `
-
-           const GlobalStyle = createGlobalStyle`
-             div${Thing} {
-               color: red;
-             }
-           `
-
-           render(
-             <React.Fragment>
-               <GlobalStyle />
-               <Thing>
-                I'm blue, da ba dee da ba daa
-               </Thing>
-             </React.Fragment>
-           )
-           ```
-   7. **Attaching additional props**: 为了避免不必要的只是向渲染组件传入某些 props 的嵌套, 可以使用 `.attrs` 构造器. 它使得你可以为一个组件附加多余的 props. 当多个样式组件嵌套或继承时子组件可以覆盖父组件的 `.attrs` 里重复的 props. [#](https://styled-components.com/docs/basics#attaching-additional-props)
-       ```js
-       const Input = styled.input.attrs(props => ({
-         type: "text",
-         size: props.size || "1em",
-       }))`
-         border: 2px solid palevioletred;
-         margin: ${props => props.size};
-         padding: ${props => props.size};
-       `;
-
-       // Input's attrs will be applied first, and then this attrs obj
-       const PasswordInput = styled(Input).attrs({
-         type: "password",
-       })`
-         // similarly, border will override Input's border
-         border: 2px solid aqua;
-       `;
-
-       render(
-         <div>
-           <Input placeholder="A bigger text input" size="2em" />
-           <br />
-           {/* Notice we can still use the size attr from Input */}
-           <PasswordInput placeholder="A bigger password input" size="2em" />
-         </div>
-       );
-       ```
-   8.  **Animations**: [#](https://styled-components.com/docs/basics#animations)
-   9.  **Advanced Usage**: [#](https://styled-components.com/docs/advanced)
+      3. 父组件为自定义组件. `styled` 方法适用于所有的自定义的或者任何第三方组件, 只要他们将传入的 `className` 这一 prop 给到 DOM 元素上.
+          ```jsx
+          const Div = ({ className, children }) => (<div className={className}>{children}</div>);
+          const StyledDiv = styled(Div)`color: palevioletred; font-weight: bold;`;
+          ```
+    3. 编写样式
+        1. css预处理器: 使用stylis预处理器, 语法类似于scss.[#](https://styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting)
+            1. 可以把样式组件本身看作是一种可以被选择器选择的div这样的元素类型, 在组件样式中用`&`来引用这一类型. 普通css的作用域是全局的, 但这里的作用域仅限于样式组件内, 默认是只作用于该组件的后代.
+            2. `&&` 可以被用于提升组件的规则的 specificity.
+        2. css helper function[#](https://styled-components.com/docs/api#css): 之前说的定义的样式都是绑定到某个HTML元素或是组件上的, 有时候只是想定义与元素无关的可以复用的css样式, 可以借助 css helper funciton. props 会从父组件自动传递给complexMixin.
+            ```jsx
+            const complexMixin = css`color: ${props => props.color}`
+            const StyledComp = styled.div`${props => props.complex ? complexMixin: "color: blue"}`
+            ```
+    4. props相关
+        1. 自动区分props与attribute: styled-components 会自动对传入的属性做区分. 如果添加样式的目标是基础元素, 会从传入的属性拆分出其基本的 HTML 属性直接添加到元素上, 并将剩余属性作为 props.
+        2. 附加额外的props: 为了避免不必要的只是向渲染组件传入某些 props 的嵌套, 可以使用 `.attrs` 构造器. 它使得你可以为一个组件附加额外的 props. 当多个样式组件嵌套或继承时子组件可以覆盖父组件的 `.attrs` 里重复的 props.
+          ```jsx
+          const TextInput = styled.div.attrs(props => {type: "text", .color: props.color || "red"})`color: ${props.color}`
+          ```
+    5.  **Advanced Usage**: [#](https://styled-components.com/docs/advanced)
 
 5. 为方便记忆, 这里单独列出四种用到括号的情况.  
     ```js
