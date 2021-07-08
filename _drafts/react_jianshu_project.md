@@ -28,6 +28,7 @@ Table of Contents
 1. 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
 
 2. 为什么使用它? (特性): 包括刚才说的, styled components 具有以下特性:
+    - **利用js来增强css**.
     - **Automatic critical CSS**: 样式化组件跟踪页面上呈现的组件，并完全自动地注入它们的样式。
     - **No class name bugs**: 为样式生成唯一的类名.
     - **Easier deletion of CSS**: 很难知道样式文件中的某个类作用于代码中的哪个地方. styled-components 使得所有样式都紧密的与某个组件相关联, 很容易知道某个样式作用于哪里.
@@ -35,15 +36,34 @@ Table of Contents
     - **Painless maintenance**: 无需遍历其他文件来查找影响组件的样式，方便维护.
     - **Automatic vendor prefixing**: 按照当前的标准编写CSS，然后让样式化的组件处理其余部分。
 
-3. 基本用法
+3. 整体用法
     1. 使用yarn安装`styled-components`依赖.
-    2. 编写样式组件.
+    2. 编写样式组件. 当你定义样式时, 你是真的在创建一个普通的具有指定样式 React 组件.
     3. 用样式组件将目标组件包裹起来.
 
-4. 更多用法
-   1. **Getting Started**: `styled-components` 使用 tagged template literals 来为组件定义样式. 当你定义样式时, 你是真的在创建一个普通的具有指定样式 React 组件. 如```const Thing = styled.div`color: blue;` ``` 创建了一个颜色为 blue 的 div 组件. [#](https://styled-components.com/docs/basics#getting-started)
-   2. **Adapting based on props**: 可以为一个 styled component 的 template literal 传入一些函数 (interpolations), 以根据props (styled component 是 react component) 来调整样式. 如: ``` const Button = `background: ${props => props.primary ? "red" : "blue"}` ``` [#](https://styled-components.com/docs/basics#adapting-based-on-props)
-   3. **Extending Styles**: 为了方便一个组件继承另一个组件的样式, 直接将另一个组件包裹在 `styled()` 构造器中即可, 如`const StyledComponent2 = styled(StyledComponent1)`. 在某些情况下，继承后的组件可能需要更改 styled component 渲染的目标标签或组件, 这时候可以使用`"as" polymorphic prop`, 如`<Button as='a' href="/">button</Button>` [#](https://styled-components.com/docs/basics#extending-styles)
+4. 具体用法
+   1. 创建样式组件
+      1. 利用 tagged template literals 创建.  
+          ```js
+           const Thing = styled.div`color: blue`;
+           const Thing = styled.div`color: ${props.color}`;
+          ```
+      2. 利用 style objects 创建.  
+          ```js
+          const Thing = styled.div({color: blue}); // 样式对象
+          const Thing = styled.div(props => {color: props.color}); // 函数, 返回样式对象
+          ```
+   2. 继承
+      1. 不改变目标组件, 直接继承
+          ```js
+          const Div = styled.div`color:blue`;
+          const Div2 = styled(Div);
+          ```
+      2. 改变目标组件, 在目标组件上加`as`
+          ```jsx
+          const Div = styled.div`color:blue`;
+          const link = <Div as="a" href="/">a link</Div>
+          ```
    4. **Styling any component**: `styled` 方法适用于所有的自定义的或者任何第三方组件, 只要他们将传入的 `className` 这一 prop 给到 DOM 元素上. [#](https://styled-components.com/docs/basics#styling-any-component)
    5. **Passed props**: styled-components 会自动对传入的属性做区分, 如果添加样式的目标是基础元素, 会从传入的属性拆分出基本的 HTML 属性直接添加到元素上, 并将剩余属性作为 props 传递给 interpolation. [#](https://styled-components.com/docs/basics#passed-props)
    6. **Pseudoelements, pseudoselectors, and nesting**: [#](https://styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting)
@@ -122,7 +142,35 @@ Table of Contents
          </div>
        );
        ```
-   8. **Animations**: [#](https://styled-components.com/docs/basics#animations)
+   8.  **Animations**: [#](https://styled-components.com/docs/basics#animations)
+   9.  **Advanced Usage**: [#](https://styled-components.com/docs/advanced)
+
+5. 为方便记忆, 这里单独列出四种用到括号的情况.  
+    ```js
+    // 普通通过 template literal 创建
+    const Div = styled.div`background: ${props.background}`
+
+    // 继承
+    const Div1 = styled(Div)``
+
+    // additional props
+    const Div2 = styled.div.attr(props => ({
+      background: 'red'
+    }))`background: ${props.background}`
+
+    /* 不使用 template literals, 直接利用对象创建 */
+    // Style Objects - static
+    const Div3 = styled.div({
+      background: 'red',
+    });
+    // Style Objects - based on props
+    const Div4 = styled.div(props => ({
+      background: props.background
+    }));
+
+    ```
+
+6. css helper function. 不使用css helper function的话，complexMixin会得到 `"color: props => (props.whiteColor ? 'white' : 'black')"` 这一字符串结果。这是因为template literals中，会将表达式直接转成字符串，所以我们不可以在template literal 中使用函数。
 
 ---
 
