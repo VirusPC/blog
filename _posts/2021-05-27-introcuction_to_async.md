@@ -8,13 +8,13 @@ resource_path: /blog/assets/2021/05/27
 # Introduction to Asynchronous Programming
 
 - [Introduction to Asynchronous Programming](#introduction-to-asynchronous-programming)
-  - [基本背景](#基本背景)
-  - [Event Loop](#event-loop)
+  - [Fundamental Concept](#fundamental-concept)
   - [Synchronous vs. Asynchronous JavaScript](#synchronous-vs-asynchronous-javascript)
   - [Legacy Asynchronous Programming Patterns](#legacy-asynchronous-programming-patterns)
     - [1. Returning Asynchronous Values - `success`](#1-returning-asynchronous-values---success)
     - [2. Handling Failure - `failure`](#2-handling-failure---failure)
-    - [3. Nesting Asynchronous Callbacks - nesting](#3-nesting-asynchronous-callbacks---nesting)
+    - [3. Nesting Asynchronous Callbacks](#3-nesting-asynchronous-callbacks)
+  - [Event Loop](#event-loop)
 
 ---
 
@@ -23,7 +23,7 @@ Throughout this chapter, examples make extensive use of **asynchronous logging**
 
 Note: A browser’s console output will often print information about objects that is not otherwise available to the JavaScript runtime (such as the state of a promise).
 
-## 基本背景
+## Fundamental Concept
 
 1. **顺序(sequntial)执行** 和 **并发(concurrent)执行** 关注的是程序的执行顺序. 顺序执行是指一个任务从执行开始到结束始终占用该进程. 上一个开始执行的任务完成后, 当前任务才能执行, 任务严格按顺序执行. 并发执行是指无论上一个开始执行的任务是否完成, 当前任务都可以开始执行. 并发执行要求这些任务的执行顺序不影响最终结果, 任务轮流执行, 多个任务可以在同一时间段内发生.
 
@@ -35,20 +35,7 @@ Note: A browser’s console output will often print information about objects th
 
 5. 并行一定可以并发. 异步(非阻塞)是实现并发的手段之一.
 
-6. 浏览器中一个页面只有一个线程来执行脚本, 是**串行**的. 浏览器和Node.js提供了一些**异步**操作的 API, 如`setTimeout`, `XMLHttpRequest`[#](https://www.zhihu.com/question/408642963/answer/1356774295).
-
-7. JavaScript 是单线程的, 只能有一条线程来执行脚本, **串行** 执行. 但是浏览器是多线程的. 所谓的 **异步** 就是借助浏览器的其他线程实现的. 如 `setTimeout()` 使用了浏览器的定时器线程, ajax 请求使用了浏览器的 HTTP 请求线程.
-
-8. A concurrency model specifies how threads in the the system collaborate to complete the tasks they are are given. Different concurrency models split the tasks in different ways, and the threads may communicate and collaborate in different ways[#](http://tutorials.jenkov.com/java-concurrency/concurrency-models.html#reactive-event-driven-systems). JavaScript 的**并发**模型是基于 [event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop) 的.
-
-9. Promise, async/await 并不能将普通代码变成异步的, 它只是用来更方便的组织多个异步行为. async/await 是 generator 的语法糖.
-
 <!-- 异步是实现并发的手段之一. 同步 (非阻塞) 同样可以实现并发, 参考 Java Netty -->
-## Event Loop
-
-1. js异步任务分微任务(micro task)和宏任务(task). 这是为了将异步队列任务划分优先级，使得微任务可以插队。 
-
-占坑, 待填
 
 ## Synchronous vs. Asynchronous JavaScript
 
@@ -57,39 +44,36 @@ let x = 3;
 setTimeout(() => x = x + 4, 1000);
 ```
 
-1. Asynchronous behavior is borne out of the need to optimize for higher computational throughput in the face of high-latency
-operations. 
+1. **The need of asynchronous behavior**: Asynchronous behavior is borne out of the need to optimize for higher computational throughput in the face of **high-latency** operations. 比如, 把IO操作做成异步的. 这样当主进程执行到IO语句时, 通知另一个进程执行IO操作, 而自己不等待IO结果就继续执行剩下的语句. 当另一个进程的IO执行完毕后再将结果返回给主进程, 主进程再根据结果执行后续异步相关代码(如果主进程需要结果的话). 这样就避免了主进程一直等待耗时的IO操作, 先去执行与异步行为无关的其他操作.
+
+2. **Drawback**: You are generally unable to assert when the system state will change after the callback is scheduled.
+
+3. 浏览器中一个页面只有一个线程来执行脚本, 是**串行**的. 浏览器和Node.js提供了一些**异步**操作的 API, 如`setTimeout`, `XMLHttpRequest`[#](https://www.zhihu.com/question/408642963/answer/1356774295).
+
+4. JavaScript 是单线程的, 只能有一条线程来执行脚本, **串行** 执行. 但是浏览器是多线程的. 所谓的 **异步** 就是借助浏览器的其他线程实现的. 如 `setTimeout()` 使用了浏览器的定时器线程, ajax 请求使用了浏览器的 HTTP 请求线程. `setTimeout()` 将函数丢给浏览器, 使其脱离js运行的主线程, 到达给定时间后再将函数丢回一个队列中, 排队等待主线程执行.
    
-2. Asynchronous behavior is analogous to interrupts, where an entity **external to the current process** is able to trigger code execution. (`setTimeout()` 是一个异步操作. 它将函数丢给浏览器, 脱离js运行的主线程, 到达给定时间后再将函数丢回一个队列中, 排队等待主线程执行)
+5. A concurrency model specifies how threads in the the system collaborate to complete the tasks they are are given. Different concurrency models split the tasks in different ways, and the threads may communicate and collaborate in different ways[#](http://tutorials.jenkov.com/java-concurrency/concurrency-models.html#reactive-event-driven-systems). JavaScript 的**并发**模型是基于 [event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop) 的.
 
-3. The second chunk of instructions (the addition operation and assignment) are triggered by a system timer, which will generate an interrupt to enqueue execution. 
-
-4. Nevertheless, you are generally unable to assert when the system state will change after the callback is scheduled.
+6. Promise, async/await 并不能将普通代码变成异步的, 它只是用来更方便的组织多个异步行为. async/await 是 generator 的语法糖.
 
 ## Legacy Asynchronous Programming Patterns
 
-1. In early versions of the language, an asynchronous operation only supported definition of a **callback** function to indicate that the asynchronous operation had completed. 
-
-2. **Serializing asynchronous behavior** was a common problem, usually solved by a codebase full of nested callback functions—colloquially referred to as ''**callback hell**''.
-
-3. In the following code, after 1000ms, the JavaScript *runtime* will schedule the callback for execution by pushing it onto JavaScript’s *message queue*.
-    ```js
-    function double(value) {
-      setTimeout(() => setTimeout(console.log, 0, value * 2), 1000);
-    }
-    double(3)  // 6 (printed after roughly 1000 ms)
-    ```
-
-4. **the full version of the using of an async function**:
+1. In early versions of the language, an asynchronous operation only supported definition of a **callback** function to indicate that the asynchronous operation had completed. The full version of the using of an async function as follows:
     ```js
     asyncfunc(values, success, failure);
     ```
 
-由于早期 JavaScript 中异步编程只支持简单回调函数的形式, 没有 Promise, async/await, 这就给用户在处理某些场景下的相关问题时带来很大不便. 这些场景包括:
-1. 处理异步操作的返回值
-2. 处理异步操作的错误
-3. 嵌套异步回调
-下面三部分会讲一下传统回调函数是如何处理上述三个场景的. 再往后面的文章会讲Promise是如何方便这三个场景以及其他的功能.
+2. **Serializing asynchronous behavior** was a common problem, usually solved by a codebase full of nested callback functions—colloquially referred to as ''**callback hell**''. See the following part: *Nest Asynchronous Callbacks*.
+
+
+
+3. 由于早期 JavaScript 中异步编程只支持简单回调函数的形式, 没有 Promise, async/await, 这就给用户在处理某些场景下的相关问题时带来很大不便. 这些场景包括:
+
+      1. 处理异步操作的返回值
+      2. 处理异步操作的错误
+      3. 嵌套异步回调
+
+      下面三部分会讲一下传统回调函数是如何处理上述三个场景的. 再往后面的文章会讲Promise是如何方便这三个场景以及其他的功能.
 
 ### 1. Returning Asynchronous Values - `success`
 
@@ -124,9 +108,9 @@ const failureCallback = (e) => console.log(`Success: ${e}`);
 double(3, successCallback, failureCallback);  // the callbacks must be defined before there.
 ```
 
-This format is already undesirable, as the callbacks must be defined when the asynchronous operation is initialized (the last line).
+This format is already undesirable, as the callbacks must be defined when the asynchronous operation is initialized (the last line). By *Promise*, we can set the operations latter with `then`.
 
-### 3. Nesting Asynchronous Callbacks - nesting
+### 3. Nesting Asynchronous Callbacks
 
 This callback strategy does not scale well as code complexity grows. The “**callback hell**” colloquialism is well-deserved, as JavaScript codebases that were afflicted with
 such a structure became nearly **unmaintainable**.
@@ -156,6 +140,13 @@ double(3, successCallback, failureCallback);
 
 // Success: 12 (printed after roughly 2000ms)
 ```
+
+## Event Loop
+
+1. js异步任务分微任务(micro task)和宏任务(task). 这是为了将异步队列任务划分优先级，使得微任务可以插队。 
+
+占坑, 待填
+
 ---
 
 Reference:
