@@ -27,7 +27,9 @@ Table of Contents
 
 1. 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
 
-2. 为什么使用它? (特性): 包括刚才说的, styled components 具有以下特性:
+2. **styled-components generates an actual stylesheet with classes, and attaches those classes to the DOM nodes of styled components via the className prop.**
+
+3. 为什么使用它? (特性): 包括刚才说的, styled components 具有以下特性:
     - **利用js来增强css**.
     - **Automatic critical CSS**: 样式化组件跟踪页面上呈现的组件，并完全自动地注入它们的样式。
     - **No class name bugs**: 为样式生成唯一的类名.
@@ -36,57 +38,90 @@ Table of Contents
     - **Painless maintenance**: 无需遍历其他文件来查找影响组件的样式，方便维护.
     - **Automatic vendor prefixing**: 按照当前的标准编写CSS，然后让样式化的组件处理其余部分。
 
-3. 整体用法
+4. 整体用法
     1. 使用yarn安装`styled-components`依赖.
     2. 编写样式组件. 当你定义样式时, 你是真的在创建一个普通的具有指定样式 React 组件.
     3. 用样式组件将目标组件包裹起来.
 
-4. 具体用法-基本
-   1. 创建样式组件
-      1. 利用 tagged template literals 创建.  
-          ```js
-           const Thing = styled.div`color: blue`;
-           const Thing = styled.div`color: ${props.color}`;
-          ```
-      2. 利用 style objects 创建.  
-          ```js
-          const Thing = styled.div({color: blue}); // 样式对象
-          const Thing = styled.div(props => {color: props.color}); // 函数, 返回样式对象
-          ```
-   2. 继承
-      1. 不改变目标组件的html元素类型, 直接继承
-          ```js
-          const Div = styled.div`color:blue`;
-          const Div2 = styled(Div);
-          ```
-      2. 改变目标组件的html元素类型, 在目标组件上加`as`
-          ```jsx
-          const Div = styled.div`color:blue`;
-          const link = <Div as="a" href="/">a link</Div>
-          ```
-      3. 父组件为自定义组件. `styled` 方法适用于所有的自定义的或者任何第三方组件, 只要他们将传入的 `className` 这一 prop 给到 DOM 元素上.
-          ```jsx
-          const Div = ({ className, children }) => (<div className={className}>{children}</div>);
-          const StyledDiv = styled(Div)`color: palevioletred; font-weight: bold;`;
-          ```
+5. 具体用法-基本
+    1. 创建样式组件
+        1. 利用 tagged template literals 创建.  
+            ```js
+             const Thing = styled.div`color: blue`;
+             const Thing = styled.div`color: ${props.color}`;
+            ```
+        2. 利用 style objects 创建.  
+            ```js
+            const Thing = styled.div({color: blue}); // 样式对象
+            const Thing = styled.div(props => {color: props.color}); // 函数, 返回样式对象
+            ```
+    2. 继承
+        1. 不改变目标组件的html元素类型, 直接继承
+            ```js
+            const Div = styled.div`color:blue`;
+            const Div2 = styled(Div);
+            ```
+        2. 改变目标组件的html元素类型, 在目标组件上加`as`
+            ```jsx
+            const Div = styled.div`color:blue`;
+            const link = <Div as="a" href="/">a link</Div>
+            ```
+        3. 父组件为自定义组件. `styled` 方法适用于所有的自定义的或者任何第三方组件, 只要他们将传入的 `className` 这一 prop 给到 DOM 元素上.
+            ```jsx
+            const Div = ({ className, children }) => (<div className={className}>{children}</div>);
+            const StyledDiv = styled(Div)`color: palevioletred; font-weight: bold;`;
+            ```
     3. 编写样式
-        1. css预处理器: 使用stylis预处理器, 语法类似于scss.[#](https://styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting)
+       1. css预处理器: 使用stylis预处理器, 语法类似于scss.[#](https://styled-components.com/docs/basics#pseudoelements-pseudoselectors-and-nesting)
             1. 可以把样式组件本身看作是一种可以被选择器选择的div这样的元素类型, 在组件样式中用`&`来引用这一类型. 普通css的作用域是全局的, 但这里的作用域仅限于样式组件内, 默认是只作用于该组件的后代.
             2. `&&` 可以被用于提升组件的规则的 specificity.
-        2. css helper function[#](https://styled-components.com/docs/api#css): 之前说的定义的样式都是绑定到某个HTML元素或是组件上的, 有时候只是想定义与元素无关的可以复用的css样式, 可以借助 css helper funciton. props 会从父组件自动传递给complexMixin.
+        1. `css` helper function[#](https://styled-components.com/docs/api#css): 之前说的定义的样式都是绑定到某个HTML元素或是组件上的, 有时候只是想定义与元素无关的可以复用的css样式, 可以借助 `css`. props 会从父组件自动传递给 complexMixin. 不使用`css` 这一 helper function的话，complexMixin会得到 `"color: props => (props.whiteColor ? 'white' : 'black')"` 这一字符串结果。这是因为 template literals 中，会将表达式直接转成字符串，所以我们不可以在template literal 中使用函数。
             ```jsx
             const complexMixin = css`color: ${props => props.color}`
             const StyledComp = styled.div`${props => props.complex ? complexMixin: "color: blue"}`
             ```
-    4. props相关
-        1. 自动区分props与attribute: styled-components 会自动对传入的属性做区分. 如果添加样式的目标是基础元素, 会从传入的属性拆分出其基本的 HTML 属性直接添加到元素上, 并将剩余属性作为 props.
+    4. props
+        1. 自动区分 props 与 attribute: styled-components 会自动对传入的属性做区分. 如果添加样式的目标是基础元素, 会从传入的属性拆分出其基本的 HTML 属性直接添加到元素上, 并将剩余属性作为 props.
         2. 附加额外的props: 为了避免不必要的只是向渲染组件传入某些 props 的嵌套, 可以使用 `.attrs` 构造器. 它使得你可以为一个组件附加额外的 props. 当多个样式组件嵌套或继承时子组件可以覆盖父组件的 `.attrs` 里重复的 props.
           ```jsx
           const TextInput = styled.div.attrs(props => {type: "text", .color: props.color || "red"})`color: ${props.color}`
           ```
-    5.  **Advanced Usage**: [#](https://styled-components.com/docs/advanced)
 
-5. 为方便记忆, 这里单独列出四种用到括号的情况.  
+6. 具体用法-高级
+    1. Animation: 需要借助`keyframes`这一helper function来定义keyframe.
+    2. React Native: 与 web-version 相比, 不可使用 `keyframes` 和 `createGlobalStyle`.
+    3. Theming: 通过context api, theme 里定义的属性, 会放到 ThemeProvider 里的每个组件的props里. 可通过 function themes 设置子主题.
+    4. Refs: 对目标是基本DOM元素的样式组件(如通过styled.div定义的)使用refs, 会返回潜在的DOM节点; 对目标是自定义组件的样式组件使用refs, 会返回组件实例. 总之, 可以将styled.div/styled(MyComponent) 看作只是为css属性们生成一个独一无二的class, 并给目标组件加了class而已. (虽然内部更复杂).
+    5. Security: 不要把用户的输入作为样式, 会带来安全隐患. 如当 background 通过 url 设置, 且 url 是用户输入的话, 用户如果输入一个 api 的 url, 会直接调用该 api. [#](https://styled-components.com/docs/advanced#security).  
+        ```jsx
+        const userInput = '/api/withdraw-funds'
+        const ArbitraryComponent = styled.div`
+          background: url(${userInput});
+          /* More styles here... */
+        `
+        ```
+    6. Existing CSS: 由于 styled-components 的工作模式是, 生成一个类的样式表, 并将这个类通过`className`添加到节点上. 如果你要添加样式的目标组件已经有一个全局 class 的话, 需要注意一下结合的方式. 如果多个 class 里重复设置了同优先级的某个属性, 会采用最后一个 class 的设置.  
+        ```jsx
+        class MyComponent extends React.Component {
+          render() {
+            // Attach the passed-in className to the DOM node
+            return <div className={`some-global-class ${this.props.className}`} />
+          }
+        }
+        ```
+    7. Referring to other components  
+        ```jsx
+        const link = styled.a``
+        const Icon = styled.svg`
+          ${Link}:hover & {
+            fill: blue
+          }
+        `
+        const Component = () => (<Icon><Link href="#"/><Icon>)
+        ```
+    8. Server Side Rendering
+
+7. 为方便对比记忆, 这里单独列出四种用到括号的情况.  
     ```js
     // 普通通过 template literal 创建
     const Div = styled.div`background: ${props.background}`
@@ -110,8 +145,6 @@ Table of Contents
     }));
 
     ```
-
-6. css helper function. 不使用css helper function的话，complexMixin会得到 `"color: props => (props.whiteColor ? 'white' : 'black')"` 这一字符串结果。这是因为template literals中，会将表达式直接转成字符串，所以我们不可以在template literal 中使用函数。
 
 ---
 
