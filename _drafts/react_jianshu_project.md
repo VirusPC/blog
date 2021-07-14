@@ -214,6 +214,7 @@ Table of Contents
 3. 核心思想
     1. 将 transition 的过程划分成多个阶段, 并将他们暴露出来, 在各阶段之间提供了slot 来供用户操作.
     2. > "exposes simple components useful for defining entering and exiting transitions…it does not animate styles by itself. Instead it exposes transition stages, manages classes and group elements and manipulates the DOM in useful ways, making the implementation of actual visual transitions much easier."
+    3. 本质也是切换css类[#](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L118)
 
 4. 为什么使用它?
    1. 比 css transition 的阶段划分更灵活.
@@ -253,7 +254,7 @@ Table of Contents
           </div>
         </CSSTransition>
         ```
-    4. 设置相应的 css class:
+    4. 设置相应的 css class. 注意, enter/active/exit三个阶段, 没到一个阶段就会把上一个阶段的class全部移除. 同一阶段内的三个类依次叠加.[#](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L201):
         ```css
         .my-node-enter{
           /* ... */
