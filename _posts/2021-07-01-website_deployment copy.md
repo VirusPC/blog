@@ -20,8 +20,6 @@ resource_path: /blog/assets/2021/07/01
       - [让第一个tomcat上的网站跑起来](#让第一个tomcat上的网站跑起来)
       - [让第二个静态网站跑起来](#让第二个静态网站跑起来)
   - [添加https支持](#添加https支持)
-    - [背景介绍](#背景介绍)
-    - [使用方法](#使用方法)
   - [最后。。。](#最后)
 
 ---
@@ -154,57 +152,7 @@ tomcat停了之后，就可以正常用`sudo apt-get install nginx`来安装ngin
 
 ## 添加https支持
 
-### 背景介绍
-
-HTTPS 主要由两部分组成：HTTP + SSL/TLS。其中SSL（Security Socket Layer）是一种广泛运用在互联网上的资料加密协议；TLS是SSL的下一代协议。
-
-HTTPS核心的一个部分是数据传输之前的握手，握手过程中确定了数据加密的密码。在握手过程中，网站会向浏览器发送SSL证书，SSL证书和我们日常用的身份证类似，是一个支持HTTPS网站的身份证明，SSL证书里面包含了网站的域名，证书有效期，证书的颁发机构以及用于加密传输密码的公钥等信息，由于公钥加密的密码只能被在申请证书时生成的私钥解密，因此浏览器在生成密码之前需要先核对当前访问的域名与证书上绑定的域名是否一致，同时还要对证书的颁发机构进行验证，如果验证失败浏览器会给出证书错误的提示。
-
-大多数SSL证书都需要钱，功能越强大的证书费用越高。阿里云每年有固定数量的免费SSL证书提供，有效期1年。 *Lets' Encrypt* 是目前适用范围最为广泛的SSL证书，唯一的缺陷是，它发行的证书有效期只有3个月。
-
-*Let's Encrypt*由互联网安全研究小组（缩写ISRG）提供服务。主要赞助商包括电子前哨基金会、Mozilla基金会、Akamai以及思科。2015年4月9日，ISRG与Linux基金会宣布合作。用以实现新的数字证书认证机构的协议被称为自动证书管理环境（ACME）。
-
-而我们要用的 [acme.sh](https://github.com/acmesh-official/acme.sh) 是纯用shell语言写的，实现了acme 协议，可以从 *Let's Encrypt* 自动生成、续订和安装证书。
-
-### 使用方法
-
-注意云服务器要在安全组策略/防火墙里开放443端口。
-
-1. 安装  
-    ```bash
-    curl https://get.acme.sh | sh
-    ```
-
-2. 申请证书。一般使用两种方式验证：http 或 dns 验证。
-    1. http验证。`-d`后跟的是网站地址，`-w`后跟的是网站工作目录的路径。  
-        ```bash
-        acme.sh --issue -d www.abc.net -d abc.net -w /opt/tomcat/apache-tomcat-8.5.42/webapps/ROOT/
-        ```
-    2. dns验证。注意为了安全最好在阿里云开个子账户用于操作，并给予DNS域名管理的权限。
-        ```bash
-        见官网
-        ```
-    
-    申请成功后，最后控制台会打印一些信息, 用于对服务器机型配置。
-
-    ```bash
-    [Wed Jun 30 22:10:13 CST 2021] Your cert is in  /root/.acme.sh/www.abc.net/www.yunhaiwang.net.cer 
-    [Wed Jun 30 22:10:13 CST 2021] Your cert key is in  /root/.acme.sh/www.abc.net/www.abc.net.key 
-    [Wed Jun 30 22:10:13 CST 2021] The intermediate CA cert is in  /root/.acme.sh/www.abc.net/ca.cer 
-    [Wed Jun 30 22:10:13 CST 2021] And the full chain certs is there:  /root/.acme.sh/www.abc.net/fullchain.cer
-    ```
-
-    通过`crontab -l`，可以看到添加了定时任务，用于自动更新证书。
-    ![nginx_https]({{page.resource_path}}/nginx_https.png)
-
-3. 修改服务器配置。
-    1. 添加`443 ssl`的监听。旧版nginx的配置是直接监听`443`端口，然后加一行`ssl true`。
-    2. 配置ssl_certificate。使用上面的最后一个`fullcahin.cer`即可。
-    3. 配置ssl_certificate_key。上面的第二行。
-    ![nginx_https]({{page.resource_path}}/nginx_https.png)
-
-4. 重启nginx
-   `nginx -s reload` 或 `service nginx restart` 或 `systemctl restart nginx`
+见另一篇[文章](#https://viruspc.github.io/blog//%E5%90%8E%E7%AB%AF/2021/07/02/https_support.html)。
 
 ## 最后。。。
 

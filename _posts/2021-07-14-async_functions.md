@@ -43,6 +43,12 @@ ES7’s async/await is intended to directly address the issue of organizing code
 
 ### The async keyword
 
+1. How to use? An async function can be declared by prepending the `async` keyword. This keyword can be used on function declarations, function expressions, arrow functions, and methods.
+
+2. Using the async keyword will create a function that exhibits some asynchronous characteristics but overall is **still synchronously evaluated**. In all other respects such as argumetns and closures, it still exhibits all the normal behavior of a JavaScript function.
+
+3. In an async function, whatever value is returned with the return keyword (or `undefined` if there is no return) will be effectively converted into a promise object with `Promise.resolve()`. An async function will always return a promise object. A thenable object will be “unwrapped” via the first argument provided to the `then()` callback. A non-thenable object will be passed through as if it were an already resolved promise. 
+
 ### The await keyword
 
 ### Restrictions on await
