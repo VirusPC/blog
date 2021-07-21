@@ -141,7 +141,7 @@ tomcat停了之后，就可以正常用`sudo apt-get install nginx`来安装ngin
 
 以后，对nginx进行简单配置即可。在之前的server下再配置一个新的server。与第一个网站的server相比，这里不需要对请求进行转发，而是需要直接指定项目的根目录。
 
-![nginx_config1]({{page.resource_path}}/nginx_config1.png)
+![nginx_config2]({{page.resource_path}}/nginx_config2.png)
 
 除了`listen`和`server_name`外，还有两个关键配置：
 
