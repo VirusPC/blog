@@ -56,14 +56,14 @@ curl https://get.acme.sh | sh
 
 1. http验证。`-d`后跟的是网站地址，`-w`后跟的是网站工作目录的路径。  
 
-```bash
-acme.sh --issue -d www.abc.net -d abc.net -w /opt/tomcat/apache-tomcat-8.5.42/webapps/ROOT/
-```
+    ```bash
+    acme.sh --issue -d www.abc.net -d abc.net -w /opt/tomcat/apache-tomcat-8.5.42/webapps/ROOT/
+    ```
 2. dns验证。注意为了安全最好在阿里云开个子账户用于操作，并给予DNS域名管理的权限。
 
-```bash
-见官网
-```
+    ```bash
+    见官网
+    ```
     
 申请成功后，最后控制台会打印一些信息, 用于对服务器机型配置。
 
