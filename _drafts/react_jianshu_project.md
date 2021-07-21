@@ -25,11 +25,15 @@ Table of Contents
 
 ## 使用 styled-components 为组件添加样式
 
-1. 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
+1. 网址: https://styled-components.com/
 
-2. **styled-components generates an actual stylesheet with classes, and attaches those classes to the DOM nodes of styled components via the className prop.**
+2. 概述: 一个 css-in-js 思想下的, 方便写css的库
 
-3. 为什么使用它? (特性): 包括刚才说的, styled components 具有以下特性:
+3. 为什么使用它? 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
+
+4. 原理: **styled-components generates an actual stylesheet with classes, and attaches those classes to the DOM nodes of styled components via the className prop.**
+
+5. 为什么使用它? (特性): 包括刚才说的, styled components 具有以下特性:
     - **利用js来增强css**.
     - **Automatic critical CSS**: 样式化组件跟踪页面上呈现的组件，并完全自动地注入它们的样式。
     - **No class name bugs**: 为样式生成唯一的类名.
@@ -38,12 +42,12 @@ Table of Contents
     - **Painless maintenance**: 无需遍历其他文件来查找影响组件的样式，方便维护.
     - **Automatic vendor prefixing**: 按照当前的标准编写CSS，然后让样式化的组件处理其余部分。
 
-4. 整体用法
+6. 整体用法
     1. 使用yarn安装`styled-components`依赖.
     2. 编写样式组件. 当你定义样式时, 你是真的在创建一个普通的具有指定样式 React 组件.
     3. 用样式组件将目标组件包裹起来.
 
-5. 具体用法-基本
+7. 具体用法-基本
     1. 创建样式组件
         1. 利用 tagged template literals 创建.  
             ```js
@@ -87,7 +91,7 @@ Table of Contents
           const TextInput = styled.div.attrs(props => {type: "text", .color: props.color || "red"})`color: ${props.color}`
           ```
 
-6. 具体用法-高级
+8. 具体用法-高级
     1. Animation: 需要借助`keyframes`这一helper function来定义keyframe.
     2. React Native: 与 web-version 相比, 不可使用 `keyframes` 和 `createGlobalStyle`.
     3. Theming: 通过context api, theme 里定义的属性, 会放到 ThemeProvider 里的每个组件的props里. 可通过 function themes 设置子主题.
@@ -121,7 +125,7 @@ Table of Contents
         ```
     8. Server Side Rendering
 
-7. 为方便对比记忆, 这里单独列出四种用到括号的情况.  
+9. 为方便对比记忆, 这里单独列出四种用到括号的情况.  
     ```js
     // 普通通过 template literal 创建
     const Div = styled.div`background: ${props.background}`
@@ -150,13 +154,17 @@ Table of Contents
 
 ## 使用 reset.css 覆盖浏览器默认样式
 
-1. 为什么使用它?
-   1. 为了保证页码在所有浏览器上的展示效果的一致性, 可以使用Reset.css, 覆盖掉浏览器默认样式. 
+1. 网址: https://meyerweb.com/eric/tools/css/reset/
 
-2. 使用方式
-   1. 直接把主页的css复制过来用就可以, 然后用`styled-components` 的 `createGlobalStyle` 设置为全局样式
+2. 概述: 就是一个普通css文件, 定义了一些基本样式.
 
-3. 一些相关文章:
+3. 为什么使用它?
+   1. 为了保证页码在所有浏览器上的展示效果的一致性, 可以使用Reset.css, 覆盖掉浏览器默认样式.
+
+4. 使用方式
+   1. 直接把网站主页的css复制过来用就可以, 然后用`styled-components` 的 `createGlobalStyle` 设置为全局样式
+
+5. 一些相关文章:
     - [到底该不该用 CSS reset?](https://www.zhihu.com/question/23554164/answer/34482613)
     - [Reset.css](https://meyerweb.com/eric/tools/css/reset/)
     - [Normalize.css](https://necolas.github.io/normalize.css/)
@@ -169,12 +177,16 @@ Table of Contents
 
 1. 网址: https://www.iconfont.cn/
 
-2. 为什么使用它?
+2. 概述: 阿里巴巴矢量图标库
+
+3. 为什么使用它?
     1. 海量图标库
+    2. 支持各种格式
+    3. 方便团队协作
 
-3. iconfont 的一般使用方法有三种: Unicode, Font class 以及 Symbol, 使用方法在下载解压后的`demo_index.html`里都有详细.
+4. iconfont 的一般使用方法有三种: Unicode, Font class 以及 Symbol, 使用方法在下载解压后的`demo_index.html`里都有详细.
 
-4. iconfont 结合 styled-component 的使用方式:
+5. iconfont 结合 styled-component 的使用方式:
    1. 图标下载到本地解压后, 只取`iconfont.css`, `iconfont.eot`, `iconfont.svg`, `iconfont.ttf` 以及 `iconfont.woff` 五个文件即可. (其他文件是和使用说明相关的)  
       ![iconfont](./iconfont.png)
 
@@ -202,6 +214,7 @@ Table of Contents
 3. 核心思想
     1. 将 transition 的过程划分成多个阶段, 并将他们暴露出来, 在各阶段之间提供了slot 来供用户操作.
     2. > "exposes simple components useful for defining entering and exiting transitions…it does not animate styles by itself. Instead it exposes transition stages, manages classes and group elements and manipulates the DOM in useful ways, making the implementation of actual visual transitions much easier."
+    3. 本质也是切换css类[#](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L118)
 
 4. 为什么使用它?
    1. 比 css transition 的阶段划分更灵活.
@@ -241,7 +254,7 @@ Table of Contents
           </div>
         </CSSTransition>
         ```
-    4. 设置相应的 css class:
+    4. 设置相应的 css class. 注意, enter/active/exit三个阶段, 没到一个阶段就会把上一个阶段的class全部移除. 同一阶段内的三个类依次叠加.[#](https://github.com/reactjs/react-transition-group/blob/5007303e729a74be66a21c3e2205e4916821524b/src/CSSTransition.js#L201):
         ```css
         .my-node-enter{
           /* ... */
@@ -259,7 +272,23 @@ Table of Contents
 
 ## 使用 React-Redux 进行应用数据的管理
 
+1. 网站
+2. 概述
+3. 核心思想
+4. 为什么使用它?
+   1. 在搭建大型项目时, 组件之间的数据传递会很麻烦, 可以借助 redux 来管理数据.
+5. 使用方式
+6. 注意事项
+   1. 一般来说, 既然项目中使用了 redux, 那么能使用 redux 的地方尽量都用 redux.-[]
+
 ## 使用 combineReducers 完成对数据的拆分管理
+
+1. 网站
+2. 概述
+3. 核心思想
+4. 为什么使用它?
+5. 使用方式
+6. 注意事项
 
 ## actionCreators 与 constants 的拆分
 
