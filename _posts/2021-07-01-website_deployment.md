@@ -1,5 +1,5 @@
 ---
-title: "在一台主机上部署多个网站" 
+title: "在一台主机上部署多个网站 (Nginx + Tomcat)" 
 categories: ['后端']
 tags: ['backend', 'nginx', 'tomcat', 'htpp']
 resource_path: /blog/assets/2021/07/01
