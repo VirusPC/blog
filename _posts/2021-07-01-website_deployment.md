@@ -137,7 +137,7 @@ tomcat停了之后，就可以正常用`sudo apt-get install nginx`来安装ngin
 
 让第二个静态网站跑起来就比较容易了。之前第二个静态网站是挂在vercel上，当github上有新的push时，项目会进行部署。
 
-为了简单起见，这里先不考虑自动化部署，先手动在本地对项目build，然后把build生成的整个文件夹通过winscp/xftp等工具上传到服务器上。
+为了简单起见，这里先不考虑自动化部署，先手动在本地对项目build，然后把build生成的整个文件夹通过winscp/xftp等工具上传到服务器上。[后续文章中](https://viruspc.github.io/blog//%E5%90%8E%E7%AB%AF/2021/08/04/auto_deployment.html)会做自动化部署.
 
 以后，对nginx进行简单配置即可。在之前的server下再配置一个新的server。与第一个网站的server相比，这里不需要对请求进行转发，而是需要直接指定项目的根目录。
 

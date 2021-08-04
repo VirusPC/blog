@@ -20,7 +20,7 @@ resource_path: /blog/assets/2021/07/02
 
 ## 背景
 
-在[上篇文章中](http://127.0.0.1:5000/blog//%E5%90%8E%E7%AB%AF/2021/07/01/website_deployment.html), 我们成功将网站部署到了云服务器上。
+在[上篇文章中](https://viruspc.github.io/blog//%E5%90%8E%E7%AB%AF/2021/07/01/website_deployment.html), 我们成功将网站部署到了云服务器上。
 
 但是我们只能通过 http 协议来访问网站，这就给用户带来很大不便：比如对于 chrome， 用户直接输入不带协议的网站链接时，会默认加 https 协议，用户要想访问网站必须手动在网站最前面加 http 协议。
 
