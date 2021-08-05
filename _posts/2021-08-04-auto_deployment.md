@@ -54,7 +54,7 @@ CI/CD 的解释可以参考 [Red Hat 的文章](https://www.redhat.com/zh/topics
 
 ![tencent cloud]({{page.resource_path}}/tencentcloud.png)
 
-但是，有些网站我们希望可以与仓库绑定，当仓库里的资源更新时，网站也会自动更新。上面说的 vercel 可以与 github 仓库关联起来，使展示的页面与仓库同步。并且，我们可以不先对前端项目进行打包，而是将这一过程交给 vercel 自动进行。github 官方的 github pages 也可以左到与仓库同步，但同样的需要先打包再部署（除非你像本博客网站一样用的 jekyll 框架）。[这里](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)写着它的项目大小,带宽等局限性. 我们想要更高级的功能, 可以借助于后面说的[github actions](#github-actions). 毕竟, 就像官方说的:
+但是，有些网站我们希望可以与仓库绑定，当仓库里的资源更新时，网站也会自动更新。上面说的 vercel 可以与 github 仓库关联起来，使展示的页面与仓库同步。并且，我们可以不先对前端项目进行打包，而是将这一过程交给 vercel 自动进行。此外，vercel 还帮我们做了 CDN （内容分发网络），感觉最大的缺点就是年初的时候被墙了。。。github 官方的 github pages 也可以左到与仓库同步，但同样的需要先打包再部署（除非你像本博客网站一样用的 jekyll 框架）。[这里](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)写着它的项目大小,带宽等局限性. 我们想要更高级的功能, 可以借助于后面说的[github actions](#github-actions). 毕竟, 就像官方说的:
 
 > GitHub Pages **is not intended for or allowed to be used as a free web hosting service** to run your online business, e-commerce site, or any other website that is primarily directed at either facilitating commercial transactions or providing commercial software as a service (SaaS)
 
