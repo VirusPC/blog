@@ -38,7 +38,9 @@ resource_path: /blog/assets/2021/08/04
 
 ## CI/CD
 
-CI/CD 的解释可以参考 [Red Hat 的文章](https://www.redhat.com/zh/topics/devops/what-is-ci-cd)。 简单来说，CI全称为Continuous Integration，意为持续集成，是在源代码变更后自动检测、拉取、构建和进行自动化测试的过程，属于开发人员的自动化流程。CD 指的是持续交付 (Continuous Delivery) 或持续部署 (Continuous Deployment)。持续交付通常是指开发人员对应用的更改会自动进行错误测试并上传到存储库（如 GitHub 或容器注册表), 然后由运维团队将其部署到实时生产环境中. 持续部署指的是自动将开发人员的更改从存储库发布到生产环境，它以持续交付为基础，实现了管道后续阶段的自动化。
+CI/CD 的解释可以参考 [Red Hat 的文章](https://www.redhat.com/zh/topics/devops/what-is-ci-cd)和[阮一峰老师的文章](https://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)。 简单来说，CI全称为Continuous Integration，意为持续集成，是在源代码变更后自动检测、拉取、构建和进行自动化测试的过程，属于开发人员的自动化流程。CD 指的是持续交付 (Continuous Delivery) 或持续部署 (Continuous Deployment)。持续交付通常是指开发人员对应用的更改会自动进行错误测试并上传到存储库（如 GitHub 或容器注册表), 然后由运维团队将其部署到实时生产环境中. 持续部署指的是自动将开发人员的更改从存储库发布到生产环境，它以持续交付为基础，实现了管道后续阶段的自动化。
+
+![CI/CD]({{page.resource_path}}/cicd.png)
 
 本文仅讨论持续部署方面的东西。
 
@@ -208,6 +210,7 @@ action 是独立的命令, 作为一个 step 来使用. 你可以创建自己的
 - [Github Actions](https://github.com/features/actions)
 - [Adding a self-hosted runner to a repository](https://docs.github.com/en/actions/hosting-your-own-runners/adding-self-hosted-runners#adding-a-self-hosted-runner-to-a-repository)
 - [CI/CD是什么？](https://www.redhat.com/zh/topics/devops/what-is-ci-cd)
+- [持续集成是什么？](https://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)
 - [搭建自己CI/CD（一）](https://zhuanlan.zhihu.com/p/163526198)
 - [ubuntu 安装 nodejs](https://zhuanlan.zhihu.com/p/55895711)
 - [tmux 使用手册](http://louiszhai.github.io/2017/09/30/tmux/#%E8%BF%9B%E5%85%A5%E4%B9%8B%E5%89%8D%E7%9A%84%E4%BC%9A%E8%AF%9D)
