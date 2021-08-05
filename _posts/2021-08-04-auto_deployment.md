@@ -1,15 +1,16 @@
 ---
-title: "Github Actions 与 自动化部署" 
+title: "用 Github Actions 做持续部署" 
 categories: ['后端']
 tags: ['backend', 'nginx', 'github', 'http', 'CI/CD']
 resource_path: /blog/assets/2021/08/04
 ---
 
-# Github Actions 与 自动化部署
+# 用 Github Actions 做持续部署
 
-- [Github Actions 与 自动化部署](#github-actions-与-自动化部署)
+- [用 Github Actions 做持续部署](#用-github-actions-做持续部署)
   - [背景](#背景)
   - [CI/CD](#cicd)
+  - [静态网站托管](#静态网站托管)
   - [Github Actions](#github-actions)
     - [Workflows](#workflows)
     - [Events](#events)
@@ -31,19 +32,38 @@ resource_path: /blog/assets/2021/08/04
 在[之前的文章中](https://viruspc.github.io/blog//%E5%90%8E%E7%AB%AF/2021/07/01/website_deployment.html), 我们成功将静态网站部署到了云服务器上。具体方法是先将静态网站在本地 build 之后, 将 build 之后的整个文件夹上传到服务器, 然后 nginx 会根据用户输入的 url 来返回网页[*]([](https://viruspc.github.io/blog//%E5%90%8E%E7%AB%AF/2021/07/01/website_deployment.html#%E8%AE%A9%E7%AC%AC%E4%BA%8C%E4%B8%AA%E9%9D%99%E6%80%81%E7%BD%91%E7%AB%99%E8%B7%91%E8%B5%B7%E6%9D%A5)
 ). 
 
-但是每次网站更新都要先 build 再上传就很麻烦耗时且容易出错, 于是考虑做自动化部署. 本文是使用了 github 提供的 CI/CD 服务: [github actions](https://github.com/features/actions) 来做自动化部署.
+但是每次网站更新都要先 build 再上传就很麻烦耗时且容易出错，于是考虑做自动化部署。本文是使用了 github 提供的 CI/CD 服务：[github actions](https://github.com/features/actions) 来做持续部署。
 
 ---
 
 ## CI/CD
 
-CI/CD 的解释可以参考 [Red Hat 的文章](https://www.redhat.com/zh/topics/devops/what-is-ci-cd). 简单来说, CI全称为Continuous Integration，意为持续集成，是在源代码变更后自动检测、拉取、构建和进行自动化测试的过程，属于开发人员的自动化流程。CD 指的是持续交付 (Continuous Delivery) 或持续部署 (Continuous Deployment)。持续交付通常是指开发人员对应用的更改会自动进行错误测试并上传到存储库（如 GitHub 或容器注册表），然后由运维团队将其部署到实时生产环境中。持续部署指的是自动将开发人员的更改从存储库发布到生产环境，它以持续交付为基础，实现了管道后续阶段的自动化。
+CI/CD 的解释可以参考 [Red Hat 的文章](https://www.redhat.com/zh/topics/devops/what-is-ci-cd)。 简单来说，CI全称为Continuous Integration，意为持续集成，是在源代码变更后自动检测、拉取、构建和进行自动化测试的过程，属于开发人员的自动化流程。CD 指的是持续交付 (Continuous Delivery) 或持续部署 (Continuous Deployment)。持续交付通常是指开发人员对应用的更改会自动进行错误测试并上传到存储库（如 GitHub 或容器注册表), 然后由运维团队将其部署到实时生产环境中. 持续部署指的是自动将开发人员的更改从存储库发布到生产环境，它以持续交付为基础，实现了管道后续阶段的自动化。
+
+本文仅讨论持续部署方面的东西。
+
+---
+
+## 静态网站托管
+
+虽然本文的目标网站是放在自己的服务器上，并没有托管，需要的只 是CI/CD 工具，但在这里还是随便写一些静态网站托管相关的东西。
+
+并不是所有的网站都需要持续部署. 对于那些在使用期间内容永远不变的网站，我们只需简单的将网页挂到网上即可。对于这类网站，我们可以借助于各云服务商的[**对象存储**](https://zhuanlan.zhihu.com/p/166289089)服务，或是**云函数服务**或是直接的**页面托管服务**等。
+
+通过对象存储来托管静态网站可参考 [腾讯云COS 静态网站托管](https://cloud.tencent.com/document/product/436/9512)，[阿里云OSS 静态网站托管](https://www.alibabacloud.com/help/zh/doc-detail/31872.htm?spm=a2c63.p38356.b99.171.38ce20cdPhz8hm)等官方的文档。云函数服务 [vercel](vercel.com)，[阿里云](https://www.aliyun.com/product/fc)，[腾讯云](https://cloud.tencent.com/document/product/583/32996)，[轻服务（字节跳动）](https://qingfuwu.cn/docs/nodejs/cloud-function/basic.html#runtime)等公司也都有提供。用云函数来做网站托管的话，其实就是给你提供个云服务器，你可以上传一些文件，让你在上面跑个 nodejs 之类的后端，需要手写根据url请求来返回页面。吐槽一下腾讯云的 Nodejs 版本很低... 写本文的时候最新版本是16.4, 它提供的版本是12.16, 对比vercel上云函数的版本是当前nodejs的推荐版本14.x。不过如果你的网站放在腾讯云云服务器上的话, 它有个专门 CI 的选项比较方便。利用云函数来托管网站并不方便，因为我们还需要手写服务端逻辑之类的，所以像vercel，轻服务等也提供了直接的页面托管服务，直接把 build 后的页面上传即可。注意如果使用云函数的话，不同厂商支持的语言种类不同，比如字节的轻服务的云函数只支持 nodejs，不支持 python 等。
+
+![tencent cloud]({{page.resource_path}}/tencentcloud.png)
+
+但是，有些网站我们希望可以与仓库绑定，当仓库里的资源更新时，网站也会自动更新。上面说的 vercel 可以与 github 仓库关联起来，使展示的页面与仓库同步。并且，我们可以不先对前端项目进行打包，而是将这一过程交给 vercel 自动进行。github 官方的 github pages 也可以左到与仓库同步，但同样的需要先打包再部署（除非你像本博客网站一样用的 jekyll 框架）。[这里](https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages#usage-limits)写着它的项目大小,带宽等局限性. 我们想要更高级的功能, 可以借助于后面说的[github actions](#github-actions). 毕竟, 就像官方说的:
+
+> GitHub Pages **is not intended for or allowed to be used as a free web hosting service** to run your online business, e-commerce site, or any other website that is primarily directed at either facilitating commercial transactions or providing commercial software as a service (SaaS)
+
 
 ---
 
 ## Github Actions
 
-GitHub Actions 是 GitHub 官方推出的 CI/CD 服务, 可以很方便的与 github 项目结合使用. 它可以帮助你在软件开发生命周期中自动执行指定的任务. 它是**事件驱动**的, 比如, 当发生 push 事件时, 自动执行一些软件测试命令.
+CI/CD 工具有很多。GitHub Actions 是 GitHub 官方推出的 CI/CD 服务, 可以很方便的与 github 项目结合使用. 它可以帮助你在软件开发生命周期中自动执行指定的任务. 它是**事件驱动**的, 比如, 当发生 push 事件时, 自动执行一些软件测试命令.
 
 所以, 使用 github actions, 我们需要指定要执行的任务(workflow), 以及任务的触发条件(event).
 
@@ -194,3 +214,11 @@ action 是独立的命令, 作为一个 step 来使用. 你可以创建自己的
 - [Ubuntu Linux系统环境变量配置文件](https://www.cnblogs.com/lovebay/p/11236255.html)
 - [Linux下source命令详解](https://www.cnblogs.com/shuiche/p/9436126.html)
 - [使用git提交到github,每次都要输入用户名和密码的解决方法](https://www.cnblogs.com/sky6862/p/7992736.html)
+- [Vercel](https://vercel.com/docs/)
+- [轻服务](qingfuwu.cn)
+- [对象存储，为什么那么火](https://zhuanlan.zhihu.com/p/166289089)
+- [腾讯云-SCF-静态网站托管](https://cloud.tencent.com/document/product/583/32996)
+- [腾讯云-COS-静态网站托管](https://cloud.tencent.com/document/product/436/9512)
+- [阿里云-OSS-静态网站托管](https://www.alibabacloud.com/help/zh/doc-detail/31872.htm?spm=a2c63.p38356.b99.171.38ce20cdPhz8hm)
+- [阿里云-函数计算FC](https://www.aliyun.com/product/fc)
+- [轻服务-云函数](https://qingfuwu.cn/docs/nodejs/cloud-function/basic.html#runtime)
