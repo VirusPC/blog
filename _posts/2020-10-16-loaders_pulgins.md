@@ -65,7 +65,7 @@ loader都是官方出品, 配置方法比较规范. plugin就不一定了.
 
 可以利用 `webpack-merge` 这个库，帮我们把通用配置，结合到另外两个配置里。
 
-不同环境，使用的 loader 和 plugin 可能会不同
+不同环境，使用的 loader 和 plugin 可能会不同。因为在开发环境中，我们考虑的是怎么让项目更方便的在本地跑起来，方便本地调试等。而在生产环境中，我们需要考虑代码打包后的体积，兼容性等。
 
 ```js
 const HtmlWebpackPlugin = require("html-webpack-plugin");
@@ -162,18 +162,16 @@ module.exports = {
 ---
 
 ## 开发环境的基本配置
-
-在顶层目录创建文件夹```dist```
-
-```webpack.config.js```中的"mode"设为"development"
  
 ### 打包样式资源
 
 1. 安装 loader
+
    * ```style-loader```：用于在html文档中创建一个style标签, 将样式塞进去
    * ```css-loader```：将css转换为CommonJS模块, 翻译 `@import` 和 `@url` 并且解析它们。
 
 2. 配置 webpack:
+
    ```js
     {
         test: /\.css$/i,
