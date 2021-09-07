@@ -103,17 +103,34 @@ No Keyword | global | no | yes | yes
 
 ### The `typeof` Operator
 
-Using the `typeof` operator on a value returns one of the following strings:
+1. Using the `typeof` operator on a value returns one of the following strings:
 
-- "*undefined*" if the value is undefined
-- "*boolean*" if the value is a Boolean
-- "*string*" if the value is a string
-- "*number*" if the value is a number
-- "*object*" if the value is an object (other than a function) **or null**
-- **"*function*" if the value is a function**
-- "*symbol*" if the value is a Symbol
+    - "*undefined*" if the value is undefined
+    - "*boolean*" if the value is a Boolean
+    - "*string*" if the value is a string
+    - "*number*" if the value is a number
+    - "*object*" if the value is an object (other than a function) **or null**
+    - **"*function*" if the value is a function**
+    - "*symbol*" if the value is a Symbol
 
-Calling `typeof null` returns a value of "object", as the special value `null` is considered to be an **empty object reference**.
+2. Before ECMAScript 2015, `typeof` was always guaranteed to return a string for any operand it was supplied with. Using `typeof` could never generate an error. However, with the addition of block-scoped `let` and `const`, using `typeof` on `let` and `const` variables (or using `typeof` on a `class`) in a block before they are declared will throw a *ReferenceError*. Block scoped variables are in a "temporal dead zone" from the start of the block until the initialization is processed, during which, it will throw an error if accessed. ES6之前，对一个未声明的变量名使用`typeof`，会认为这个变量是`undefined`，并返回`"undefined"`字符串。ES6之后，因为`let`和`const`的出现，对于未声明的变量，和在变量的 temporal dead zone 中对其使用`typeof`，会报引用错误。
+
+    1. 直接对一个不会声明的变量使用`typeof`
+        ```js
+        console.log(typeof a); // "undefined"
+        ```
+    2. 对一个将要被`var`声明的变量使用`typeof`
+        ```js
+        console.log(typeof a); // Uncaught ReferenceError: Cannot access 'a' before initialization
+        const a;
+        ```
+    3. 对一个将要被`const`或`let`声明的变量使用`typeof`
+        ```js
+        console.log(typeof a); // Uncaught ReferenceError: Cannot access 'a' before initialization
+        var a;
+        ```
+
+3. Calling `typeof null` returns a value of "object", as the special value `null` is considered to be an **empty object reference**. However, `null instanceof Object` will return false.
 
 ### The Undefined Type
 
@@ -163,6 +180,14 @@ variable won’t cause an error, but this isn’t very useful and in fact throws
     if(message) {
       // This block will not execute
     }
+    ```
+
+5. javascript 中的 null，既是对象，又不是对象：
+   
+    ```js
+    typeof null === 'object';  // true
+    null instanceof Object;  // false
+    null instanceof null;  // Uncaught TypeError: Right-hand side of 'instanceof' is not an object
     ```
 
 ### The Boolean Type
@@ -602,3 +627,7 @@ References
 - [JavaScript numbers, all the same size in memory? - stackoverflow](https://stackoverflow.com/questions/32276562/javascript-numbers-all-the-same-size-in-memory)
 - [BigInt - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/BigInt)
 - [block - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/block)
+- [有哪些明明是 bug，却被说成是 feature 的例子？ - justjavac的回答 - 知乎](https://www.zhihu.com/question/66941121/answer/247939890)
+- [The history of “typeof null”](https://2ality.com/2013/10/typeof-null.html)
+- [`typeof null` - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#typeof_null)
+- [Errors with `typeof`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/typeof#errors)
