@@ -24,6 +24,7 @@ resource_path: /blog/assets/2021/08/04
     - [第二步, 克隆项目到服务器, 并项目相关环境](#第二步-克隆项目到服务器-并项目相关环境)
     - [第三步, 添加 self-hosted runner](#第三步-添加-self-hosted-runner)
     - [第四步, 编写 workflow](#第四步-编写-workflow)
+  - [网站预览](#网站预览)
 
 ---
 
@@ -202,6 +203,25 @@ action 是独立的命令, 作为一个 step 来使用. 你可以创建自己的
 自动化部署的 workflow 的核心步骤就是, 当项目发生 push 事件时, 服务器自动进行 pull, install 和 build. 下图是此项目的 workflow.
 
 ![workflow]({{page.resource_path}}/workflow.png)
+
+---
+
+## 网站预览
+
+经过上面的步骤，在服务端，我们有了github仓库，以及一个运行着的 runner。当用户执行 git push 操作时，runner 会自动执行 workflow 里的内容：拉去远程仓库到本地，并且进行项目构建。项目构建好后，就可以访问到新的内容了。
+
+一般来说，不应该在网站主分支上直接做改动，我们需要一个分支来对网站进行修改和预览。为了实现这个目的，在之前的基础上，我们需要：
+
+1. 再重新 clone 一遍仓库到服务器，新的仓库将用于预览。
+
+2. 修改 workflow，区分主分支和预览分支，为每个分支编写自己的 workflow。下图中将 master 分支作为 production 分支，release 分支作为 preview 分支。
+
+![workflow]({{page.resource_path}}/production-workflow.png)
+![workflow]({{page.resource_path}}/preview-workflow.png)
+
+3. 配置 DNS，新增预览用的子域名，并在 nginx 里配置好，让域名指向预览仓库的 dist(build) 文件夹。
+
+
 
 ---
 
