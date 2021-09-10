@@ -1,6 +1,11 @@
-# React 简书项目实战
-
 ---
+title: "React简书项目技术总结" 
+categories: ['前端']
+tags: ['frontend', 'react']
+resource_path: /blog/assets/2021/09/10
+---
+
+# React 简书项目实战
 
 Table of Contents
 
@@ -188,16 +193,16 @@ Table of Contents
 
 5. iconfont 结合 styled-component 的使用方式:
    1. 图标下载到本地解压后, 只取`iconfont.css`, `iconfont.eot`, `iconfont.svg`, `iconfont.ttf` 以及 `iconfont.woff` 五个文件即可. (其他文件是和使用说明相关的)  
-      ![iconfont](./iconfont.png)
+      ![iconfont]({{page.resource_path}}/iconfont.png)
 
    2. 将`iconfont.css`中的绝对路径修改为相对路径. 并只保留`@font-family`和`.iconfont`  
-     ![iconfont2](./iconfont2.png)
+     ![iconfont2]({{page.resource_path}}/iconfont2.png)
 
    3. 将css改为styled-component的格式. 注意 iconfont 应该作为全局样式.  
-     ![iconfont3](./iconfont3.png)
+     ![iconfont3]({{page.resource_path}}/iconfont3.png)
 
    4. 挑选相应图标并获取字体变法, 应用于界面. 字体的unicode编码可以在`demo_index.html`中看到, 也可以在`iconfont.css` 或 iconfont网站上自己的对应项目中看到.
-     ![iconfont4](./iconfont4.png)
+     ![iconfont4]({{page.resource_path}}/iconfont4.png)
 
 ---
 
