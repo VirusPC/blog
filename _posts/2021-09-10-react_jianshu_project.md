@@ -32,9 +32,9 @@ Table of Contents
 
 1. 网址: https://styled-components.com/
 
-2. 概述: 一个 css-in-js 思想下的, 方便写css的库
+2. 概述: 一个 css-in-js 思想下的, 方便写css的库。
 
-3. 为什么使用它? 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/).
+3. 为什么使用它? 在使用`create-react-app`创建的项目中, 如果在一个地方以`import xxx.css`的形式导入某个样式文件, 这个样式文件会被所有的组件共享, 需要注意不同的样式文件中不要起相同的类名. 要想每个组件使用不同的样式文件, 我们可以借助于[`styled-components`](https://styled-components.com/). 此外，我们可以利用js的语法，来增强css，而不是像 sass，less 等通过预处理器来增强css。
 
 4. 原理: **styled-components generates an actual stylesheet with classes, and attaches those classes to the DOM nodes of styled components via the className prop.**
 
