@@ -241,6 +241,7 @@ Table of Contents
 6. 其他注意事项
     1. *Transition* 中, `appear` 属性默认为 `false`，即组件刚 mount 时不会触发 enter 。为 `true` 时会。
     2. `timeout={{appear: 1, enter: 1, exit: 1}}` 等价于 `timeout={1}`
+    3. *-active 类表示你希望的动画结束时的样式, 所以**应该将`transition`属性放且仅在这里**, 否则最终效果可能不会如你所想.
 
 7. *CSSTransition* 使用方式:
     1. `import {CSSTransition} from 'react-transition-group'`, 使用 `<CSSTransition>` 标签将要添加动画的组件包裹起来
