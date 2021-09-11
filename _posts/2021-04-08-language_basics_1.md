@@ -121,13 +121,13 @@ No Keyword | global | no | yes | yes
         ```
     2. 对一个将要被`var`声明的变量使用`typeof`
         ```js
-        console.log(typeof a); // Uncaught ReferenceError: Cannot access 'a' before initialization
-        const a;
+        console.log(typeof a); // "undefined"
+        var a;
         ```
     3. 对一个将要被`const`或`let`声明的变量使用`typeof`
         ```js
         console.log(typeof a); // Uncaught ReferenceError: Cannot access 'a' before initialization
-        var a;
+        const a;
         ```
 
 3. Calling `typeof null` returns a value of "object", as the special value `null` is considered to be an **empty object reference**. However, `null instanceof Object` will return false.
