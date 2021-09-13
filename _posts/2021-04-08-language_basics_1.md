@@ -121,13 +121,13 @@ No Keyword | global | no | yes | yes
         ```
     2. 对一个将要被`var`声明的变量使用`typeof`
         ```js
-        console.log(typeof a); // Uncaught ReferenceError: Cannot access 'a' before initialization
-        const a;
+        console.log(typeof a); // "undefined"
+        var a;
         ```
     3. 对一个将要被`const`或`let`声明的变量使用`typeof`
         ```js
         console.log(typeof a); // Uncaught ReferenceError: Cannot access 'a' before initialization
-        var a;
+        const a;
         ```
 
 3. Calling `typeof null` returns a value of "object", as the special value `null` is considered to be an **empty object reference**. However, `null instanceof Object` will return false.
@@ -515,30 +515,30 @@ structor behavior and instantiate a primitive wrapper object. Should you want to
         //}
         ```
     2. Just as `Object.getOwnPropertyNames()` returns an array of regular properties on an object instance, `Object.getOwnPropertySymbols()` returns an array of symbol properties on an object instance. The return values of these two methods are mutually **exclusive**. `Object .getOwnPropertyDescriptors()` will return an object containing both regular and symbol property descriptors. `Reflect.ownKeys()` will return both types of keys.
-    ```javascript
-    let s1 = Symbol('foo'), s2 = Symbol('bar');
-    let o = {
-      [s1]: 'foo val', 
-      [s2]: 'bar val', 
-      baz: 'baz val', 
-      qux: 'qux val'
-    };
+        ```javascript
+        let s1 = Symbol('foo'), s2 = Symbol('bar');
+        let o = {
+        [s1]: 'foo val', 
+        [s2]: 'bar val', 
+        baz: 'baz val', 
+        qux: 'qux val'
+        };
 
-    console.log(Object.getOwnPropertySymbols(o)); // [Symbol(foo), Symbol(bar)]
-    console.log(Object.getOwnPropertyNames(o)); // ["baz", "qux"]
-    console.log(Object.getOwnPropertyDescriptors(o)); // {baz: {...}, qux: {...}, Symbol(foo): {...}, Symbol(bar): {...}}
-    console.log(Reflect.ownKeys(o));
-    // ["baz", "qux", Symbol(foo), Symbol(bar)]
-    ```
+        console.log(Object.getOwnPropertySymbols(o)); // [Symbol(foo), Symbol(bar)]
+        console.log(Object.getOwnPropertyNames(o)); // ["baz", "qux"]
+        console.log(Object.getOwnPropertyDescriptors(o)); // {baz: {...}, qux: {...}, Symbol(foo): {...}, Symbol(bar): {...}}
+        console.log(Reflect.ownKeys(o));
+        // ["baz", "qux", Symbol(foo), Symbol(bar)]
+        ```
     3. Symbols are not lost if directly created and used as properties.Declining to keep an explicit reference to a property means that traversing all the object’s symbol properties will be required to recover the property key (The only way to get ):
-    ```javascript
-    let o = { 
-      [Symbol('foo')]: 'foo val', 
-      [Symbol('bar')]: 'bar val'
-    };
-    let barSymbol = Object.getOwnPropertySymbols(o) .find((symbol) => symbol.toString().match(/bar/));
-    console.log(barSymbol);  // Symbol(bar)
-    ```
+        ```javascript
+        let o = { 
+        [Symbol('foo')]: 'foo val', 
+        [Symbol('bar')]: 'bar val'
+        };
+        let barSymbol = Object.getOwnPropertySymbols(o) .find((symbol) => symbol.toString().match(/bar/));
+        console.log(barSymbol);  // Symbol(bar)
+        ```
 8. **Well-Known Symbols**:  
     1. ECMAScript 6 also introduced a collection of well-known symbols that would be used throughout the language to **expose internal language behaviors** for direct access, overriding, or emulating. These well-known symbols exist as string properties on the Symbol factory function.
     2. One of the primary utilities of these well-known symbols is redefining them as to alter the behavior of the native language constructs.

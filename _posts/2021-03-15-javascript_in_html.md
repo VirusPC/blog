@@ -82,6 +82,9 @@ need not wait for another script to load and execute before it can do the same.
 
 6. Best practice: It’s recommended that asynchronous scripts not modify the DOM as they are loading.
 
+7. Defer VS. Async:
+    ![defer VS. async]({{page.resource_path}}/defer_async.png)
+
 ### Dynamic Script Loading
 
 1. You can use the DOM API in a script to add another script elements and load the resources.
@@ -222,3 +225,4 @@ Because *almost standards mode* is so close to *standards mode*, the distinction
 Reference:
 
 - Professional JavaScript for Web Developers 4th Edition
+- [Scripts: async, defer](https://javascript.info/script-async-defer)
