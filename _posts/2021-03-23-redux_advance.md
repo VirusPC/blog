@@ -193,6 +193,12 @@ export const getInitListAction = () => ({
 
 *React-Redux* 是一个第三方模块, 可以帮助我们在 *React* 中更方便的使用 *Redux*.
 
+如果你将 Redux 与任一类型的 UI 库结合使用, 你一般需要使用一个 "UI binding" 库来将 Redux 与 UI 框架结合起来, 而不应该直接在 UI 代码里调用它(如之前的做法, 直接在组件文件中导入store,手动store.subscribe等). React-Redux 是官方的将 Redux 与 React 结合起来的库.
+
+有了它, 你无需再手动在每个组件代码文件中导入 store, 无需手动 subscribe, 手动检查更新的数据, 手动触发重新渲染. React-Redux 这样的 UI 绑定库处理了 store 与 UI库交互的逻辑, 你无需手动将二者联系起来.
+
+总的来说，React-Redux 鼓励了良好的 React 架构，并帮助实现了复杂的性能优化。 它还与 Redux 和 React 的最新 API 更改保持同步。
+
 第一个核心 API, ```Provider```. 用它来将需要使用 store 的组件们包裹起来, 通过它连接 store, 连接之后其内部组件都有能力获取到 store:
 
 ```js
@@ -261,3 +267,9 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 ```
+
+---
+
+参考资料
+
+- [Why should I use React-Redux](https://redux.js.org/faq/react-redux#why-should-i-use-react-redux)
