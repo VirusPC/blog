@@ -14,9 +14,7 @@ Table of Contents
   - [使用 reset.css 覆盖浏览器默认样式](#使用-resetcss-覆盖浏览器默认样式)
   - [使用 iconfont 嵌入头部图标](#使用-iconfont-嵌入头部图标)
   - [使用 react-transition-group 实现搜索框动画效果](#使用-react-transition-group-实现搜索框动画效果)
-  - [使用 React-Redux 进行应用数据的管理](#使用-react-redux-进行应用数据的管理)
-  - [使用 combineReducers 完成对数据的拆分管理](#使用-combinereducers-完成对数据的拆分管理)
-  - [actionCreators 与 constants 的拆分](#actioncreators-与-constants-的拆分)
+  - [使用 Redux, React-Redux 进行应用数据的管理](#使用-redux-react-redux-进行应用数据的管理)
   - [使用 immutable.js 来管理 store 中的数据](#使用-immutablejs-来管理-store-中的数据)
   - [使用 redux-immutable 统一数据格式](#使用-redux-immutable-统一数据格式)
   - [热门搜索样式布局](#热门搜索样式布局)
@@ -276,33 +274,166 @@ Table of Contents
 
 ---
 
-## 使用 React-Redux 进行应用数据的管理
+## 使用 Redux, React-Redux 进行应用数据的管理
 
-1. 网站
-2. 概述
-3. 核心思想
-4. 为什么使用它?
-   1. 在搭建大型项目时, 组件之间的数据传递会很麻烦, 可以借助 redux 来管理数据.
-5. 使用方式
-6. 注意事项
-   1. 一般来说, 既然项目中使用了 redux, 那么能使用 redux 的地方尽量都用 redux.-[]
+1. 使用目的: 简化组件之间的数据传递
+2. 详细: 见之前的两篇博客: [Redux基础](https://viruspc.github.io/blog//%E5%89%8D%E7%AB%AF/2021/03/07/redux.html), [Redux进阶](https://viruspc.github.io/blog//%E5%89%8D%E7%AB%AF/2021/03/23/redux_advance.html)
 
-## 使用 combineReducers 完成对数据的拆分管理
-
-1. 网站
-2. 概述
-3. 核心思想
-4. 为什么使用它?
-5. 使用方式
-6. 注意事项
-
-## actionCreators 与 constants 的拆分
+---
 
 ## 使用 immutable.js 来管理 store 中的数据
 
+1. 网址: [https://immutable-js.com/](https://immutable-js.com/)
+
+2. 概述: 提供了一些常见数据结构的 immutable 版本, 方便创建 immutable 数据和将普通js数据转化为 immutable 数据. 另外还提供了支持 lazy evaluation 的 immutable 数据结构.
+
+3. 核心思想: immutable. immutable data 一旦被创建, 不可被更改. immutalbe 的对象上的操作, 只会返回一个新的对象, 而不会对其本身做任何修改. immutalbe collections(List, Map, Set等) 应该被视为值而不是对象. 对象是可以随时间改变的, 而一个值代表着一个事物在某一具体时间的状态.
+
+4. 为什么使用它?
+    1. Simpler application development
+    2. No defensive copying
+    3. Enabling advanced memoization and change detection techniques with simple logic.
+
+5. 使用方式:
+    1. immutable.js 模拟了 ES2015 的 Array, Map, Set 等. 其上面的任何操作, 都会返回一个新的 immutable 对象.
+    2. 创建: 可以很方便的利用 JS 的对象和数组, 来创建 immutable collection.
+        ```js
+        const map = Immutable.Map({ a: 1, b: 2, c: 3, d: 4 });
+        const list = Immutable.List([1, 2, 3]);
+        Immutable.Seq({ a: 1, b: 2, c: 3 })
+          .map(x => x * x)
+          .toObject();
+        ```
+    3. 嵌套结构:
+        ```js
+        const { fromJS } = require('immutable');
+        const nested = fromJS({ a: { b: { c: [3, 4, 5] } } });
+
+        const nested2 = nested.mergeDeep({ a: { b: { d: 6 } } });
+        // Map { a: Map { b: Map { c: List [ 3, 4, 5 ], d: 6 } } }
+
+        console.log(nested2.getIn(['a', 'b', 'd'])); // 6
+
+        const nested3 = nested2.updateIn(['a', 'b', 'd'], value => value + 1);
+        console.log(nested3);
+        // Map { a: Map { b: Map { c: List [ 3, 4, 5 ], d: 7 } } }
+
+        const nested4 = nested3.updateIn(['a', 'b', 'c'], list => list.push(6));
+        // Map { a: Map { b: Map { c: List [ 3, 4, 5, 6 ], d: 7 } } }
+        ``` 
+    4. immutable data 之间的比较: 不应该使用`===`, 应该使用`Immutable.is()` 或 `.equals()`. (虽然出于性能优化, 如果操作结果不对集合本身做任何修改, 会直接返回集合本身, 而不是新建一个对象再返回)
+        ```js
+        const { Map } = require('immutable');
+        const map1 = Map({ a: 1, b: 2, c: 3 });
+        const map2 = Map({ a: 1, b: 2, c: 3 });
+        map1.equals(map2); // true
+        map1 === map2; // false
+        ``` 
+    5. immutable data 的复制: 由于 immutable collections 应被视为值而非对象, 所以直接像"复制"一个数字那样, 直接让新的引用指向它即可.
+        ```js
+        const { Map } = require('immutable');
+        const map = Map({ a: 1, b: 2, c: 3 });
+        const mapCopy = map; // Look, "copies" are free!
+        ``` 
+    6. 转换回 JavaScript 对象:
+        ```js
+        const deep = Map({ a: 1, b: 2, c: List([3, 4, 5]) });
+        console.log(deep.toObject()); // { a: 1, b: 2, c: List [ 3, 4, 5 ] }
+        console.log(deep.toArray()); // [ 1, 2, List [ 3, 4, 5 ] ]
+        console.log(deep.toJS()); // { a: 1, b: 2, c: [ 3, 4, 5 ] }
+        JSON.stringify(deep); // '{"a":1,"b":2,"c":[3,4,5]}'
+        ```
+    7. Lazy Seq:
+        ```js
+        const oddSquares = Seq([1, 2, 3, 4, 5, 6, 7, 8])
+          .filter(x => x % 2 !== 0)
+          .map(x => x * x);
+        ``` 
+
+6. 管理 store 中的数据:
+    1. 将 state 从普通对象, 改为 immutable 对象.
+        ```js
+        import {Search_Focus_Action, Search_Blur_Action} from "./actionTypes"
+        import { fromJS } from 'immutable';
+
+        const defaultState = fromJS({
+          focused: false
+        });
+        ```
+    2. 修改其他地方改值取值的方式.
+       1. reducer.js
+            ```js
+            export default (state = defaultState, action) => {
+              if(action.type === Search_Focus_Action){
+                if(state.get("focused") === false) {
+                  // immutable对象的set方法,会结合之前immutable对象的值和设置的值,返回一个全新的对象
+                  return state.set("focused", true)
+                }
+              } else if(action.type === Search_Blur_Action){
+                if(state.get("focused") === true) {
+                  // return newState;
+                  return state.set("focused", false);
+                }
+              }
+              return state;
+            }
+            ```
+        1. Header.js (使用了combineRedcuers, 将 Header 的reducer 命名为 header)
+            ```js
+            const mapStateToProps = (state) => {
+              return {
+                focused: state.header.get('focused')
+              }
+            }
+            ```
+    
+7. 注意事项
+
+
 ## 使用 redux-immutable 统一数据格式
 
+1. 网址: [https://github.com/gajus/redux-immutable](https://github.com/gajus/redux-immutable)
+
+2. 概述: `redux-immutable` 用于创建一个与 Redux 的 `combineReducers` 相同的函数, 但是它创建的全局 state 是 immutable 的.
+
+3. 核心思想: 利用 `immutable.js` 来增强 `combineReducers`, 使得其自动生成的全局 state 变成了一个 immutable 对象.
+
+4. 为什么使用它?
+    之前的代码看起来很难受. 这是因为, combineReducers 生成的全局 state 是一个普通对象, 通过点或中括号来获取属性值. 而组件自己的 reducer 中使用了 immutable.js, 返回组件的state是 immutable 对象. 我们可以直接让 `combineReducers` 生成的全局 state 是 immutable 的.
+
+    ```js
+    // globle reducer.js
+    export default combineReducers({
+      header: headerReducer
+    })
+    // Header.js
+    const mapStateToProps = (state) => {
+      return ({
+        focused: state.header.get('focused')
+      })
+    }
+    ```
+
+5. 使用方式:
+    1. 使用 `redux-immutable` 中的 `combineReducers`, 来替代 Redux 中的 `combineReducers`:
+        ```js
+        //import { combineReducers } from 'redux';
+        import { combineReducers } from 'redux-immutable';
+        ```
+    2. 修改组件获取state的方式:
+        ```js
+        const mapStateToProps = (state) => {
+          return {
+            // focused: state.header.get("focused")
+            // focused: state.get("header").get("focused")
+            focused: state.getIn(["header", "focused"])
+          }
+        }
+        ```
+
 ## 热门搜索样式布局
+
+
 
 ## Ajax获取推荐数据
 
@@ -317,5 +448,4 @@ Table of Contents
 ---
 
 Reference:
-> React开发简书项目 从零基础入门到实战 https://coding.imooc.com/class/229.html
-> 
+- [React开发简书项目 从零基础入门到实战](https://coding.imooc.com/class/229.html)
