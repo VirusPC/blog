@@ -161,7 +161,7 @@ action 是独立的命令, 作为一个 step 来使用. 你可以创建自己的
     tar -xvf node-v16.4.2-linux-x64.tar.xz node-v16.4.2-linux-x64/
     ```
 
-3. 配置环境变量, 让 node 命令可以全局被使用. 现在有个问题, 每次切换用户都要重新执行 source 命令, 待解决.
+3. 配置环境变量, 让 node 命令可以全局被使用. 现在有个问题, 每次切换用户都要重新执行 source 命令, 可通过[修改shell初始化文件](https://unix.stackexchange.com/questions/21598/how-do-i-set-a-user-environment-variable-permanently-not-session)来解决.
     ```bash
     vim /etc/profile # 在文件最下面的export PATH后添加新路径PATH=xxx, xxx为nodejs解压目录下的bin目录的路径。
     source /etc/profile # 让配置环境变量生效.
@@ -233,6 +233,7 @@ action 是独立的命令, 作为一个 step 来使用. 你可以创建自己的
 - [持续集成是什么？](https://www.ruanyifeng.com/blog/2015/09/continuous-integration.html)
 - [搭建自己CI/CD（一）](https://zhuanlan.zhihu.com/p/163526198)
 - [ubuntu 安装 nodejs](https://zhuanlan.zhihu.com/p/55895711)
+- [How do I set a user environment variable](https://unix.stackexchange.com/questions/21598/how-do-i-set-a-user-environment-variable-permanently-not-session)
 - [tmux 使用手册](http://louiszhai.github.io/2017/09/30/tmux/#%E8%BF%9B%E5%85%A5%E4%B9%8B%E5%89%8D%E7%9A%84%E4%BC%9A%E8%AF%9D)
 - [Ubuntu Linux系统环境变量配置文件](https://www.cnblogs.com/lovebay/p/11236255.html)
 - [Linux下source命令详解](https://www.cnblogs.com/shuiche/p/9436126.html)
