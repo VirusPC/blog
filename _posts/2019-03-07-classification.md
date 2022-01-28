@@ -5,7 +5,7 @@ tags: []
 resource_path: /blog/assets/2019/03/07/classification
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 分类及其表示
 ===

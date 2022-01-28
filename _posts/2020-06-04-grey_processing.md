@@ -5,7 +5,7 @@ tags: [‘灰度化’, 'grey processing']
 resource_path: /blog/assets/2020/06/04/grey_processing
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 灰度化
 ===

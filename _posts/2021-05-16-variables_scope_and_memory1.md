@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/05/16
 ---
 
+{% include posts_hook.html %}
+
 # Working with primitive and reference values in variables
 
 - [Working with primitive and reference values in variables](#working-with-primitive-and-reference-values-in-variables)

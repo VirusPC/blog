@@ -5,7 +5,7 @@ tags: []
 resource_path: /blog/assets/2019/03/09/multiclass
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 多类别分类
 ===

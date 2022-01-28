@@ -5,7 +5,7 @@ tags: []
 resource_path: /blog/assets/2019/03/10/overfitting
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 解决过拟合问题
 ===

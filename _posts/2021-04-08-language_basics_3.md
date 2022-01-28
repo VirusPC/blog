@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/04/16
 ---
 
+{% include posts_hook.html %}
+
 # STATEMENTS AND FUNCTIONS
 
 - [STATEMENTS AND FUNCTIONS](#statements-and-functions)

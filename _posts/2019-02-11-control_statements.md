@@ -5,6 +5,8 @@ tags: ['Matlab', 'Octave']
 resource_path: /blog/assets/2019/02/11/control_statements
 ---
 
+{% include posts_hook.html %}
+
 控制语句
 ===
 

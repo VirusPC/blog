@@ -5,7 +5,7 @@ tags: []
 resource_path: /blog/assets/2019/04/12/optimization2
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 {{page.title}}
 ===

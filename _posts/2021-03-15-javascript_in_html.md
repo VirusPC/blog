@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/03/15
 ---
 
+{% include posts_hook.html %}
+
 # JavaScript in HTML
 
 **Table of Contents**:

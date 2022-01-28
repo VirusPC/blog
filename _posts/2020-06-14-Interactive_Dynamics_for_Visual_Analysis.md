@@ -5,6 +5,8 @@ tags: ['visualization', '可视化']
 resource_path: /blog/assets/2010/
 ---
 
+{% include posts_hook.html %}
+
 Interactive Dynamics for Visual Analysis
 ===
 

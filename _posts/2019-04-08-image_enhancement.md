@@ -5,7 +5,7 @@ tags: []
 resource_path: /blog/assets/2019/04/08
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 图像增强
 ===

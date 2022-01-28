@@ -5,6 +5,8 @@ tags: ['programming languages', 'programming paradigms']
 resource_path: /blog/assets/2021/02/13/loaders_plugins
 ---
 
+{% include posts_hook.html %}
+
 Imperative and Declarative Programming
 ===
 

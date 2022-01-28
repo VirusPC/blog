@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/05/28
 ---
 
+{% include posts_hook.html %}
+
 # Async Functions 
 
 - [Async Functions](#async-functions)

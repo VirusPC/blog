@@ -5,6 +5,8 @@ tags: ['javascript', 'vega', 'visualization', '可视化']
 resource_path: /blog/assets/2020/07/10/vega_specification
 ---
 
+{% include posts_hook.html %}
+
 Vega: Specification
 ===
 
@@ -32,15 +34,22 @@ Vega specification 整体结构如下
 }
 ```
 
-* [画布尺寸：width, height, padding, autosize](#width-height)
-* [动态变量：signals](#signals)
-* [数据集：data](#data)
-* [比例尺：scales](#scales)
-* [坐标轴：axes](#axes)
-* [图形标记：marks](#marks)
-* [图例：legends](#legends)
-* [地图投影：projections](#projections)
-* [其它信息：description, title，background, encode, usermeta](#description)
+- [Vega: Specification](#vega-specification)
+  - [width, height](#width-height)
+  - [padding](#padding)
+  - [autosize](#autosize)
+  - [signals](#signals)
+  - [data](#data)
+  - [scales](#scales)
+  - [axes](#axes)
+  - [marks](#marks)
+  - [legends](#legends)
+  - [projections](#projections)
+  - [title](#title)
+  - [description](#description)
+  - [background](#background)
+  - [encode](#encode)
+  - [usermeta](#usermeta)
 
 ---
 

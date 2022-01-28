@@ -5,6 +5,8 @@ tags: ['javascript', '前端', 'webpack']
 resource_path: /blog/assets/2020/10/16/loaders_plugins
 ---
 
+{% include posts_hook.html %}
+
 # webpack: 常用loader与plugin
 
 - [webpack: 常用loader与plugin](#webpack-常用loader与plugin)

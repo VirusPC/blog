@@ -5,6 +5,8 @@ tags: ['前端', 'React', 'javascript', 'scaffolding']
 resource_path: /blog/assets/2020/08/11/react_scaffolding
 ---
 
+{% include posts_hook.html %}
+
 React: 脚手架 
 ===
 
@@ -12,10 +14,12 @@ React: 脚手架
 
 ## 目录
 
-1. [脚手架概述](#脚手架概述)
-2. [创建项目并启动](#创建项目并启动)
-3. [react脚手架项目结构](#react脚手架项目结构)
-4. [脚手架中的组件](#脚手架中的组件)
+- [React: 脚手架](#react-脚手架)
+  - [目录](#目录)
+  - [脚手架概述](#脚手架概述)
+  - [创建项目并启动](#创建项目并启动)
+  - [react脚手架项目结构](#react脚手架项目结构)
+  - [脚手架中的组件](#脚手架中的组件)
 
 ---
 

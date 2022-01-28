@@ -5,6 +5,8 @@ tags: ['react', 'redux']
 resource_path: /blog/assets/2021/03/23
 ---
 
+{% include posts_hook.html %}
+
 # Redux 进阶
 
 ---

@@ -5,17 +5,17 @@ tags: [‘pandas’， ‘数据处理’]
 resource_path: /blog/assets/2010/
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 Pandas使用指南
 ===
 
-1. [简介](#简介)
-2. [基本概念](#基本概念)
-3. [访问数据](#访问数据)
-4. [操控数据](#操控数据)
-5. [索引](#索引)
-6. [常用命令整理](#常用命令整理)
+- [Pandas使用指南](#pandas使用指南)
+  - [简介](#简介)
+  - [基本概念](#基本概念)
+  - [索引](#索引)
+  - [常用命令整理](#常用命令整理)
+  - [部分参考资料](#部分参考资料)
 
 ---
 

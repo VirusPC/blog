@@ -5,6 +5,8 @@ tags: ['backend', 'nginx', 'tomcat', 'htpp']
 resource_path: /blog/assets/2021/07/01
 ---
 
+{% include posts_hook.html %}
+
 # 在一台主机上部署多个网站
 
 - [在一台主机上部署多个网站](#在一台主机上部署多个网站)

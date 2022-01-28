@@ -4,6 +4,8 @@ categories: ['Matlab/Octave']
 tags: [Matlab, Octave]
 ---
 
+{% include posts_hook.html %}
+
 矩阵操作
 ---
 

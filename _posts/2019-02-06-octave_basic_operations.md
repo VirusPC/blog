@@ -5,6 +5,7 @@ tags: ['Octave', 'Matlab']
 resource_path: /blog/assets/2019/02/06/octave_basic_operations
 ---
 
+{% include posts_hook.html %}
 
 乘方
 ---

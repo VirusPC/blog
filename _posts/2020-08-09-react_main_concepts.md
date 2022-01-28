@@ -5,6 +5,8 @@ tags: ['前端', 'React', 'javascript']
 resource_path: /blog/assets/2020/08/09/react_main_concepts
 ---
 
+{% include posts_hook.html %}
+
 React: 核心概念
 ===
 

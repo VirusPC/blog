@@ -5,6 +5,8 @@ tags: ['backend', 'nginx', 'tomcat', 'http']
 resource_path: /blog/assets/2021/07/02
 ---
 
+{% include posts_hook.html %}
+
 # 给网站添加 HTTPS 支持
 
 - [给网站添加 HTTPS 支持](#给网站添加-https-支持)

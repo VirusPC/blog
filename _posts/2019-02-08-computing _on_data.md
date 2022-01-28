@@ -3,6 +3,8 @@ title: 计算数据
 categories: ['Matlab/Octave']
 ---
 
+{% include posts_hook.html %}
+
 基本运算
 ---
 

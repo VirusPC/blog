@@ -5,7 +5,7 @@ tags: []
 resource_path: /blog/assets/2019/
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 建立神经网络的步骤
 ===

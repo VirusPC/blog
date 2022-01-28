@@ -5,6 +5,8 @@ tags: ['backend', 'nginx', 'github', 'http', 'CI/CD']
 resource_path: /blog/assets/2021/08/04
 ---
 
+{% include posts_hook.html %}
+
 # 用 Github Actions 做持续部署
 
 - [用 Github Actions 做持续部署](#用-github-actions-做持续部署)

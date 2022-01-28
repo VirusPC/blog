@@ -3,6 +3,8 @@ title: Introduction
 categories: [机器学习]
 ---
 
+{% include posts_hook.html %}
+
 What is machine learning
 ---
 

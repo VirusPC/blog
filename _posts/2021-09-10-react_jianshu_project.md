@@ -5,6 +5,8 @@ tags: ['frontend', 'react']
 resource_path: /blog/assets/2021/09/10
 ---
 
+{% include posts_hook.html %}
+
 # React 简书项目实战
 
 Table of Contents

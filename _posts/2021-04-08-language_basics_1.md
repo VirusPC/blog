@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/04/08
 ---
 
+{% include posts_hook.html %}
+
 # Language Basics - Syntax, Variables and Data Types
 
 Table of contents

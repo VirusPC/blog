@@ -5,7 +5,7 @@ tags: [Matlab, Octave]
 resource_path: /blog/2019/02/12/vectorization
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 向量化的优点
 ---

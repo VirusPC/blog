@@ -5,7 +5,7 @@ tags: [‘spam classifier’]
 resource_path: /blog/assets/2020/06/05/spam_classifier
 ---
 
-<script type="text/javascript" async src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-MML-AM_CHTML"> </script>
+{% include posts_hook.html %}
 
 垃圾邮件分类
 ---
@@ -15,10 +15,10 @@ resource_path: /blog/assets/2020/06/05/spam_classifier
 	3. 转化为词干
 	4. 移除非单词成分（制表，空格，换行）
 2. 单词表
-	1. 选择出现频率最高的单词们作为单词表
-	2. 为每个单词标记序号
+	5. 选择出现频率最高的单词们作为单词表
+	6. 为每个单词标记序号
 3. 从邮件中提取特征
-	1. 构建n维向量，向量下标与单词序号一一对应，存在记为1，不存在记为0.
+	7. 构建n维向量，向量下标与单词序号一一对应，存在记为1，不存在记为0.
 4. 训练SVM用于垃圾邮件分类
 5. 预测
 

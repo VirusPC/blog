@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/05/27
 ---
 
+{% include posts_hook.html %}
+
 # Introduction to Asynchronous Programming
 
 - [Introduction to Asynchronous Programming](#introduction-to-asynchronous-programming)

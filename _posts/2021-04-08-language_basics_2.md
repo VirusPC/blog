@@ -5,6 +5,8 @@ tags: ['frontend', 'javascript']
 resource_path: /blog/assets/2021/04/08
 ---
 
+{% include posts_hook.html %}
+
 # Operators
 
 When used on objects, operators typically call the `valueOf()` and/or `toString()` method to retrieve a value they can work with.

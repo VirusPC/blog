@@ -4,6 +4,8 @@ categories: ['Matlab/Octave']
 resource_path: /blog/assets/2019/02/09/plotting_data
 ---
 
+{% include posts_hook.html %}
+
 基本操作
 ---
 
