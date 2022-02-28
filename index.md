@@ -22,3 +22,5 @@
 ---
 
 > [旧笔记](https://github.com/VirusPC/old-notes)
+> [微博（部分知识点）](https://weibo.com/u/5264294249)
+> [语雀](https://www.yuque.com/pengcheng-fuigs)
