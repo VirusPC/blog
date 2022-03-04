@@ -21,6 +21,7 @@ resource_path: /blog/assets/2021/05/28
     - [Maxmizing Parallelization](#maxmizing-parallelization)
     - [Serial Promise Execution](#serial-promise-execution)
     - [Stack Traces and Memory Management](#stack-traces-and-memory-management)
+  - [Iteration ptotocal, Iterator, Iterable, generator 与 async/await](#iteration-ptotocal-iterator-iterable-generator-与-asyncawait)
   - [Summary](#summary)
 
 ---
@@ -73,6 +74,23 @@ ES7’s async/await is intended to directly address the issue of organizing code
 
 ---
 
+## Iteration ptotocal, Iterator, Iterable, generator 与 async/await
+
+1. iteration protocal 包括 iterator与iterable
+
+2. iterable是实现了@@Iterator 的对象。用于for...in循环等。@@itertator 要求为iterator，一般为generator。
+
+3. iterator是一个具有next()方法的对象。该方法返回一个对象，这个对象至少包含两个属性:done和value。
+
+4. generator即是iterator，又是itetable。
+
+5. async就是generator+自动执行器，await就是yield。
+
+6. 下图为用 generator + spawn（自动执行器）模拟的[#](https://www.zhihu.com/question/65171328/answer/2357882622)
+   ![async_generator]({{page.resource_path}}/async_generator.jpg)
+
+---
+
 ## Summary
 
 
@@ -81,3 +99,5 @@ ES7’s async/await is intended to directly address the issue of organizing code
 Reference:
 
 - Professional JavaScript for Web Developers 4th Edition
+- (JavaScript中Generator 和迭代器对象 iterator很相像。他们在哪些地方应用呢？)[https://www.zhihu.com/question/65171328/answer/2357882622]
+- [Iteration Protocals - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Iteration_protocols)
