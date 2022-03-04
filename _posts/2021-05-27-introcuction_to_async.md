@@ -145,9 +145,26 @@ double(3, successCallback, failureCallback);
 
 ## Event Loop
 
-1. js异步任务分微任务(micro task)和宏任务(task). 这是为了将异步队列任务划分优先级，使得微任务可以插队。 
+1. JS 是单线程，event loop 使得 JS 可以处理异步行为。
 
-占坑, 待填
+2. js异步任务分微任务(micro task)和宏任务(task). 微任务只是普通的js脚本，红任务是真正的异步任务。这可以将异步队列任务划分优先级, 使得微任务可以插队.
+
+3. 宏任务有: 主线程,UI渲染 (解析DOM, 计算布局, 绘制), UI 交互, I/O, 网络请求(`xmlhttprequest`, Worker 的创建也需要 fetch 脚本),  `postMessage`,  `setTimeout`, `setInterval`,  nodejs 下的 `setImmediate` 等.
+
+4. 微任务有: Promise的 `resolve` 或 `reject`, `Object.observe` (已被Proxy取代), `MutationObserver`, nodejs 下的 `process.nextTick`.
+
+5. 参与event loop的有四部分:主线程，web api, 宏任务队列， 微任务队列。
+
+6. event loop 中，一次循环称为一次tick。
+
+7. 过程: 
+  1. 执行宏任务：主线程(宏任务)正常执行，遇到异步任务先不执行，将他们放入任务队列，直至主线程执行完毕。宏任务和微任务各有各的队列。
+  2. 执行微任务：按顺序微任务队列里的任务，**直至队列为空**。执行过程中可能会产生新的微任务，将他们继续加入微任务队列尾部, 继续执行。
+  3. 执行渲染：GUI 线程接管渲染（reflow，repaint 等）。
+  4. （第二次tick）执行宏任务：从宏任务队列取出第一个，按第一步执行。
+  5. 循环。。。
+
+![event loop]({{page.resource_path}}/eventloop.png)
 
 ---
 
@@ -164,3 +181,6 @@ Reference:
 - [Single-threaded Concurrency](http://tutorials.jenkov.com/java-concurrency/single-threaded-concurrency.html)
 - [关于js异步任务有哪些](https://www.zhihu.com/question/408642963/answer/1356774295)
 - [JS为什么要区分微任务和宏任务？](https://www.zhihu.com/question/316514618)
+- [JS Web Worker is a macro task?](https://stackoverflow.com/questions/60694838/js-web-worker-is-a-macro-task)
+- [The event loop - MDN](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop)
+- [the event loop picture](https://www.freecodecamp.org/news/javascript-concurrency-model-and-event-loop/)
