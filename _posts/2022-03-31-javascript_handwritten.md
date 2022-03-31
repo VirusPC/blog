@@ -25,6 +25,7 @@ resource_path: /blog/assets/2022/03/31
   - [Promise chain + retry](#promise-chain--retry)
   - [async](#async)
 
+---
 
 ## throttle
 
@@ -65,6 +66,8 @@ function throttle(func, delay){
 }
 ```
 
+---
+
 ## debounce
 1. timer，每次执行前重置
 2. 保存this和arguments
@@ -82,6 +85,8 @@ function debounce(func, delay){
   }
 }
 ```
+
+---
 
 ## 柯里化
 
@@ -116,6 +121,8 @@ function curry(fn, ...args) {
   }
 }
 ```
+
+---
 
 ## `Promise.all`
 
@@ -155,6 +162,8 @@ function all2(promises){
 };
 ```
 
+---
+
 ## `Promise.race`
 
 1. 只要一个`resolve`或`reject`了，后续的`resolve`或`reject`就无效了
@@ -166,6 +175,8 @@ function race(...promises) {
   });
 }
 ```
+
+---
 
 ## `new` 操作符
 
@@ -184,6 +195,8 @@ function New(func, ...args) {
     return res;
 }
 ```
+
+---
 
 ## `call` 与 `apply`
 
@@ -210,6 +223,8 @@ Function.prototype.apply = function(context, args){  // 与call的唯一不同�
 }
 ```
 
+---
+
 ## `bind`
 
 1. 返回的函数可能用于new，作为构造函数，此时this是resFn的实例
@@ -233,6 +248,8 @@ Function.prototype.bind = function(content, ...args) {
 }
 ```
 
+---
+
 ## Promise try
 
 1. attempt 函数，执行promise，并且当失败时重新attempt
@@ -254,6 +271,8 @@ function retry(p, times, delay) {
 }
 ```
 
+---
+
 ## Promise chain
 
 ```js
@@ -270,6 +289,8 @@ function chainPromise(promiseFactories) {
 }
 ```
 
+---
+
 ## Promise chain + retry
 
 ```js
@@ -285,6 +306,8 @@ function chainPromise(promiseFactories, times) {
   });
 }
 ```
+
+---
 
 ## async
 ```js
