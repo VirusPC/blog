@@ -8,7 +8,7 @@
   gtag('config', 'G-DE96ZG1N0C');
 </script>
 
-<h2> 新笔记（图形/可视化/Web/理论/工程/。。。）请转 >> [语雀](https://www.yuque.com/pengcheng-fuigs) </h2>
+<h2> 新笔记（图形/可视化/Web/理论/工程/。。。）请转 >>  </h2>[https://www.yuque.com/pengcheng-fuigs](https://www.yuque.com/pengcheng-fuigs)
 
 ---
 
