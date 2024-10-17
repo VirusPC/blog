@@ -25,7 +25,7 @@
 
 ---
 
-> [github]（https://github.com/VirusPC）
+> [github](https://github.com/VirusPC)
 
 > [旧笔记](https://github.com/VirusPC/old-notes)
 <br/>
