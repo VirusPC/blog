@@ -28,7 +28,6 @@
 > [github](https://github.com/VirusPC)
 
 > [旧笔记](https://github.com/VirusPC/old-notes)
-<br/>
 
 > [语雀](https://www.yuque.com/viruspc)
 
